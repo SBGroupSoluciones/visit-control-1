@@ -244,6 +244,11 @@ const _nav =  [
       },
       {
         _tag: 'CSidebarNavItem',
+        name: 'Guest',
+        to: '/guest',
+      },
+      {
+        _tag: 'CSidebarNavItem',
         name: 'Error 404',
         to: '/404',
       },

@@ -16,7 +16,7 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 
-const Register = () => {
+const Guest = () => {
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -25,15 +25,12 @@ const Register = () => {
             <CCard className="mx-4">
               <CCardBody className="p-4">
                 <CForm>
-                  {/* <h1>Registro</h1> */}
-                  <div class="text-center">
                   <CImg
-                    src={"logos/SBG.png"} 
+                    src={"logos/SBG.png"}
                     className="img-fluid"
                     alt="https://sbgroup.com.mx"
-                  />  
-                  </div>
-                  <p className="text-muted">Crear cuenta</p>
+                  />
+                  <p className="text-muted">Registrarse como visitante</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>
@@ -55,7 +52,7 @@ const Register = () => {
                     <CInput
                       type="text"
                       placeholder="Apellido"
-                      autoComplete="lastName"
+                      autoComplete="username"
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -66,30 +63,6 @@ const Register = () => {
                       type="text"
                       placeholder="Correo electrónico"
                       autoComplete="email"
-                    />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-lock-locked" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput
-                      type="password"
-                      placeholder="Contraseña"
-                      autoComplete="new-password"
-                    />
-                  </CInputGroup>
-                  <CInputGroup className="mb-4">
-                    <CInputGroupPrepend>
-                      <CInputGroupText>
-                        <CIcon name="cil-lock-locked" />
-                      </CInputGroupText>
-                    </CInputGroupPrepend>
-                    <CInput
-                      type="password"
-                      placeholder="Repetir contraseña"
-                      autoComplete="new-password"
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -111,13 +84,13 @@ const Register = () => {
                       </CInputGroupText>
                     </CInputGroupPrepend>
                     <CInput
-                      type="text"
+                      type="tel"
                       placeholder="Teléfono"
-                      autoComplete="phone"
+                      // autoComplete="phone"
                     />
                   </CInputGroup>
                   <CButton color="success" block>
-                    Crear 
+                    Ingresar
                   </CButton>
                 </CForm>
               </CCardBody>
@@ -143,4 +116,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Guest;
