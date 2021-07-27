@@ -1,0 +1,116 @@
+{
+  "account": {
+    "uuid": "",
+    "firstName": "",
+    "lastName": "",
+    "imgUrl": "",
+    "auth": {
+      "email": "",
+      "pass": ""
+    },
+    "company": "",
+    "phone": [""],
+    "cargoVehicle": [
+      {
+        "id":"",
+        "driver":"",
+        "line": "",
+        "platformPlate": "",
+        "petition":"",
+        "packs":"",
+        "containerNumber":"",
+        "tractNumber":"",
+        "load":"",
+        "unload":"",
+        "sealsNumber":"",
+        "additionalDoc":"",
+        "additionalDocPath":"",
+        "petitionPath":"",
+        "timestamp":""
+      }
+    ],
+    "privateVehicle":[{
+      "id":"",
+      "color":"",
+      "brand":"",
+      "subBrand":"",
+      "model":"",
+      "timestamp":""
+    }],
+    "person": [
+      {
+        "id": "",
+        "firstName": "",
+        "lastName": "",
+        "email": "",
+        "imgUrl": "",
+        "phone": "",
+        "company":"",
+        "idFrontPath": "",
+        "idBackPath": ""
+      }
+    ],
+    "visit": {
+      "person": [
+        {
+          "person":{},
+          "recinto": "",
+          "dateTimestamp": "",
+          "checkInTimestamp": "",
+          "chechOutTimestamp": "",
+          "host": "",
+          "reason": "",
+          "status": "",
+          "qrUrl": "",
+          "timestamp":""
+        }
+      ],
+      "vehicle": [
+        {
+          "driverFirstName": "",
+          "driverLastName": "",
+          "dateTimestamp": "",
+          "checkInTimestamp": "",
+          "chechOutTimestamp": "",
+          "line": "",
+          "vehiclePlate": "",
+          "platformPlate": "",
+          "petition": "",
+          "container": "",
+          "packs": 0,
+          "tractEcoNumber": "",
+          "status": "",
+          "qrUrl": ""
+        }
+      ]
+    },
+    "role": ""
+  },
+  "recinto": {
+    "id": "",
+    "name": "",
+    "address": "",
+    "phone": "",
+    "lat": "",
+    "lon": ""
+  },
+  "profile":{
+      "id":"",
+      "name":"",
+      "permission":{
+          "reports":{
+              "admin":false,
+              "operator":false
+          },
+          "appointment":{
+              "myAppointments":false,
+              "admin":false,
+              "operator":false,
+              "edit":false,
+              "delete":false,
+              "add":false,
+              "departure":false
+          }
+      }
+  }
+}

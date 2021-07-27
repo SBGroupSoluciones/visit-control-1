@@ -14,6 +14,33 @@ const _nav =  [
   },
   {
     _tag: 'CSidebarNavTitle',
+    _children: ['Admin']
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Citas',
+    to: '/appointment',
+    icon: 'cil-car-alt',
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Personas',
+    to: '/person',
+    icon: 'cil-car-alt',
+  },
+
+  {
+    _tag: 'CSidebarNavTitle',
+    _children: ['Custom']
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Vehicle',
+    to: '/vehicle',
+    icon: 'cil-car-alt',
+  },
+  {
+    _tag: 'CSidebarNavTitle',
     _children: ['Theme']
   },
   {
