@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -18,13 +19,27 @@ import {
   CImg,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
+import { Auth } from "aws-amplify";
+import awsconfig from "../../aws-exports";
+Auth.configure(awsconfig);
 
-const Login = (props) => {
-  const {
-    setEmail,
-    setPassword,
-    onSignIn,
-  } = props;
+const SignIn = (props) => {
+  const history = useHistory();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  useEffect(() => {}, [email, password,history]);
+
+  const onSignIn = async () => {
+    try {
+      const user = await Auth.signIn(email, password);
+      localStorage.setItem("jwt", user.signInUserSession.idToken.jwtToken);
+      history.push("/");
+    } catch (error) {
+      // errorHandler(error.code);
+      console.log("error signing in", error.code);
+    }
+  };
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -42,7 +57,7 @@ const Login = (props) => {
                 </CCardHeader>
                 <CCardBody>
                   <CForm>
-                    <p className="text-muted">Iniciar Sesión</p>
+                    <p className="">Iniciar Sesión</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
@@ -52,7 +67,7 @@ const Login = (props) => {
                       <CInput
                         type="text"
                         placeholder="Correo electrónico"
-                        autoComplete="email"
+                        autoComplete="username"
                         onChange={(e) => {
                           setEmail(e.target.value);
                         }}
@@ -67,7 +82,7 @@ const Login = (props) => {
                       <CInput
                         type="password"
                         placeholder="Contraseña"
-                        autoComplete="current-password"
+                        autoComplete=""
                         onChange={(e) => {
                           setPassword(e.target.value);
                         }}
@@ -75,7 +90,11 @@ const Login = (props) => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4" onClick={(e) => onSignIn()}>
+                        <CButton
+                          color="primary"
+                          className="px-4"
+                          onClick={(e) => onSignIn()}
+                        >
                           Ingresar
                         </CButton>
                       </CCol>
@@ -91,7 +110,7 @@ const Login = (props) => {
                   <p className="text-muted">¿No tiene cuenta?</p>
                   <CRow>
                     <CCol xs="12" sm="6">
-                      <Link to="/register">
+                      <Link to="/signup">
                         <CButton color="primary" className="mb-1" block>
                           <span>Crear Cuenta</span>
                         </CButton>
@@ -115,4 +134,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default SignIn;

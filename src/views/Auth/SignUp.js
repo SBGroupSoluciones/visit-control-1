@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Auth } from "aws-amplify";
+import awsconfig from "../../aws-exports";
 import {
   CButton,
   CCard,
+  CCardHeader,
   CCardBody,
   CCardFooter,
   CCol,
@@ -15,24 +19,54 @@ import {
   CImg,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
+Auth.configure(awsconfig);
 
-const Register = () => {
+const SignUp = (props) => {
+  const history = useHistory();
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [company, setCompany] = useState();
+  const [phone, setPhone] = useState();
+
+  useEffect(() => {}, [email, password, firstName, lastName, company, phone,history]);
+
+  const onSignUp = async () => {
+    try {
+      const { user } = await Auth.signUp({
+        username: email,
+        password: password,
+        attributes: {
+          email: email,
+        },
+      });
+      console.log("EL USUARIO ", user);
+      localStorage.setItem("user", email);
+      history.push("/verify")
+    } catch (error) {
+      // errorHandler(error.code);
+      console.log("error signing up:", error, error.code);
+    }
+  };
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="4" lg="4" xl="4">
             <CCard className="mx-4">
-              <CCardBody className="p-4">
-                <CForm>
-                  {/* <h1>Registro</h1> */}
-                  <div class="text-center">
+              <CCardHeader className="p-4">
+                <div class="text-center">
                   <CImg
-                    src={"logos/SBG.png"} 
+                    src={"logos/SBG.png"}
                     className="img-fluid"
                     alt="https://sbgroup.com.mx"
-                  />  
-                  </div>
+                  />
+                </div>
+              </CCardHeader>
+              <CCardBody className="p-4">
+                <CForm>
                   <p className="text-muted">Crear cuenta</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -44,6 +78,9 @@ const Register = () => {
                       type="text"
                       placeholder="Nombre"
                       autoComplete="username"
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -56,6 +93,9 @@ const Register = () => {
                       type="text"
                       placeholder="Apellido"
                       autoComplete="lastName"
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -66,6 +106,9 @@ const Register = () => {
                       type="text"
                       placeholder="Correo electrónico"
                       autoComplete="email"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -78,6 +121,9 @@ const Register = () => {
                       type="password"
                       placeholder="Contraseña"
                       autoComplete="new-password"
+                      onChange={(e) => {
+                        setPassword(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
@@ -102,6 +148,9 @@ const Register = () => {
                       type="text"
                       placeholder="Empresa"
                       autoComplete="company"
+                      onChange={(e) => {
+                        setCompany(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -114,26 +163,17 @@ const Register = () => {
                       type="text"
                       placeholder="Teléfono"
                       autoComplete="phone"
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
                     />
                   </CInputGroup>
-                  <CButton color="success" block>
-                    Crear 
-                  </CButton>
                 </CForm>
               </CCardBody>
               <CCardFooter className="p-4">
-                {/* <CRow>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-facebook mb-1" block>
-                      <span>facebook</span>
-                    </CButton>
-                  </CCol>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-twitter mb-1" block>
-                      <span>twitter</span>
-                    </CButton>
-                  </CCol>
-                </CRow> */}
+                <CButton color="success" block onClick={(e) => onSignUp()}>
+                  Crear
+                </CButton>
               </CCardFooter>
             </CCard>
           </CCol>
@@ -143,4 +183,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default SignUp;

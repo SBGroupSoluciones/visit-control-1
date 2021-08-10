@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-visitcontrol-dev-125850-authRole",
+      "UnauthRoleArn": "arn:aws:iam::552906341724:role/amplify-visitcontrol-dev-125850-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::552906341724:role/amplify-visitcontrol-dev-125850-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-visitcontrol-dev-125850-deployment",
+      "UnauthRoleName": "amplify-visitcontrol-dev-125850-unauthRole",
+      "StackName": "amplify-visitcontrol-dev-125850",
+      "StackId": "arn:aws:cloudformation:us-east-1:552906341724:stack/amplify-visitcontrol-dev-125850/2e83c9e0-f61f-11eb-ab52-0e9061196303",
+      "AmplifyAppId": "d3sqeoa4h7d1ls"
+    },
+    "categories": {
+      "auth": {
+        "visitcontrol0ca5cd6e": {}
+      }
+    }
+  }
+}

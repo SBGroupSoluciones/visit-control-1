@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "visitcontrol0ca5cd6e": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}
