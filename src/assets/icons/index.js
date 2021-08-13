@@ -1,6 +1,6 @@
 import { sygnet } from './sygnet'
-import { logo } from './logo'
-import { logoNegative } from './logo-negative'
+import { logo } from './logo-sbg-dark'
+import { logoNegative } from './logo-sbg-light'
 
 import {
   cibSkype,
