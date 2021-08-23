@@ -19,12 +19,16 @@ import {
 import CIcon from "@coreui/icons-react";
 import { Auth } from "aws-amplify";
 import awsconfig from "../../aws-exports";
+import AuthErrorsNotification from "./AuthErrorsNotification";
+
 Auth.configure(awsconfig);
 
 const Verify = () => {
   const history = useHistory();
   const [email, setEmail] = useState();
   const [code, setCode] = useState();
+  const [error, setError] = useState();
+  const [notify, setNotify] = useState(false);
 
   useEffect(() => {
     setEmail(localStorage.getItem("user"));
@@ -34,14 +38,19 @@ const Verify = () => {
     try {
       await Auth.confirmSignUp(email, code);
       history.push("/");
-    } catch (error) {
-      // errorHandler(error.code);
-      console.log("error confirming sign up", error);
+    } catch (e) {
+      setError(e.code);
+      setNotify(true);
     }
   };
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
+      <AuthErrorsNotification
+        show={notify}
+        code={error}
+        setNotify={setNotify}
+      />
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="4" lg="4" xl="4">

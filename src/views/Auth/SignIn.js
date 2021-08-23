@@ -21,28 +21,37 @@ import {
 import CIcon from "@coreui/icons-react";
 import { Auth } from "aws-amplify";
 import awsconfig from "../../aws-exports";
+import AuthErrorsNotification from "./AuthErrorsNotification";
+
 Auth.configure(awsconfig);
 
 const SignIn = (props) => {
   const history = useHistory();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [error, setError] = useState();
+  const [notify, setNotify] = useState(false);
 
-  useEffect(() => {}, [email, password,history]);
+  useEffect(() => {}, [email, password, history]);
 
   const onSignIn = async () => {
     try {
       const user = await Auth.signIn(email, password);
       localStorage.setItem("jwt", user.signInUserSession.idToken.jwtToken);
       history.push("/");
-    } catch (error) {
-      // errorHandler(error.code);
-      console.log("error signing in", error.code);
+    } catch (e) {
+      setError(e.code);
+      setNotify(true);
     }
   };
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
+      <AuthErrorsNotification
+        show={notify}
+        code={error}
+        setNotify={setNotify}
+      />
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="4">

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import "./scss/style.scss";
-import { isLogin } from "./utils";
+import { isLogin, isGuest } from "./utils";
 import useToken from "./useToken";
 
 const loading = (
@@ -14,11 +14,10 @@ const loading = (
 const TheLayout = React.lazy(() => import("./containers/TheLayout"));
 
 // Pages
-const Authentication = React.lazy(() => import("./views/Auth/Authentication"));
 const SignUp = React.lazy(() => import("./views/Auth/SignUp"));
 const SignIn = React.lazy(() => import("./views/Auth/SignIn"));
 const Verify = React.lazy(() => import("./views/Auth/Verify"));
-const Guest = React.lazy(() => import("./views/pages/register/Guest"));
+const Guest = React.lazy(() => import("./views/Auth/Guest"));
 const Page404 = React.lazy(() => import("./views/pages/page404/Page404"));
 const Page500 = React.lazy(() => import("./views/pages/page500/Page500"));
 
@@ -31,14 +30,14 @@ class App extends Component {
           <Route exact path="/verify" name="Verify Account Page" render={props => <Verify {...props}/>} />
           <Route exact path="/signup" name="Signup Page" render={props => <SignUp {...props}/>} />
           <Route exact path="/signin" name="Signin Page" render={props => <SignIn {...props}/>} />
+          <Route exact path="/guest" name="Guest Page" render={props => <Guest {...props}/>} />
 
             <Route path="/" render={props => (
-              !isLogin() ?
+            !isGuest() ?
                   <Redirect to="/signin" />
-              : <TheLayout {...props}/>
+              : !isLogin ?<Redirect to="/signin" />:<TheLayout {...props}/>
              )} />
             {/* <Route exact path="/" name="Authentication" render={(props) => <Authentication {...props} />}/> */}
-            <Route exact path="/guest" name="Guest Page" render={props => <Guest {...props}/>} />
             <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
             <Route exact path="/500" name="Page 500" render={props => <Page500 {...props}/>} />
             {/* <Route path="/" name="Home" render={props => <TheLayout {...props}/>} /> */}

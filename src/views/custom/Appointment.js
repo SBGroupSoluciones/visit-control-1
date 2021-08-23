@@ -10,6 +10,7 @@ import {
   CCard,
   CCardHeader,
   CCardBody,
+  CCardFooter,
   CImg,
   CForm,
   CLabel,
@@ -30,6 +31,7 @@ import { DocsLink } from "src/reusable";
 import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import CarbonDatePicker from "react-carbon-datepicker";
+import Notification from "./Notification";
 
 const getBadge = (status) => {
   switch (status) {
@@ -48,7 +50,7 @@ const getBadge = (status) => {
 const fields = ["name", "registered", "role", "status"];
 
 const Appointment = () => {
-  const [personAlready, setPersonAlready] = useState(true);
+  const [personAlready, setPersonAlready] = useState(false);
   const [active, setActive] = useState(0);
   const lorem =
     "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.";
@@ -191,7 +193,189 @@ const Appointment = () => {
 
   return (
     <>
+      <Notification 
+        show={true}
+      />
       <CRow>
+        <CCol md="12">
+          <CCard>
+            <CCardHeader>Agendar Cita</CCardHeader>
+            <CCardBody>
+              <CRow>
+                <CCol xs="12" md="6">
+                  <CRow>
+                    <CCol xs="12" md="12">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Nombre</CLabel>
+                        {personAlready ? (
+                          <CSelect
+                            custom
+                            name="select"
+                            id="select"
+                            onChange={(e) => {
+                              changeHandler(e.target.value);
+                            }}
+                          >
+                            <option value="0">Seleccione una Persona...</option>
+                            <option value="new">Nueva Persona</option>
+                          </CSelect>
+                        ) : (
+                          <div>
+                            <CInput id="firstName" placeholder="" required />
+                            <CLabel htmlFor="lastName" className="ln-top">
+                              Apellido
+                            </CLabel>
+                            <CInput id="lastName" placeholder="" required />
+                          </div>
+                        )}
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="12">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Correo</CLabel>
+                        {personAlready ? (
+                          <CSelect custom name="select" id="select">
+                            <option value="0">Seleccione una Persona...</option>
+                            <option value="1">Option #1</option>
+                            <option value="2">Option #2</option>
+                            <option value="3">Option #3</option>
+                          </CSelect>
+                        ) : (
+                          <CInput id="firstName" placeholder="" required />
+                        )}
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="12">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Empresa</CLabel>
+                        {personAlready ? (
+                          <CSelect custom name="select" id="select">
+                            <option value="0">Seleccione una Persona...</option>
+                            <option value="1">Option #1</option>
+                            <option value="2">Option #2</option>
+                            <option value="3">Option #3</option>
+                          </CSelect>
+                        ) : (
+                          <CInput id="firstName" placeholder="" required />
+                        )}
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="12">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Motivo de la visita</CLabel>
+                        <CTextarea
+                          name="textarea-input"
+                          id="textarea-input"
+                          rows="3"
+                          placeholder="Content..."
+                        />
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="12">
+                      <CFormGroup>
+                        <CLabel htmlFor="date-input">Fecha</CLabel>
+                        <CInput
+                          type="date"
+                          id="date-input"
+                          name="date-input"
+                          placeholder="date"
+                        />
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="12">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Hora</CLabel>
+                        <CSelect custom name="select" id="select">
+                          <option value="0">Seleccione una hora...</option>
+                          <option value="09:00:00">09:00 a.m.</option>
+                          <option value="09:30:00">09:30 a.m.</option>
+                          <option value="10:00:00">10:00 a.m.</option>
+                          <option value="10:30:00">10:30 a.m.</option>
+                          <option value="11:00:00">11:00 a.m.</option>
+                          <option value="11:30:00">11:30 a.m.</option>
+                          <option value="12:00:00">12:00 p.m.</option>
+                          <option value="12:30:00">12:30 p.m.</option>
+                          <option value="13:00:00">01:00 p.m.</option>
+                          <option value="13:30:00">01:30 p.m.</option>
+                          <option value="14:00:00">02:00 p.m.</option>
+                          <option value="14:30:00">02:30 p.m.</option>
+                          <option value="15:00:00">03:00 p.m.</option>
+                          <option value="15:30:00">03:30 p.m.</option>
+                          <option value="16:00:00">04:00 p.m.</option>
+                          <option value="16:30:00">04:30 p.m.</option>
+                          <option value="17:00:00">05:00 p.m.</option>
+                          <option value="17:30:00">05:30 p.m.</option>
+                        </CSelect>{" "}
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="12">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Anfitrión</CLabel>
+                        <CSelect custom name="select" id="select">
+                          <option value="0">
+                            Selecciona a tu Anfitrión...
+                          </option>
+                          <option value="any">Cualquiera</option>
+                          <option value="2">Option #2</option>
+                          <option value="3">Option #3</option>
+                        </CSelect>{" "}
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="12">
+                      <CRow>
+                        <CCol xs="12" md="4">
+                          <CLabel htmlFor="file-input">Imagen</CLabel>
+                          <CInputFile id="file-input" name="file-input" />
+                        </CCol>
+                        <CCol xs="12" md="4">
+                          <CLabel htmlFor="file-input">INE Frente</CLabel>
+                          <CInputFile id="file-input" name="file-input" />
+                        </CCol>{" "}
+                        <CCol xs="12" md="4">
+                          <CLabel htmlFor="file-input">INE Reverso</CLabel>
+                          <CInputFile id="file-input" name="file-input" />
+                        </CCol>
+                      </CRow>
+                    </CCol>
+                  </CRow>
+                </CCol>
+                <CCol xs="12" md="6">
+                  <CRow>
+                    <CCol xs="12" md="3">
+                      <CImg
+                        src="https://images.generated.photos/wTiSoFr_r3EULmE2aKYB0Xh7rzjjTtjkTetI4Q_An5c/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvMzYyMTgy/NTYtMGM3MC00ZTVi/LWFlZDQtZGUwYmEw/NzdjMGNjLmpwZw.jpg"
+                        shape="rounded-circle"
+                        thumbnail                                                               
+                        className="mb-2"
+                        align="right"
+                        fluidGrow
+                      />
+                    </CCol>
+                  </CRow>
+                  <CRow>
+                    <CCol xs="12" md="4">
+                      <img
+                        src="https://www.ambientum.com/wp-content/uploads/2020/06/DNI.png"
+                        alt="..."
+                        class="img-thumbnail"
+                      />
+                    </CCol>
+                  </CRow>
+                  <CRow>
+                    <CButton type="submit" color="primary">
+                      Agendar
+                    </CButton>
+                  </CRow>
+                </CCol>
+              </CRow>
+            </CCardBody>
+            <CCardFooter>
+              <CButton type="submit" color="primary">
+                Agendar
+              </CButton>
+            </CCardFooter>
+          </CCard>
+        </CCol>
         <CCol md="12">
           <CCard>
             <CCardHeader>Agendar Cita</CCardHeader>
@@ -433,33 +617,33 @@ const Appointment = () => {
                               </CSelect>{" "}
                             </CFormGroup>
                             <CCol xs="12" md="12">
-                            <CFormGroup>
-                              <CLabel htmlFor="firstName">Anfitrión</CLabel>
-                              <CSelect custom name="select" id="select">
-                                <option value="0">
-                                  Seleccione una hora...
-                                </option>
-                                <option value="09:00:00">09:00 a.m.</option>
-                                <option value="09:30:00">09:30 a.m.</option>
-                                <option value="10:00:00">10:00 a.m.</option>
-                                <option value="10:30:00">10:30 a.m.</option>
-                                <option value="11:00:00">11:00 a.m.</option>
-                                <option value="11:30:00">11:30 a.m.</option>
-                                <option value="12:00:00">12:00 p.m.</option>
-                                <option value="12:30:00">12:30 p.m.</option>
-                                <option value="13:00:00">01:00 p.m.</option>
-                                <option value="13:30:00">01:30 p.m.</option>
-                                <option value="14:00:00">02:00 p.m.</option>
-                                <option value="14:30:00">02:30 p.m.</option>
-                                <option value="15:00:00">03:00 p.m.</option>
-                                <option value="15:30:00">03:30 p.m.</option>
-                                <option value="16:00:00">04:00 p.m.</option>
-                                <option value="16:30:00">04:30 p.m.</option>
-                                <option value="17:00:00">05:00 p.m.</option>
-                                <option value="17:30:00">05:30 p.m.</option>
-                              </CSelect>{" "}
-                            </CFormGroup>
-                          </CCol>
+                              <CFormGroup>
+                                <CLabel htmlFor="firstName">Anfitrión</CLabel>
+                                <CSelect custom name="select" id="select">
+                                  <option value="0">
+                                    Seleccione una hora...
+                                  </option>
+                                  <option value="09:00:00">09:00 a.m.</option>
+                                  <option value="09:30:00">09:30 a.m.</option>
+                                  <option value="10:00:00">10:00 a.m.</option>
+                                  <option value="10:30:00">10:30 a.m.</option>
+                                  <option value="11:00:00">11:00 a.m.</option>
+                                  <option value="11:30:00">11:30 a.m.</option>
+                                  <option value="12:00:00">12:00 p.m.</option>
+                                  <option value="12:30:00">12:30 p.m.</option>
+                                  <option value="13:00:00">01:00 p.m.</option>
+                                  <option value="13:30:00">01:30 p.m.</option>
+                                  <option value="14:00:00">02:00 p.m.</option>
+                                  <option value="14:30:00">02:30 p.m.</option>
+                                  <option value="15:00:00">03:00 p.m.</option>
+                                  <option value="15:30:00">03:30 p.m.</option>
+                                  <option value="16:00:00">04:00 p.m.</option>
+                                  <option value="16:30:00">04:30 p.m.</option>
+                                  <option value="17:00:00">05:00 p.m.</option>
+                                  <option value="17:30:00">05:30 p.m.</option>
+                                </CSelect>{" "}
+                              </CFormGroup>
+                            </CCol>
                           </CCol>
                         </CRow>
                       </CCol>
@@ -471,68 +655,195 @@ const Appointment = () => {
                         <CCol xs="4">
                           <CRow>
                             <CCol xs="4">
-                              <p name="9" onClick={(e)=>{console.log(e.target.textContent)}}  className="time-picker">09:00 a.m.</p>
+                              <p
+                                name="9"
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                09:00 a.m.
+                              </p>
                             </CCol>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">09:30 a.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                09:30 a.m.
+                              </p>
                             </CCol>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">10:00 a.m.</p>
-                            </CCol>
-                          </CRow>
-                          <CRow>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">10:30 a.m.</p>
-                            </CCol>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">11:00 a.m.</p>
-                            </CCol>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">11:30 a.m.</p>
-                            </CCol>
-                          </CRow>
-                          <CRow>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">12:00 p.m.</p>
-                            </CCol>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">12:30 p.m.</p>
-                            </CCol>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">01:00 p.m.</p>
-                            </CCol>
-                          </CRow>
-                          <CRow>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">01:30 p.m.</p>
-                            </CCol>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">02:00 p.m.</p>
-                            </CCol>
-                            <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">02:30 p.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                10:00 a.m.
+                              </p>
                             </CCol>
                           </CRow>
                           <CRow>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">03:00 p.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                10:30 a.m.
+                              </p>
                             </CCol>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">03:30 p.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                11:00 a.m.
+                              </p>
                             </CCol>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">04:00 p.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                11:30 a.m.
+                              </p>
                             </CCol>
                           </CRow>
                           <CRow>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">04:30 p.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                12:00 p.m.
+                              </p>
                             </CCol>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">05:00 p.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                12:30 p.m.
+                              </p>
                             </CCol>
                             <CCol xs="4">
-                              <p onClick={(e)=>{console.log(e.target.textContent)}} className="time-picker">05:30 p.m.</p>
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                01:00 p.m.
+                              </p>
+                            </CCol>
+                          </CRow>
+                          <CRow>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                01:30 p.m.
+                              </p>
+                            </CCol>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                02:00 p.m.
+                              </p>
+                            </CCol>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                02:30 p.m.
+                              </p>
+                            </CCol>
+                          </CRow>
+                          <CRow>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                03:00 p.m.
+                              </p>
+                            </CCol>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                03:30 p.m.
+                              </p>
+                            </CCol>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                04:00 p.m.
+                              </p>
+                            </CCol>
+                          </CRow>
+                          <CRow>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                04:30 p.m.
+                              </p>
+                            </CCol>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                05:00 p.m.
+                              </p>
+                            </CCol>
+                            <CCol xs="4">
+                              <p
+                                onClick={(e) => {
+                                  console.log(e.target.textContent);
+                                }}
+                                className="time-picker"
+                              >
+                                05:30 p.m.
+                              </p>
                             </CCol>
                           </CRow>
                         </CCol>

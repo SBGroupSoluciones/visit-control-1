@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   CButton,
   CCard,
+  CCardHeader,
   CCardBody,
   CCardFooter,
   CCol,
@@ -17,20 +19,42 @@ import {
 import CIcon from "@coreui/icons-react";
 
 const Guest = () => {
+  const history = useHistory();
+  const [email, setEmail] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [company, setCompany] = useState();
+  const [phone, setPhone] = useState();
+  const [disabledButton, setDisabledButton] = useState(true);
+
+  const onGuest = () => {
+    const guestData = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      company: company,
+      phone: phone,
+    };
+    localStorage.setItem("guest", JSON.stringify(guestData));
+    history.push("/");
+  };
+
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md="4" lg="4" xl="4">
             <CCard className="mx-4">
+              <CCardHeader>
+                <CImg
+                  src={"logos/SBG.png"}
+                  className="img-fluid"
+                  alt="https://sbgroup.com.mx"
+                />
+              </CCardHeader>
               <CCardBody className="p-4">
                 <CForm>
-                  <CImg
-                    src={"logos/SBG.png"}
-                    className="img-fluid"
-                    alt="https://sbgroup.com.mx"
-                  />
-                  <p className="text-muted">Registrarse como visitante</p>
+                  <p className="text-muted">Registrarse como visitanste</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>
@@ -40,7 +64,10 @@ const Guest = () => {
                     <CInput
                       type="text"
                       placeholder="Nombre"
-                      autoComplete="username"
+                      autoComplete="firstName"
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -52,7 +79,10 @@ const Guest = () => {
                     <CInput
                       type="text"
                       placeholder="Apellido"
-                      autoComplete="username"
+                      autoComplete="lastName"
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -63,6 +93,9 @@ const Guest = () => {
                       type="text"
                       placeholder="Correo electrónico"
                       autoComplete="email"
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -75,6 +108,9 @@ const Guest = () => {
                       type="text"
                       placeholder="Empresa"
                       autoComplete="company"
+                      onChange={(e) => {
+                        setCompany(e.target.value);
+                      }}
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
@@ -86,27 +122,18 @@ const Guest = () => {
                     <CInput
                       type="tel"
                       placeholder="Teléfono"
-                      // autoComplete="phone"
+                      onChange={(e) => {
+                        setPhone(e.target.value);
+                      }}
+                      autoComplete="phone"
                     />
                   </CInputGroup>
-                  <CButton color="success" block>
-                    Ingresar
-                  </CButton>
                 </CForm>
               </CCardBody>
               <CCardFooter className="p-4">
-                {/* <CRow>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-facebook mb-1" block>
-                      <span>facebook</span>
-                    </CButton>
-                  </CCol>
-                  <CCol xs="12" sm="6">
-                    <CButton className="btn-twitter mb-1" block>
-                      <span>twitter</span>
-                    </CButton>
-                  </CCol>
-                </CRow> */}
+                <CButton color="success" block onClick={(e) => onGuest()}>
+                  Ingresar
+                </CButton>
               </CCardFooter>
             </CCard>
           </CCol>

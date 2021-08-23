@@ -180,3 +180,29 @@ export const userNav = [
     ],
   }
 ];
+
+export const guestNav = [
+  {
+    _tag: "CSidebarNavTitle",
+    _children: ["Invitado"],
+  },
+
+  {
+    _tag: "CSidebarNavDropdown",
+    name: "Citas",
+    route: "/apointment",
+    icon: "cil-puzzle",
+    _children: [
+      {
+        _tag: "CSidebarNavItem",
+        name: "Agendar Cita",
+        to: "/appointment",
+      },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Citas Agendadas",
+        to: "/appointment",
+      },
+    ],
+  }
+];

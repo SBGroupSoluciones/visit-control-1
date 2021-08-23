@@ -8,18 +8,34 @@ import {
 } from "@coreui/react";
 
 const Notification = (props) => {
-  const { title, body, setNotification, activated} = props;
+  const {
+    title,
+    body,
+    buttonText,
+    secundaryButton,
+    show,
+    setNotification,
+    setPressedButton,
+  } = props;
 
-  const toggle = () => {
-    setNotification(!activated);
+  const toggle = (e) => {
+    setPressedButton(e.target.value);
+    setNotification(!show);
   };
 
   return (
-    <CModal show={true}>
+    <CModal show={show}>
       <CModalHeader closeButton>{title}</CModalHeader>
       <CModalBody>{body}</CModalBody>
       <CModalFooter>
-        <CButton color="primary" onClick={toggle}>Aceptar</CButton>{" "}
+        <CButton value="primary" color="primary" onClick={(e) => toggle(e)}>
+          {buttonText ? buttonText : "Aceptar"}
+        </CButton>
+        {secundaryButton ? (
+          <CButton value="secundary" color="secondary" onClick={(e) => toggle(e)}>
+            {secundaryButton}
+          </CButton>
+        ) : null}
       </CModalFooter>
     </CModal>
   );
