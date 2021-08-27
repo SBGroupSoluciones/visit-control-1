@@ -121,20 +121,20 @@ const SignIn = (props) => {
                 <CCardFooter className="p-4">
                   <p className="text-muted">¿No tiene cuenta?</p>
                   <CRow>
-                    <CCol xs="12" sm="6">
+                    <CCol xs="12" sm="12">
                       <Link to="/signup">
                         <CButton color="primary" className="mb-1" block>
                           <span>Crear Cuenta</span>
                         </CButton>
                       </Link>
                     </CCol>
-                    <CCol xs="12" sm="6">
+                    {/* <CCol xs="12" sm="6">
                       <Link to="/guest">
                         <CButton color="primary" className="mb-1" block>
                           <span>Visitante</span>
                         </CButton>
                       </Link>
-                    </CCol>
+                    </CCol> */}
                   </CRow>
                 </CCardFooter>
               </CCard>
