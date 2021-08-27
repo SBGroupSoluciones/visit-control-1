@@ -1,6 +1,6 @@
 {
     "identityPoolName": "visitcontrol0ca5cd6e_identitypool_0ca5cd6e",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "visitc0ca5cd6e",
     "userPoolName": "visitcontrol0ca5cd6e_userpool_0ca5cd6e",
     "autoVerifiedAttributes": [

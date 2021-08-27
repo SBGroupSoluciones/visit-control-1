@@ -631,7 +631,7 @@ const BasicForms = () => {
           <CCard>
             <CCardHeader>
               Form
-              <small> validation feedback</small>
+              <small> validation feedback asdasdsadasd</small>
             </CCardHeader>
             <CCardBody>
               <CFormGroup>

@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "vcapi",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authvisitcontrol0ca5cd6e",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

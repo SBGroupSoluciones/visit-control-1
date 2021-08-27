@@ -39,6 +39,7 @@ const SignIn = (props) => {
       const user = await Auth.signIn(email, password);
       localStorage.setItem("jwt", user.signInUserSession.idToken.jwtToken);
       history.push("/");
+      console.log("CAMIO?",user)
     } catch (e) {
       setError(e.code);
       setNotify(true);
@@ -108,9 +109,11 @@ const SignIn = (props) => {
                         </CButton>
                       </CCol>
                       <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">
-                          ¿Olvidó su contraseña?
-                        </CButton>
+                        <Link to="/forgot">
+                          <CButton color="link" className="px-0">
+                            ¿Olvidó su contraseña?
+                          </CButton>
+                        </Link>
                       </CCol>
                     </CRow>
                   </CForm>

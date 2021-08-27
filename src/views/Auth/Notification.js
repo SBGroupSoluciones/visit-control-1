@@ -16,6 +16,7 @@ const Notification = (props) => {
     show,
     setNotification,
     setPressedButton,
+    color,
   } = props;
 
   const toggle = (e) => {
@@ -24,7 +25,7 @@ const Notification = (props) => {
   };
 
   return (
-    <CModal show={show}>
+    <CModal show={show} color={color}>
       <CModalHeader closeButton>{title}</CModalHeader>
       <CModalBody>{body}</CModalBody>
       <CModalFooter>
@@ -32,7 +33,11 @@ const Notification = (props) => {
           {buttonText ? buttonText : "Aceptar"}
         </CButton>
         {secundaryButton ? (
-          <CButton value="secundary" color="secondary" onClick={(e) => toggle(e)}>
+          <CButton
+            value="secundary"
+            color="secondary"
+            onClick={(e) => toggle(e)}
+          >
             {secundaryButton}
           </CButton>
         ) : null}

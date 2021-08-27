@@ -2,7 +2,7 @@ const TOKEN_KEY = "jwt";
 const GUEST_KEY = "guest";
 
 export const isLogin = () => {
-  console.log("entroa islogn")
+  console.log("ENTRO AL LOGIN")
   if (localStorage.getItem(TOKEN_KEY)) {
     return true;
   }
