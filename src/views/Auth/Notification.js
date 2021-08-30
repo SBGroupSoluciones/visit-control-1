@@ -20,7 +20,9 @@ const Notification = (props) => {
   } = props;
 
   const toggle = (e) => {
-    setPressedButton(e.target.value);
+    if (setPressedButton) {
+      setPressedButton(e.target.value);
+    }
     setNotification(!show);
   };
 

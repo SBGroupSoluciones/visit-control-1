@@ -64,7 +64,7 @@ const ForgotPass = () => {
         });
         console.log("LADATAES ", data);
       })
-      .catch((err) => console.log("ERROR", err));
+      .catch((err) => setError(err.code));
   };
 
   return (

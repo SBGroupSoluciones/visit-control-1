@@ -24,8 +24,6 @@ import {
   TheHeaderDropdownTasks,
 } from "./index";
 
-import { isGuest } from "src/utils";
-
 const TheHeader = () => {
   const dispatch = useDispatch();
   const sidebarShow = useSelector((state) => state.sidebarShow);
@@ -71,22 +69,13 @@ const TheHeader = () => {
           <CHeaderNavLink>Settings</CHeaderNavLink>
         </CHeaderNavItem> */}
       </CHeaderNav>
-
-      {isGuest ? (
-        <CHeaderNav className="px-3">
-          {/** GUEST HEADER NAV */}
-          <GuestHeader />
-        </CHeaderNav>
-      ) : (
-        <CHeaderNav className="px-3">
-          {/* REGISTERED USER HEADER NAV */}
-          <TheHeaderDropdownNotif />
-          <TheHeaderDropdownTasks />
-          <TheHeaderDropdownMssg />
-          <TheHeaderDropdown />
-        </CHeaderNav>
-      )}
-
+      <CHeaderNav className="px-3">
+        {/* REGISTERED USER HEADER NAV */}
+        <TheHeaderDropdownNotif />
+        <TheHeaderDropdownTasks />
+        <TheHeaderDropdownMssg />
+        <TheHeaderDropdown />
+      </CHeaderNav>
 
       <CSubheader className="px-3 justify-content-between">
         <CBreadcrumbRouter
