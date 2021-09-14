@@ -14,7 +14,9 @@ import awsconfig from "../aws-exports";
 
 Auth.configure(awsconfig);
 
-const TheHeaderDropdown = () => {
+const TheHeaderDropdown = (props) => {
+  const {userData} = props;
+
   const history = useHistory();
 
   const onSignOut = async () => {
@@ -29,7 +31,7 @@ const TheHeaderDropdown = () => {
   return (
     <CDropdown inNav className="c-header-nav-items mx-2" direction="down">
       <CDropdownToggle className="c-header-nav-link" caret={false}>
-        <div className="c-avatar avatar-name">Angel</div>
+        <div className="c-avatar avatar-name">{userData? userData.firstName.split(" ")[0]:null}</div>
         <div className="c-avatar">
           <CImg
             src={"avatars/6.jpg"}

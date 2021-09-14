@@ -9,6 +9,15 @@ const COMPANY_NAME_REGEX = /^[0-9A-Za-zÀ-ÿ\s,._+;()*~'#@!?&-]+$/;
 const PHONE_NUMBER_REGEX = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 const VERIFICATION_CODE = /^[0-9][0-9][0-9][0-9][0-9][0-9]$/;
 
+export const isValidText = (text) =>{
+  let result = false;
+  if (FIRST_NAME_REGEX.test(text)) {
+    result = true;
+  }
+  return result;
+}
+
+
 export const isValidFirstName = (firstName) => {
   let result = false;
   if (FIRST_NAME_REGEX.test(firstName)) {

@@ -2,14 +2,15 @@
 // this is an auto generated file. This will be overwritten
 
 export const getAccount = /* GraphQL */ `
-  query GetAccount($id: ID!) {
-    getAccount(id: $id) {
+  query GetAccount($email: String!) {
+    getAccount(email: $email) {
       id
       firstName
       lastName
       imgUrl
       company
       email
+      role
       phones
       createdAt
       updatedAt
@@ -26,6 +27,7 @@ export const getAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -53,6 +55,7 @@ export const getAccount = /* GraphQL */ `
       privateVehicles {
         items {
           id
+          plate
           color
           brand
           subBrand
@@ -68,9 +71,6 @@ export const getAccount = /* GraphQL */ `
         items {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -78,71 +78,43 @@ export const getAccount = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
         nextToken
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
-          id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
-        owner
-      }
-      role {
-        id
-        roleName
-        description
-        admin
-        user
-        guest
-        host
-        createdAt
-        updatedAt
-        account {
+        warehouse {
           id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -154,11 +126,19 @@ export const getAccount = /* GraphQL */ `
 `;
 export const listAccounts = /* GraphQL */ `
   query ListAccounts(
+    $email: String
     $filter: ModelAccountFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listAccounts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listAccounts(
+      email: $email
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         firstName
@@ -166,6 +146,7 @@ export const listAccounts = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -182,25 +163,58 @@ export const listAccounts = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
         }
-        role {
+      }
+      nextToken
+    }
+  }
+`;
+export const accountsByRole = /* GraphQL */ `
+  query AccountsByRole(
+    $role: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelAccountFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    accountsByRole(
+      role: $role
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        firstName
+        lastName
+        imgUrl
+        company
+        email
+        role
+        phones
+        createdAt
+        updatedAt
+        owner
+        visit {
+          nextToken
+        }
+        persons {
+          nextToken
+        }
+        privateVehicles {
+          nextToken
+        }
+        cargoVehicles {
+          nextToken
+        }
+        host {
           id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -223,6 +237,7 @@ export const getVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      type
       createdAt
       updatedAt
       account {
@@ -232,6 +247,7 @@ export const getVisit = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -248,25 +264,8 @@ export const getVisit = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -293,12 +292,13 @@ export const getVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
-        site {
+        visit {
           id
           dateTimestamp
           checkInTimestamp
@@ -309,6 +309,7 @@ export const getVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -317,6 +318,7 @@ export const getVisit = /* GraphQL */ `
       }
       privateVehicle {
         id
+        plate
         color
         brand
         subBrand
@@ -331,6 +333,7 @@ export const getVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -347,6 +350,7 @@ export const getVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -356,9 +360,6 @@ export const getVisit = /* GraphQL */ `
       cargoVehicle {
         id
         line
-        platformPlate
-        petition
-        packs
         containerNumber
         tractNumber
         load
@@ -366,9 +367,10 @@ export const getVisit = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        petition
         petitionPath
         timestamp
-        driverNAme
+        driverName
         createdAt
         updatedAt
         account {
@@ -378,6 +380,7 @@ export const getVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -394,44 +397,40 @@ export const getVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
         }
         owner
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
+          nextToken
+        }
+        warehouse {
           id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -459,6 +458,7 @@ export const listVisits = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -468,6 +468,7 @@ export const listVisits = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -491,6 +492,7 @@ export const listVisits = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -503,9 +505,6 @@ export const listVisits = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -513,20 +512,16 @@ export const listVisits = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -558,6 +553,7 @@ export const getPerson = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -574,31 +570,14 @@ export const getPerson = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
         }
       }
-      site {
+      visit {
         id
         dateTimestamp
         checkInTimestamp
@@ -609,6 +588,7 @@ export const getPerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -618,6 +598,7 @@ export const getPerson = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -641,6 +622,7 @@ export const getPerson = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -653,9 +635,6 @@ export const getPerson = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -663,20 +642,16 @@ export const getPerson = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -713,12 +688,13 @@ export const listPersons = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
-        site {
+        visit {
           id
           dateTimestamp
           checkInTimestamp
@@ -729,6 +705,7 @@ export const listPersons = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -740,9 +717,10 @@ export const listPersons = /* GraphQL */ `
   }
 `;
 export const getPrivateVehicle = /* GraphQL */ `
-  query GetPrivateVehicle($id: ID!) {
-    getPrivateVehicle(id: $id) {
+  query GetPrivateVehicle($id: ID!, $plate: String!) {
+    getPrivateVehicle(id: $id, plate: $plate) {
       id
+      plate
       color
       brand
       subBrand
@@ -757,6 +735,7 @@ export const getPrivateVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -773,25 +752,8 @@ export const getPrivateVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -808,6 +770,7 @@ export const getPrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -817,6 +780,7 @@ export const getPrivateVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -840,6 +804,7 @@ export const getPrivateVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -852,9 +817,6 @@ export const getPrivateVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -862,20 +824,16 @@ export const getPrivateVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -887,13 +845,24 @@ export const getPrivateVehicle = /* GraphQL */ `
 `;
 export const listPrivateVehicles = /* GraphQL */ `
   query ListPrivateVehicles(
+    $id: ID
+    $plate: ModelStringKeyConditionInput
     $filter: ModelPrivateVehicleFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listPrivateVehicles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPrivateVehicles(
+      id: $id
+      plate: $plate
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
+        plate
         color
         brand
         subBrand
@@ -908,6 +877,7 @@ export const listPrivateVehicles = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -924,6 +894,67 @@ export const listPrivateVehicles = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const privateVehicleByPlate = /* GraphQL */ `
+  query PrivateVehicleByPlate(
+    $plate: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelPrivateVehicleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    privateVehicleByPlate(
+      plate: $plate
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        plate
+        color
+        brand
+        subBrand
+        model
+        timestamp
+        createdAt
+        updatedAt
+        account {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          id
+          dateTimestamp
+          checkInTimestamp
+          checkOutTimestamp
+          reason
+          status
+          qrUrl
+          timestamp
+          adminApprove
+          operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -939,9 +970,6 @@ export const getCargoVehicle = /* GraphQL */ `
     getCargoVehicle(id: $id) {
       id
       line
-      platformPlate
-      petition
-      packs
       containerNumber
       tractNumber
       load
@@ -949,9 +977,10 @@ export const getCargoVehicle = /* GraphQL */ `
       sealsNumber
       additionalDoc
       additionalDocPath
+      petition
       petitionPath
       timestamp
-      driverNAme
+      driverName
       createdAt
       updatedAt
       account {
@@ -961,6 +990,7 @@ export const getCargoVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -977,25 +1007,8 @@ export const getCargoVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -1012,6 +1025,7 @@ export const getCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -1021,6 +1035,7 @@ export const getCargoVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1044,6 +1059,7 @@ export const getCargoVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -1056,9 +1072,6 @@ export const getCargoVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -1066,20 +1079,16 @@ export const getCargoVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -1091,17 +1100,22 @@ export const getCargoVehicle = /* GraphQL */ `
 `;
 export const listCargoVehicles = /* GraphQL */ `
   query ListCargoVehicles(
+    $id: ID
     $filter: ModelCargoVehicleFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listCargoVehicles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listCargoVehicles(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         line
-        platformPlate
-        petition
-        packs
         containerNumber
         tractNumber
         load
@@ -1109,9 +1123,10 @@ export const listCargoVehicles = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        petition
         petitionPath
         timestamp
-        driverNAme
+        driverName
         createdAt
         updatedAt
         account {
@@ -1121,6 +1136,7 @@ export const listCargoVehicles = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1137,6 +1153,7 @@ export const listCargoVehicles = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -1147,75 +1164,35 @@ export const listCargoVehicles = /* GraphQL */ `
     }
   }
 `;
-export const getEnclosure = /* GraphQL */ `
-  query GetEnclosure($id: ID!) {
-    getEnclosure(id: $id) {
-      id
-      name
-      address
-      phone
-      lat
-      lon
-      createdAt
-      updatedAt
-      account {
+export const cargoVehicleByPetition = /* GraphQL */ `
+  query CargoVehicleByPetition(
+    $petition: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelCargoVehicleFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    cargoVehicleByPetition(
+      petition: $petition
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
         id
-        firstName
-        lastName
-        imgUrl
-        company
-        email
-        phones
-        createdAt
-        updatedAt
-        owner
-        visit {
-          nextToken
-        }
-        persons {
-          nextToken
-        }
-        privateVehicles {
-          nextToken
-        }
-        cargoVehicles {
-          nextToken
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
-          createdAt
-          updatedAt
-          owner
-        }
-      }
-      visit {
-        id
-        dateTimestamp
-        checkInTimestamp
-        checkOutTimestamp
-        reason
-        status
-        qrUrl
+        line
+        containerNumber
+        tractNumber
+        load
+        unload
+        sealsNumber
+        additionalDoc
+        additionalDocPath
+        petition
+        petitionPath
         timestamp
-        adminApprove
-        operApprove
+        driverName
         createdAt
         updatedAt
         account {
@@ -1225,81 +1202,131 @@ export const getEnclosure = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
+        visit {
+          id
+          dateTimestamp
+          checkInTimestamp
+          checkOutTimestamp
+          reason
+          status
+          qrUrl
+          timestamp
+          adminApprove
+          operApprove
+          type
+          createdAt
+          updatedAt
+          owner
+        }
         owner
-        person {
-          id
-          firstName
-          lastName
-          email
-          imgUrl
-          phone
-          company
-          idFrontPath
-          idBackPath
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        privateVehicle {
-          id
-          color
-          brand
-          subBrand
-          model
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        cargoVehicle {
-          id
-          line
-          platformPlate
-          petition
-          packs
-          containerNumber
-          tractNumber
-          load
-          unload
-          sealsNumber
-          additionalDoc
-          additionalDocPath
-          petitionPath
-          timestamp
-          driverNAme
-          createdAt
-          updatedAt
-          owner
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
       }
-      owner
+      nextToken
     }
   }
 `;
-export const listEnclosures = /* GraphQL */ `
-  query ListEnclosures(
-    $filter: ModelEnclosureFilterInput
+export const cargoVehicleByDirverName = /* GraphQL */ `
+  query CargoVehicleByDirverName(
+    $driverName: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelCargoVehicleFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listEnclosures(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    cargoVehicleByDirverName(
+      driverName: $driverName
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        line
+        containerNumber
+        tractNumber
+        load
+        unload
+        sealsNumber
+        additionalDoc
+        additionalDocPath
+        petition
+        petitionPath
+        timestamp
+        driverName
+        createdAt
+        updatedAt
+        account {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          id
+          dateTimestamp
+          checkInTimestamp
+          checkOutTimestamp
+          reason
+          status
+          qrUrl
+          timestamp
+          adminApprove
+          operApprove
+          type
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getWarehouse = /* GraphQL */ `
+  query GetWarehouse($id: ID!) {
+    getWarehouse(id: $id) {
+      id
+      name
+      address
+      phone
+      lat
+      lon
+      createdAt
+      updatedAt
+      owner
+      host {
+        items {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const listWarehouses = /* GraphQL */ `
+  query ListWarehouses(
+    $filter: ModelWarehouseFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWarehouses(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
@@ -1309,58 +1336,29 @@ export const listEnclosures = /* GraphQL */ `
         lon
         createdAt
         updatedAt
-        account {
-          id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
-          createdAt
-          updatedAt
-          owner
-        }
-        visit {
-          id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
-          createdAt
-          updatedAt
-          owner
-        }
         owner
+        host {
+          nextToken
+        }
       }
       nextToken
     }
   }
 `;
-export const getRole = /* GraphQL */ `
-  query GetRole($id: ID!) {
-    getRole(id: $id) {
+export const getHost = /* GraphQL */ `
+  query GetHost($id: ID!) {
+    getHost(id: $id) {
       id
-      roleName
-      description
-      admin
-      user
-      guest
-      host
       createdAt
       updatedAt
-      account {
+      hostName {
         id
         firstName
         lastName
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -1377,59 +1375,84 @@ export const getRole = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
         }
-        role {
+      }
+      visit {
+        items {
           id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
+          dateTimestamp
+          checkInTimestamp
+          checkOutTimestamp
+          reason
+          status
+          qrUrl
+          timestamp
+          adminApprove
+          operApprove
+          type
           createdAt
           updatedAt
           owner
+        }
+        nextToken
+      }
+      warehouse {
+        id
+        name
+        address
+        phone
+        lat
+        lon
+        createdAt
+        updatedAt
+        owner
+        host {
+          nextToken
         }
       }
       owner
     }
   }
 `;
-export const listRoles = /* GraphQL */ `
-  query ListRoles(
-    $filter: ModelRoleFilterInput
+export const listHosts = /* GraphQL */ `
+  query ListHosts(
+    $filter: ModelHostFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listRoles(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listHosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        roleName
-        description
-        admin
-        user
-        guest
-        host
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner

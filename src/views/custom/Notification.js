@@ -22,6 +22,7 @@ const Notification = (props) => {
     show,
     setNotification,
     setPressedButton,
+    setPersonaConfirm, 
   } = props;
 
   const qrCode = {
@@ -35,9 +36,26 @@ const Notification = (props) => {
     },
   };
 
+  const appointment = {
+    firstName: "Angel",
+    lastName: "Ojeda",
+    email: "aojeda@sbgroup.com.mx",
+    company: "SBGroup",
+    reason: "Visita al recinto",
+    phone: "6122308184",
+    vehicle: "SKD-1234",
+    warehouse: "Irapuato",
+    host: "Marcela Rodriguez",
+    date: "20/10/2021",
+    time: "10:29",
+    imgUrl: "",
+    ineFUrl: "",
+    ineBUrl: "",
+  };
+
   const toggle = (e) => {
     setPressedButton(e.target.value);
-    setNotification(!show);
+    setPersonaConfirm(!show);
   };
 
   return (
@@ -54,7 +72,9 @@ const Notification = (props) => {
                   <CLabel htmlFor="firstName">
                     <strong>Fecha y Hora</strong>
                   </CLabel>
-                  <p className="h5">20/Septiembre/2021 10:30 a.m</p>
+                  <p className="h5">
+                    {appointment.date + " " + appointment.time}
+                  </p>
                 </CCol>
               </CRow>
               <CRow>
@@ -62,7 +82,9 @@ const Notification = (props) => {
                   <CLabel htmlFor="firstName">
                     <strong>Nombre</strong>
                   </CLabel>
-                  <p className="h5">Angel de Jesus Ojeda Castro</p>
+                  <p className="h5">
+                    {(appointment.firstName+" "+appointment.lastName)}
+                  </p>
                 </CCol>
               </CRow>
               <CRow>
@@ -70,7 +92,7 @@ const Notification = (props) => {
                   <CLabel htmlFor="firstName">
                     <strong>Correo</strong>
                   </CLabel>
-                  <p className="h5">aojeda@sbgroup.com.mx</p>
+                  <p className="h5">{appointment.email}</p>
                 </CCol>
               </CRow>
               <CRow>
@@ -78,7 +100,7 @@ const Notification = (props) => {
                   <CLabel htmlFor="firstName">
                     <strong>Empresa</strong>
                   </CLabel>
-                  <p className="h5">SBGroup</p>
+                  <p className="h5">{appointment.company}</p>
                 </CCol>
               </CRow>
               <CRow>
@@ -86,7 +108,7 @@ const Notification = (props) => {
                   <CLabel htmlFor="firstName">
                     <strong>Teléfono</strong>
                   </CLabel>
-                  <p className="h5">6122308184</p>
+                  <p className="h5">{appointment.phone}</p>
                 </CCol>
               </CRow>
               <CRow>
@@ -94,7 +116,7 @@ const Notification = (props) => {
                   <CLabel htmlFor="firstName">
                     <strong>Motivo</strong>
                   </CLabel>
-                  <p className="h5">Visita de prueba</p>
+                  <p className="h5">{appointment.reason}</p>
                 </CCol>
               </CRow>
               <CRow>
@@ -102,7 +124,7 @@ const Notification = (props) => {
                   <CLabel htmlFor="firstName">
                     <strong>Anfitrión</strong>
                   </CLabel>
-                  <p className="h5">John Doe</p>
+                  <p className="h5">{appointment.host}</p>
                 </CCol>
               </CRow>
             </CContainer>

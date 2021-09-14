@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -25,19 +25,24 @@ Auth.configure(awsconfig);
 
 const Verify = () => {
   const history = useHistory();
+  const location = useLocation();
   const [email, setEmail] = useState();
   const [code, setCode] = useState();
   const [error, setError] = useState();
   const [notify, setNotify] = useState(false);
-
+  const [userData, setUserData] = useState();
   useEffect(() => {
-    setEmail(localStorage.getItem("user"));
+    setEmail(location.data.email);
+    setUserData(location.data);
   }, [email, code]);
 
   const onConfirmSignUp = async () => {
     try {
       await Auth.confirmSignUp(email, code);
-      history.push("/");
+      history.push({
+        pathname:"/signin",
+        data:userData
+      });
     } catch (e) {
       setError(e.code);
       setNotify(true);

@@ -7,9 +7,14 @@
       "customAuth": false
     }
   },
-  "storage": {},
+  "storage": {
+    "vcbucketdev": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
+  },
   "api": {
-    "vcapi": {
+    "visitcontroldevapi": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "output": {
@@ -25,7 +30,7 @@
               "authenticationType": "API_KEY",
               "apiKeyConfig": {
                 "apiKeyExpirationDays": 365,
-                "description": "vcapikey"
+                "description": "vckey"
               }
             }
           ]

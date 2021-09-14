@@ -54,14 +54,12 @@ const SignUp = () => {
   const [firstNameValid, setFirstNameValid] = useState(false);
   const [lastNameValid, setLastNameValid] = useState(false);
   const [companyValid, setCompanyValid] = useState(false);
-  const [role, setRole] = useState("USER");
 
   useEffect(() => {
     onPreviousDate();
   }, [error, notyButton]);
 
   const onSignUp = async () => {
-    const role = "SUPER_ADMIN"
     try {
       const { user } = await Auth.signUp({
         username: email,
@@ -79,7 +77,6 @@ const SignUp = () => {
           email: email,
           company: company,
           phone: phone,
-          role: role
         },
       });
     } catch (e) {

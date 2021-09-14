@@ -1,0 +1,163 @@
+type Account
+  @model
+  @key(fields: ["email"])
+  @key(name: "ByRole", fields: ["role"], queryField: "accountsByRole")
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  imgUrl: String
+  company: String!
+  email: String!
+  role: String!
+  phones: [String]
+  visit: [Visit] @connection(name: "AccountVisits")
+  persons: [Person] @connection(name: "AccountPersons")
+  privateVehicles: [PrivateVehicle] @connection(name: "AccountPrivateVehicles")
+  cargoVehicles: [CargoVehicle] @connection(name: "AccountCargoVehicles")
+  host: Host @connection(name: "AccountHost")
+}
+
+type Visit
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID!
+  person: Person @connection(name: "VisitPerson")
+  dateTimestamp: String!
+  checkInTimestamp: String!
+  checkOutTimestamp: String!
+  privateVehicle: PrivateVehicle @connection(name: "VisitPrivateVehicle")
+  cargoVehicle: CargoVehicle @connection(name: "VisitCargoVehicle")
+  reason: String
+  status: String!
+  qrUrl: String
+  timestamp: String
+  adminApprove: Boolean
+  operApprove: Boolean
+  type: String!
+  host: Host! @connection(name: "VisitHost")
+  account: Account @connection(name: "AccountVisits")
+}
+
+type Person
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  imgUrl: String
+  phone: String!
+  company: String!
+  idFrontPath: String
+  idBackPath: String
+  timestamp: String!
+  visit: Visit @connection(name: "VisitPerson")
+  account: Account @connection(name: "AccountPersons")
+}
+
+type PrivateVehicle
+  @model
+  @key(fields: ["id", "plate"])
+  @key(name: "ByPlate", fields: ["plate"], queryField: "privateVehicleByPlate")
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID!
+  plate: String!
+  color: String!
+  brand: String!
+  subBrand: String!
+  model: String!
+  timestamp: String!
+  visit: Visit @connection(name: "VisitPrivateVehicle")
+  account: Account @connection(name: "AccountPrivateVehicles")
+}
+
+type CargoVehicle
+  @model
+  @key(fields: ["id"])
+  @key(name: "ByPetition", fields: ["petition"], queryField: "cargoVehicleByPetition")
+  @key(
+    name: "ByDriverName"
+    fields: ["driverName"]
+    queryField: "cargoVehicleByDirverName"
+  )
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID!
+  line: String!
+  containerNumber: String!
+  tractNumber: String!
+  load: Boolean!
+  unload: Boolean!
+  sealsNumber: String!
+  additionalDoc: String!
+  additionalDocPath: String!
+  petition: String!
+  petitionPath: String!
+  timestamp: String!
+  driverName: String!
+  account: Account @connection(name: "AccountCargoVehicles")
+  visit: Visit @connection(name: "VisitCargoVehicle")
+}
+
+type Warehouse
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  address: String
+  phone: String
+  lat: String
+  lon: String
+  host: [Host] @connection(name: "WarehouseHost")
+}
+
+type Host
+  @model
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID!
+  hostName: Account @connection(name: "AccountHost")
+  warehouse: Warehouse @connection(name: "WarehouseHost")
+  visit: [Visit] @connection(name: "VisitHost")
+}

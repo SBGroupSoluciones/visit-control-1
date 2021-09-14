@@ -10,6 +10,7 @@ export const onCreateAccount = /* GraphQL */ `
       imgUrl
       company
       email
+      role
       phones
       createdAt
       updatedAt
@@ -26,6 +27,7 @@ export const onCreateAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -53,6 +55,7 @@ export const onCreateAccount = /* GraphQL */ `
       privateVehicles {
         items {
           id
+          plate
           color
           brand
           subBrand
@@ -68,9 +71,6 @@ export const onCreateAccount = /* GraphQL */ `
         items {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -78,71 +78,43 @@ export const onCreateAccount = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
         nextToken
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
-          id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
-        owner
-      }
-      role {
-        id
-        roleName
-        description
-        admin
-        user
-        guest
-        host
-        createdAt
-        updatedAt
-        account {
+        warehouse {
           id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -161,6 +133,7 @@ export const onUpdateAccount = /* GraphQL */ `
       imgUrl
       company
       email
+      role
       phones
       createdAt
       updatedAt
@@ -177,6 +150,7 @@ export const onUpdateAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -204,6 +178,7 @@ export const onUpdateAccount = /* GraphQL */ `
       privateVehicles {
         items {
           id
+          plate
           color
           brand
           subBrand
@@ -219,9 +194,6 @@ export const onUpdateAccount = /* GraphQL */ `
         items {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -229,71 +201,43 @@ export const onUpdateAccount = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
         nextToken
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
-          id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
-        owner
-      }
-      role {
-        id
-        roleName
-        description
-        admin
-        user
-        guest
-        host
-        createdAt
-        updatedAt
-        account {
+        warehouse {
           id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -312,6 +256,7 @@ export const onDeleteAccount = /* GraphQL */ `
       imgUrl
       company
       email
+      role
       phones
       createdAt
       updatedAt
@@ -328,6 +273,7 @@ export const onDeleteAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -355,6 +301,7 @@ export const onDeleteAccount = /* GraphQL */ `
       privateVehicles {
         items {
           id
+          plate
           color
           brand
           subBrand
@@ -370,9 +317,6 @@ export const onDeleteAccount = /* GraphQL */ `
         items {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -380,71 +324,43 @@ export const onDeleteAccount = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
         nextToken
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
-          id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
-        owner
-      }
-      role {
-        id
-        roleName
-        description
-        admin
-        user
-        guest
-        host
-        createdAt
-        updatedAt
-        account {
+        warehouse {
           id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -467,6 +383,7 @@ export const onCreateVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      type
       createdAt
       updatedAt
       account {
@@ -476,6 +393,7 @@ export const onCreateVisit = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -492,25 +410,8 @@ export const onCreateVisit = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -537,12 +438,13 @@ export const onCreateVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
-        site {
+        visit {
           id
           dateTimestamp
           checkInTimestamp
@@ -553,6 +455,7 @@ export const onCreateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -561,6 +464,7 @@ export const onCreateVisit = /* GraphQL */ `
       }
       privateVehicle {
         id
+        plate
         color
         brand
         subBrand
@@ -575,6 +479,7 @@ export const onCreateVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -591,6 +496,7 @@ export const onCreateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -600,9 +506,6 @@ export const onCreateVisit = /* GraphQL */ `
       cargoVehicle {
         id
         line
-        platformPlate
-        petition
-        packs
         containerNumber
         tractNumber
         load
@@ -610,9 +513,10 @@ export const onCreateVisit = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        petition
         petitionPath
         timestamp
-        driverNAme
+        driverName
         createdAt
         updatedAt
         account {
@@ -622,6 +526,7 @@ export const onCreateVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -638,44 +543,40 @@ export const onCreateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
         }
         owner
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
+          nextToken
+        }
+        warehouse {
           id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -698,6 +599,7 @@ export const onUpdateVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      type
       createdAt
       updatedAt
       account {
@@ -707,6 +609,7 @@ export const onUpdateVisit = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -723,25 +626,8 @@ export const onUpdateVisit = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -768,12 +654,13 @@ export const onUpdateVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
-        site {
+        visit {
           id
           dateTimestamp
           checkInTimestamp
@@ -784,6 +671,7 @@ export const onUpdateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -792,6 +680,7 @@ export const onUpdateVisit = /* GraphQL */ `
       }
       privateVehicle {
         id
+        plate
         color
         brand
         subBrand
@@ -806,6 +695,7 @@ export const onUpdateVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -822,6 +712,7 @@ export const onUpdateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -831,9 +722,6 @@ export const onUpdateVisit = /* GraphQL */ `
       cargoVehicle {
         id
         line
-        platformPlate
-        petition
-        packs
         containerNumber
         tractNumber
         load
@@ -841,9 +729,10 @@ export const onUpdateVisit = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        petition
         petitionPath
         timestamp
-        driverNAme
+        driverName
         createdAt
         updatedAt
         account {
@@ -853,6 +742,7 @@ export const onUpdateVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -869,44 +759,40 @@ export const onUpdateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
         }
         owner
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
+          nextToken
+        }
+        warehouse {
           id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -929,6 +815,7 @@ export const onDeleteVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      type
       createdAt
       updatedAt
       account {
@@ -938,6 +825,7 @@ export const onDeleteVisit = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -954,25 +842,8 @@ export const onDeleteVisit = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -999,12 +870,13 @@ export const onDeleteVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
-        site {
+        visit {
           id
           dateTimestamp
           checkInTimestamp
@@ -1015,6 +887,7 @@ export const onDeleteVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -1023,6 +896,7 @@ export const onDeleteVisit = /* GraphQL */ `
       }
       privateVehicle {
         id
+        plate
         color
         brand
         subBrand
@@ -1037,6 +911,7 @@ export const onDeleteVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1053,6 +928,7 @@ export const onDeleteVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
@@ -1062,9 +938,6 @@ export const onDeleteVisit = /* GraphQL */ `
       cargoVehicle {
         id
         line
-        platformPlate
-        petition
-        packs
         containerNumber
         tractNumber
         load
@@ -1072,9 +945,10 @@ export const onDeleteVisit = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        petition
         petitionPath
         timestamp
-        driverNAme
+        driverName
         createdAt
         updatedAt
         account {
@@ -1084,6 +958,7 @@ export const onDeleteVisit = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1100,44 +975,40 @@ export const onDeleteVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          type
           createdAt
           updatedAt
           owner
         }
         owner
       }
-      enclosure {
+      host {
         id
-        name
-        address
-        phone
-        lat
-        lon
         createdAt
         updatedAt
-        account {
+        hostName {
           id
           firstName
           lastName
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
           owner
         }
         visit {
+          nextToken
+        }
+        warehouse {
           id
-          dateTimestamp
-          checkInTimestamp
-          checkOutTimestamp
-          reason
-          status
-          qrUrl
-          timestamp
-          adminApprove
-          operApprove
+          name
+          address
+          phone
+          lat
+          lon
           createdAt
           updatedAt
           owner
@@ -1169,6 +1040,7 @@ export const onCreatePerson = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -1185,31 +1057,14 @@ export const onCreatePerson = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
         }
       }
-      site {
+      visit {
         id
         dateTimestamp
         checkInTimestamp
@@ -1220,6 +1075,7 @@ export const onCreatePerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -1229,6 +1085,7 @@ export const onCreatePerson = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1252,6 +1109,7 @@ export const onCreatePerson = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -1264,9 +1122,6 @@ export const onCreatePerson = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -1274,20 +1129,16 @@ export const onCreatePerson = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -1319,6 +1170,7 @@ export const onUpdatePerson = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -1335,31 +1187,14 @@ export const onUpdatePerson = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
         }
       }
-      site {
+      visit {
         id
         dateTimestamp
         checkInTimestamp
@@ -1370,6 +1205,7 @@ export const onUpdatePerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -1379,6 +1215,7 @@ export const onUpdatePerson = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1402,6 +1239,7 @@ export const onUpdatePerson = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -1414,9 +1252,6 @@ export const onUpdatePerson = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -1424,20 +1259,16 @@ export const onUpdatePerson = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -1469,6 +1300,7 @@ export const onDeletePerson = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -1485,31 +1317,14 @@ export const onDeletePerson = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
         }
       }
-      site {
+      visit {
         id
         dateTimestamp
         checkInTimestamp
@@ -1520,6 +1335,7 @@ export const onDeletePerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -1529,6 +1345,7 @@ export const onDeletePerson = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1552,6 +1369,7 @@ export const onDeletePerson = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -1564,9 +1382,6 @@ export const onDeletePerson = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -1574,20 +1389,16 @@ export const onDeletePerson = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -1601,6 +1412,7 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
   subscription OnCreatePrivateVehicle {
     onCreatePrivateVehicle {
       id
+      plate
       color
       brand
       subBrand
@@ -1615,6 +1427,7 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -1631,25 +1444,8 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -1666,6 +1462,7 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -1675,6 +1472,7 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1698,6 +1496,7 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -1710,9 +1509,6 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -1720,20 +1516,16 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -1747,6 +1539,7 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
   subscription OnUpdatePrivateVehicle {
     onUpdatePrivateVehicle {
       id
+      plate
       color
       brand
       subBrand
@@ -1761,6 +1554,7 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -1777,25 +1571,8 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -1812,6 +1589,7 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -1821,6 +1599,7 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1844,6 +1623,7 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -1856,9 +1636,6 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -1866,20 +1643,16 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -1893,6 +1666,7 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
   subscription OnDeletePrivateVehicle {
     onDeletePrivateVehicle {
       id
+      plate
       color
       brand
       subBrand
@@ -1907,6 +1681,7 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -1923,25 +1698,8 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -1958,6 +1716,7 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -1967,6 +1726,7 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -1990,6 +1750,7 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -2002,9 +1763,6 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -2012,20 +1770,16 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -2040,9 +1794,6 @@ export const onCreateCargoVehicle = /* GraphQL */ `
     onCreateCargoVehicle {
       id
       line
-      platformPlate
-      petition
-      packs
       containerNumber
       tractNumber
       load
@@ -2050,9 +1801,10 @@ export const onCreateCargoVehicle = /* GraphQL */ `
       sealsNumber
       additionalDoc
       additionalDocPath
+      petition
       petitionPath
       timestamp
-      driverNAme
+      driverName
       createdAt
       updatedAt
       account {
@@ -2062,6 +1814,7 @@ export const onCreateCargoVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -2078,25 +1831,8 @@ export const onCreateCargoVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -2113,6 +1849,7 @@ export const onCreateCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -2122,6 +1859,7 @@ export const onCreateCargoVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -2145,6 +1883,7 @@ export const onCreateCargoVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -2157,9 +1896,6 @@ export const onCreateCargoVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -2167,20 +1903,16 @@ export const onCreateCargoVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -2195,9 +1927,6 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
     onUpdateCargoVehicle {
       id
       line
-      platformPlate
-      petition
-      packs
       containerNumber
       tractNumber
       load
@@ -2205,9 +1934,10 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
       sealsNumber
       additionalDoc
       additionalDocPath
+      petition
       petitionPath
       timestamp
-      driverNAme
+      driverName
       createdAt
       updatedAt
       account {
@@ -2217,6 +1947,7 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -2233,25 +1964,8 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -2268,6 +1982,7 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -2277,6 +1992,7 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -2300,6 +2016,7 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -2312,9 +2029,6 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -2322,20 +2036,16 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -2350,9 +2060,6 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
     onDeleteCargoVehicle {
       id
       line
-      platformPlate
-      petition
-      packs
       containerNumber
       tractNumber
       load
@@ -2360,9 +2067,10 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
       sealsNumber
       additionalDoc
       additionalDocPath
+      petition
       petitionPath
       timestamp
-      driverNAme
+      driverName
       createdAt
       updatedAt
       account {
@@ -2372,6 +2080,7 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -2388,25 +2097,8 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
@@ -2423,6 +2115,7 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        type
         createdAt
         updatedAt
         account {
@@ -2432,6 +2125,7 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
           imgUrl
           company
           email
+          role
           phones
           createdAt
           updatedAt
@@ -2455,6 +2149,7 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
         }
         privateVehicle {
           id
+          plate
           color
           brand
           subBrand
@@ -2467,9 +2162,6 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
-          platformPlate
-          petition
-          packs
           containerNumber
           tractNumber
           load
@@ -2477,20 +2169,16 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          petition
           petitionPath
           timestamp
-          driverNAme
+          driverName
           createdAt
           updatedAt
           owner
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
@@ -2500,9 +2188,9 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
     }
   }
 `;
-export const onCreateEnclosure = /* GraphQL */ `
-  subscription OnCreateEnclosure {
-    onCreateEnclosure {
+export const onCreateWarehouse = /* GraphQL */ `
+  subscription OnCreateWarehouse {
+    onCreateWarehouse {
       id
       name
       address
@@ -2511,144 +2199,22 @@ export const onCreateEnclosure = /* GraphQL */ `
       lon
       createdAt
       updatedAt
-      account {
-        id
-        firstName
-        lastName
-        imgUrl
-        company
-        email
-        phones
-        createdAt
-        updatedAt
-        owner
-        visit {
-          nextToken
-        }
-        persons {
-          nextToken
-        }
-        privateVehicles {
-          nextToken
-        }
-        cargoVehicles {
-          nextToken
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
-          createdAt
-          updatedAt
-          owner
-        }
-      }
-      visit {
-        id
-        dateTimestamp
-        checkInTimestamp
-        checkOutTimestamp
-        reason
-        status
-        qrUrl
-        timestamp
-        adminApprove
-        operApprove
-        createdAt
-        updatedAt
-        account {
-          id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
-          createdAt
-          updatedAt
-          owner
-        }
-        owner
-        person {
-          id
-          firstName
-          lastName
-          email
-          imgUrl
-          phone
-          company
-          idFrontPath
-          idBackPath
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        privateVehicle {
-          id
-          color
-          brand
-          subBrand
-          model
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        cargoVehicle {
-          id
-          line
-          platformPlate
-          petition
-          packs
-          containerNumber
-          tractNumber
-          load
-          unload
-          sealsNumber
-          additionalDoc
-          additionalDocPath
-          petitionPath
-          timestamp
-          driverNAme
-          createdAt
-          updatedAt
-          owner
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-      }
       owner
+      host {
+        items {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
-export const onUpdateEnclosure = /* GraphQL */ `
-  subscription OnUpdateEnclosure {
-    onUpdateEnclosure {
+export const onUpdateWarehouse = /* GraphQL */ `
+  subscription OnUpdateWarehouse {
+    onUpdateWarehouse {
       id
       name
       address
@@ -2657,144 +2223,22 @@ export const onUpdateEnclosure = /* GraphQL */ `
       lon
       createdAt
       updatedAt
-      account {
-        id
-        firstName
-        lastName
-        imgUrl
-        company
-        email
-        phones
-        createdAt
-        updatedAt
-        owner
-        visit {
-          nextToken
-        }
-        persons {
-          nextToken
-        }
-        privateVehicles {
-          nextToken
-        }
-        cargoVehicles {
-          nextToken
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
-          createdAt
-          updatedAt
-          owner
-        }
-      }
-      visit {
-        id
-        dateTimestamp
-        checkInTimestamp
-        checkOutTimestamp
-        reason
-        status
-        qrUrl
-        timestamp
-        adminApprove
-        operApprove
-        createdAt
-        updatedAt
-        account {
-          id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
-          createdAt
-          updatedAt
-          owner
-        }
-        owner
-        person {
-          id
-          firstName
-          lastName
-          email
-          imgUrl
-          phone
-          company
-          idFrontPath
-          idBackPath
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        privateVehicle {
-          id
-          color
-          brand
-          subBrand
-          model
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        cargoVehicle {
-          id
-          line
-          platformPlate
-          petition
-          packs
-          containerNumber
-          tractNumber
-          load
-          unload
-          sealsNumber
-          additionalDoc
-          additionalDocPath
-          petitionPath
-          timestamp
-          driverNAme
-          createdAt
-          updatedAt
-          owner
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-      }
       owner
+      host {
+        items {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
-export const onDeleteEnclosure = /* GraphQL */ `
-  subscription OnDeleteEnclosure {
-    onDeleteEnclosure {
+export const onDeleteWarehouse = /* GraphQL */ `
+  subscription OnDeleteWarehouse {
+    onDeleteWarehouse {
       id
       name
       address
@@ -2803,13 +2247,33 @@ export const onDeleteEnclosure = /* GraphQL */ `
       lon
       createdAt
       updatedAt
-      account {
+      owner
+      host {
+        items {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreateHost = /* GraphQL */ `
+  subscription OnCreateHost {
+    onCreateHost {
+      id
+      createdAt
+      updatedAt
+      hostName {
         id
         firstName
         lastName
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -2826,137 +2290,64 @@ export const onDeleteEnclosure = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
         }
       }
       visit {
+        items {
+          id
+          dateTimestamp
+          checkInTimestamp
+          checkOutTimestamp
+          reason
+          status
+          qrUrl
+          timestamp
+          adminApprove
+          operApprove
+          type
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      warehouse {
         id
-        dateTimestamp
-        checkInTimestamp
-        checkOutTimestamp
-        reason
-        status
-        qrUrl
-        timestamp
-        adminApprove
-        operApprove
+        name
+        address
+        phone
+        lat
+        lon
         createdAt
         updatedAt
-        account {
-          id
-          firstName
-          lastName
-          imgUrl
-          company
-          email
-          phones
-          createdAt
-          updatedAt
-          owner
-        }
         owner
-        person {
-          id
-          firstName
-          lastName
-          email
-          imgUrl
-          phone
-          company
-          idFrontPath
-          idBackPath
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        privateVehicle {
-          id
-          color
-          brand
-          subBrand
-          model
-          timestamp
-          createdAt
-          updatedAt
-          owner
-        }
-        cargoVehicle {
-          id
-          line
-          platformPlate
-          petition
-          packs
-          containerNumber
-          tractNumber
-          load
-          unload
-          sealsNumber
-          additionalDoc
-          additionalDocPath
-          petitionPath
-          timestamp
-          driverNAme
-          createdAt
-          updatedAt
-          owner
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
+        host {
+          nextToken
         }
       }
       owner
     }
   }
 `;
-export const onCreateRole = /* GraphQL */ `
-  subscription OnCreateRole {
-    onCreateRole {
+export const onUpdateHost = /* GraphQL */ `
+  subscription OnUpdateHost {
+    onUpdateHost {
       id
-      roleName
-      description
-      admin
-      user
-      guest
-      host
       createdAt
       updatedAt
-      account {
+      hostName {
         id
         firstName
         lastName
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -2973,53 +2364,64 @@ export const onCreateRole = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
           createdAt
           updatedAt
           owner
         }
-        role {
+      }
+      visit {
+        items {
           id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
+          dateTimestamp
+          checkInTimestamp
+          checkOutTimestamp
+          reason
+          status
+          qrUrl
+          timestamp
+          adminApprove
+          operApprove
+          type
           createdAt
           updatedAt
           owner
+        }
+        nextToken
+      }
+      warehouse {
+        id
+        name
+        address
+        phone
+        lat
+        lon
+        createdAt
+        updatedAt
+        owner
+        host {
+          nextToken
         }
       }
       owner
     }
   }
 `;
-export const onUpdateRole = /* GraphQL */ `
-  subscription OnUpdateRole {
-    onUpdateRole {
+export const onDeleteHost = /* GraphQL */ `
+  subscription OnDeleteHost {
+    onDeleteHost {
       id
-      roleName
-      description
-      admin
-      user
-      guest
-      host
       createdAt
       updatedAt
-      account {
+      hostName {
         id
         firstName
         lastName
         imgUrl
         company
         email
+        role
         phones
         createdAt
         updatedAt
@@ -3036,91 +2438,44 @@ export const onUpdateRole = /* GraphQL */ `
         cargoVehicles {
           nextToken
         }
-        enclosure {
+        host {
           id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
           createdAt
           updatedAt
           owner
         }
       }
-      owner
-    }
-  }
-`;
-export const onDeleteRole = /* GraphQL */ `
-  subscription OnDeleteRole {
-    onDeleteRole {
-      id
-      roleName
-      description
-      admin
-      user
-      guest
-      host
-      createdAt
-      updatedAt
-      account {
+      visit {
+        items {
+          id
+          dateTimestamp
+          checkInTimestamp
+          checkOutTimestamp
+          reason
+          status
+          qrUrl
+          timestamp
+          adminApprove
+          operApprove
+          type
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      warehouse {
         id
-        firstName
-        lastName
-        imgUrl
-        company
-        email
-        phones
+        name
+        address
+        phone
+        lat
+        lon
         createdAt
         updatedAt
         owner
-        visit {
+        host {
           nextToken
-        }
-        persons {
-          nextToken
-        }
-        privateVehicles {
-          nextToken
-        }
-        cargoVehicles {
-          nextToken
-        }
-        enclosure {
-          id
-          name
-          address
-          phone
-          lat
-          lon
-          createdAt
-          updatedAt
-          owner
-        }
-        role {
-          id
-          roleName
-          description
-          admin
-          user
-          guest
-          host
-          createdAt
-          updatedAt
-          owner
         }
       }
       owner

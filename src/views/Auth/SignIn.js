@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CButton,
   CCard,
@@ -19,31 +19,54 @@ import {
   CImg,
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
-import { Auth } from "aws-amplify";
+import { Auth, Amplify } from "aws-amplify";
 import awsconfig from "../../aws-exports";
 import AuthErrorsNotification from "./AuthErrorsNotification";
+import { accountCreate, GetAccount } from "./Account";
+
+Amplify.configure(awsconfig);
 
 Auth.configure(awsconfig);
 
 const SignIn = (props) => {
   const history = useHistory();
+  const location = useLocation();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
   const [notify, setNotify] = useState(false);
+  const [userData, setUserData] = useState();
 
-  useEffect(() => {}, [email, password, history]);
+  useEffect(() => {
+    setUserData(location.data);
+  }, [email, password, history]);
 
   const onSignIn = async () => {
     try {
       const user = await Auth.signIn(email, password);
       localStorage.setItem("jwt", user.signInUserSession.idToken.jwtToken);
-      history.push("/");
-      console.log("CAMIO?",user)
+      onRetriveAccount().then((account) => {
+        localStorage.setItem("account", account.email);
+        history.push({
+          pathname: "/dashboard",
+        });
+      });
     } catch (e) {
       setError(e.code);
       setNotify(true);
     }
+  };
+
+  const onRetriveAccount = async () => {
+    return GetAccount(email).then((account) => {
+      if (!account) {
+        return accountCreate(userData).then((newAccount) => {
+          return newAccount;
+        });
+      } else {
+        return account;
+      }
+    });
   };
 
   return (
