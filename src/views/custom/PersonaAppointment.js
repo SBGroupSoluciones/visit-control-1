@@ -169,6 +169,12 @@ const PersonaAppointment = (props) => {
       console.log(uploaded);
     });
   };
+
+  const onHostIdSelect = (event) => {
+    const selectedIndex = event.target.options.selectedIndex;
+    setHostId(event.target.options[selectedIndex].getAttribute("data-key"));
+  };
+
   return (
     <>
       <div className="custom-separation"></div>
@@ -308,7 +314,7 @@ const PersonaAppointment = (props) => {
                   name="select"
                   id="select"
                   onChange={(e) => {
-                    setHostId(e.target.value);
+                    onHostIdSelect(e);
                   }}
                 >
                   <option value="0">Selecciona a tu Anfitrión...</option>

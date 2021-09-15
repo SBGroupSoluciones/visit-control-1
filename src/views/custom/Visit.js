@@ -33,28 +33,42 @@ export const visitCreate = async (params) => {
       phone: phone,
       timestamp: new Date(),
     };
-    API.graphql({ query: createPerson, variables: { input: personData } }).then(
-      (person) => {
-        const visitData = {
-          checkInTimestamp: cDate,
-          checkOutTimestamp: cDate,
-          dateTimestamp: cDate,
-          operApprove: false,
-          adminApprove: false,
-          status: "SCHEDULED",
-          type: type,
-          visitAccountId: localStorage.getItem("account"),
-          visitHostId: host,
-          visitPersonId: person.data.createPerson.id,
-        };
-        API.graphql({
-          query: personData,
-          variables: { input: visitData },
-        }).then((visit) =>
-          console.log("la visita se creo satisfactoriamente ", visit)
-        );
-      }
-    );
+    const personID = await personVisit(personData);
+
+    const visitData = {
+      checkInTimestamp: cDate,
+      checkOutTimestamp: cDate,
+      dateTimestamp: cDate,
+      operApprove: false,
+      adminApprove: false,
+      status: "SCHEDULED",
+      type: type,
+      visitAccountId: localStorage.getItem("account"),
+      visitHostId: host,
+      visitPersonId: personID,
+    };
+
+    try {
+      const visit = await API.graphql({
+        query: createVisit,
+        variables: { input: visitData },
+      });
+      return visit.data.createVisit;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+};
+
+const personVisit = async (personData) => {
+  try {
+    const person = await API.graphql({
+      query: createPerson,
+      variables: { input: personData },
+    });
+    return person.data.createPerson.id;
+  } catch (e) {
+    console.log(e);
   }
 };
 

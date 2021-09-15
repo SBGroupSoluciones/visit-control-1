@@ -94,7 +94,7 @@ const ListAccount = () => {
   return (
     <>
       <CCard accentColor="info">
-        <CCardHeader>Lista de Citas</CCardHeader>
+        <CCardHeader>Lista de Cuentas</CCardHeader>
         <CCardBody>
           <CDataTable
             items={accounts}

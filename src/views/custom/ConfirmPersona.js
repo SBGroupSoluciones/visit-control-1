@@ -33,8 +33,9 @@ const ConfirmPersona = (props) => {
   useEffect(() => {
     console.log("HORARIO MOMENT ", moment().format("YYYY-MM-DD")); // 2021-09-15T12:30:42-06:00);
     if (appointmentData) {
+      console.log("LA DATA DE LA CITA ", appointmentData);
       const appointmentConfirmData = {
-        type:"PERSON",
+        type: "PERSON",
         firstName: appointmentData.firstName,
         lastName: appointmentData.lastName,
         email: appointmentData.email,
@@ -74,9 +75,7 @@ const ConfirmPersona = (props) => {
   };
 
   const onConfirmData = () => {
-
-    visitCreate(appointment)
-    
+    visitCreate(appointment);
 
     // setPressedButton(e.target.value);
     setPersonaConfirm(!show);
@@ -229,7 +228,9 @@ const ConfirmPersona = (props) => {
         <CButton color="secondary" onClick={(e) => onEditButton(e)}>
           Editar
         </CButton>
-        <CButton color="success" onClick={(e) => onConfirmData(e)}>Confirmar</CButton>
+        <CButton color="success" onClick={(e) => onConfirmData(e)}>
+          Confirmar
+        </CButton>
       </CModalFooter>
     </CModal>
   );
