@@ -87,6 +87,10 @@ const ListAccount = () => {
     }
   }, [accounts]);
 
+  const seletedRow = (e) => {
+    console.log("LA ROWWW", e);
+  };
+
   return (
     <>
       <CCard accentColor="info">
@@ -113,6 +117,12 @@ const ListAccount = () => {
             hover
             sorter
             columnHeaderSlot={spanishFieds}
+            onClick={(e) => {
+              seletedRow(e);
+            }}
+            onRowClick={(e) => {
+              seletedRow(e);
+            }}
             scopedSlots={{
               role: (item) => (
                 <td>

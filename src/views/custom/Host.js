@@ -1,6 +1,6 @@
 import { createHost } from "src/graphql/mutations";
 import { listHosts } from "src/graphql/queries";
-import { API, graphqlOperation, Auth } from "aws-amplify";
+import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import awsconfig from "../../aws-exports";
 import CreateHost from "./CreateHost";
 
@@ -9,8 +9,8 @@ Auth.configure(awsconfig);
 export const hostCreate = async (params) => {
   const { hostNameId, warehouseId } = params;
   const hostData = {
-    hostHostNameId:hostNameId, 
-    hostWarehouseId:warehouseId, 
+    hostHostNameId: hostNameId,
+    hostWarehouseId: warehouseId,
   };
 
   try {
@@ -30,6 +30,20 @@ export const hostList = async () => {
     return hosts.data.listHosts.items;
   } catch (e) {
     console.log(e);
+  }
+};
+
+export const uploadImage = async (data) => {
+  // Storage.put(data.fileName, data.file, {
+  //   progressCallback(progress) {
+  //     console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+  //   },
+  // });
+  try {
+    const file = await Storage.put(data.fileName, data.file);
+    console.log("SE SUBIO ", file)
+  } catch (error) {
+    console.log("elerror ", error);
   }
 };
 

@@ -12,6 +12,10 @@ import {
   CImg,
 } from "@coreui/react";
 import QRCode from "react-qr-code";
+import moment from "moment";
+import "moment/locale/es";
+import { visitCreate } from "./Visit";
+moment.locale("es");
 
 const ConfirmPersona = (props) => {
   const {
@@ -23,7 +27,36 @@ const ConfirmPersona = (props) => {
     setNotification,
     setPressedButton,
     setPersonaConfirm,
+    appointmentData,
   } = props;
+  const [appointment, setAppointment] = useState();
+  useEffect(() => {
+    console.log("HORARIO MOMENT ", moment().format("YYYY-MM-DD")); // 2021-09-15T12:30:42-06:00);
+    if (appointmentData) {
+      const appointmentConfirmData = {
+        type:"PERSON",
+        firstName: appointmentData.firstName,
+        lastName: appointmentData.lastName,
+        email: appointmentData.email,
+        company: appointmentData.company,
+        reason: appointmentData.company,
+        phone: "1111111111",
+        vehicle: appointmentData.vehicle ? appointmentData.vehicle : null,
+        host: appointmentData.hostId,
+        date: appointmentData.appointmentDate,
+        time: appointmentData.appointmentHour,
+        cDate:
+          appointmentData.appointmentDate +
+          "T" +
+          appointmentData.appointmentHour,
+        warehouse: appointmentData.warehouse,
+        imgUrl: appointmentData.image,
+        ineFUrl: "",
+        ineBUrl: "",
+      };
+      setAppointment(appointmentConfirmData);
+    }
+  }, [appointmentData]);
 
   const qrCode = {
     recinto: {
@@ -36,25 +69,16 @@ const ConfirmPersona = (props) => {
     },
   };
 
-  const appointment = {
-    firstName: "Angel",
-    lastName: "Ojeda",
-    email: "aojeda@sbgroup.com.mx",
-    company: "SBGroup",
-    reason: "Visita al recinto",
-    phone: "6122308184",
-    vehicle: "SKD-1234",
-    warehouse: "Irapuato",
-    host: "Marcela Rodriguez",
-    date: "20/10/2021",
-    time: "10:29",
-    imgUrl: "",
-    ineFUrl: "",
-    ineBUrl: "",
+  const onEditButton = (e) => {
+    setPersonaConfirm(!show);
   };
 
-  const toggle = (e) => {
-    setPressedButton(e.target.value);
+  const onConfirmData = () => {
+
+    visitCreate(appointment)
+    
+
+    // setPressedButton(e.target.value);
     setPersonaConfirm(!show);
   };
 
@@ -63,141 +87,149 @@ const ConfirmPersona = (props) => {
       <CModalHeader closeButton>
         <p className="h4">Confirmar cita</p>
       </CModalHeader>
-      <CModalBody>
-        <CRow>
-          <CCol xs="12" md="6">
-            <CContainer>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Fecha y Hora</strong>
-                  </CLabel>
-                  <p className="h5">
-                    {appointment.date + " " + appointment.time}
-                  </p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Nombre</strong>
-                  </CLabel>
-                  <p className="h5">
-                    {appointment.firstName + " " + appointment.lastName}
-                  </p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Correo</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.email}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Empresa</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.company}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Teléfono</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.phone}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Motivo</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.reason}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Anfitrión</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.host}</p>
-                </CCol>
-              </CRow>
-            </CContainer>
-          </CCol>
-          <CCol xs="12" md="6">
-            <CContainer>
-              <CRow>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>QR</strong>
-                  </CLabel>
-                  <p className="h5">
-                    <QRCode
-                      value={JSON.stringify(qrCode)}
-                      level="L"
-                      fgColor="#212121"
-                      size="128"
+      {appointment ? (
+        <CModalBody>
+          <CRow>
+            <CCol xs="12" md="6">
+              <CContainer>
+                <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Fecha y Hora</strong>
+                    </CLabel>
+                    <p className="h5">
+                      {moment(appointment.cDate).format("LLL a")}
+                      {/* {appointment.date + " " + appointment.time} */}
+                    </p>
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Nombre</strong>
+                    </CLabel>
+                    <p className="h5">
+                      {appointment.firstName + " " + appointment.lastName}
+                    </p>
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Correo</strong>
+                    </CLabel>
+                    <p className="h5">{appointment.email}</p>
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Empresa</strong>
+                    </CLabel>
+                    <p className="h5">{appointment.company}</p>
+                  </CCol>
+                </CRow>
+                {/* <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Teléfono</strong>
+                    </CLabel>
+                    <p className="h5">{appointment.phone}</p>
+                  </CCol>
+                </CRow> */}
+                <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Motivo</strong>
+                    </CLabel>
+                    <p className="h5">{appointment.reason}</p>
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Recinto</strong>
+                    </CLabel>
+                    <p className="h5">{appointment.warehouse}</p>
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="firstName">
+                      <strong>Anfitrión</strong>
+                    </CLabel>
+                    <p className="h5">{appointment.host}</p>
+                  </CCol>
+                </CRow>
+              </CContainer>
+            </CCol>
+            <CCol xs="12" md="6">
+              <CContainer>
+                <CRow>
+                  <CCol xs="12" md="6">
+                    <CLabel htmlFor="firstName">
+                      <strong>QR</strong>
+                    </CLabel>
+                    <p className="h5">
+                      <QRCode
+                        value={JSON.stringify(qrCode)}
+                        level="L"
+                        fgColor="#212121"
+                        size="128"
+                      />
+                    </p>
+                  </CCol>
+                  <CCol xs="12" md="6">
+                    <CLabel htmlFor="firstName">
+                      <strong>Imagen</strong>
+                    </CLabel>
+                    <CImg
+                      src={appointment.image}
+                      shape="rounded-circle"
+                      thumbnail
+                      className="mb-2"
+                      align="right"
+                      fluidGrow
+                    />{" "}
+                  </CCol>
+                </CRow>
+                <CRow>
+                  <CCol xs="12" md="6">
+                    <CLabel htmlFor="firstName">
+                      <strong>INE Frente</strong>
+                    </CLabel>
+                    <CImg
+                      src={appointment.image}
+                      shape="rounded"
+                      thumbnail
+                      className="mb-2"
+                      align="right"
+                      fluidGrow
                     />
-                  </p>
-                </CCol>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>Imagen</strong>
-                  </CLabel>
-                  <CImg
-                    src="https://images.generated.photos/wTiSoFr_r3EULmE2aKYB0Xh7rzjjTtjkTetI4Q_An5c/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvMzYyMTgy/NTYtMGM3MC00ZTVi/LWFlZDQtZGUwYmEw/NzdjMGNjLmpwZw.jpg"
-                    shape="rounded-circle"
-                    thumbnail
-                    className="mb-2"
-                    align="right"
-                    fluidGrow
-                  />{" "}
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>INE Frente</strong>
-                  </CLabel>
-                  <CImg
-                    src="https://images.generated.photos/wTiSoFr_r3EULmE2aKYB0Xh7rzjjTtjkTetI4Q_An5c/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvMzYyMTgy/NTYtMGM3MC00ZTVi/LWFlZDQtZGUwYmEw/NzdjMGNjLmpwZw.jpg"
-                    shape="rounded"
-                    thumbnail
-                    className="mb-2"
-                    align="right"
-                    fluidGrow
-                  />
-                </CCol>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>INE Atras</strong>
-                  </CLabel>
-                  <CImg
-                    src="https://images.generated.photos/wTiSoFr_r3EULmE2aKYB0Xh7rzjjTtjkTetI4Q_An5c/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvMzYyMTgy/NTYtMGM3MC00ZTVi/LWFlZDQtZGUwYmEw/NzdjMGNjLmpwZw.jpg"
-                    shape="rounded"
-                    thumbnail
-                    className="mb-2"
-                    align="right"
-                    fluidGrow
-                  />
-                </CCol>
-              </CRow>
-            </CContainer>
-          </CCol>
-        </CRow>
-      </CModalBody>
+                  </CCol>
+                  <CCol xs="12" md="6">
+                    <CLabel htmlFor="firstName">
+                      <strong>INE Atras</strong>
+                    </CLabel>
+                    <CImg
+                      src={appointment.image}
+                      thumbnail
+                      className="mb-2"
+                      align="right"
+                      fluidGrow
+                    />
+                  </CCol>
+                </CRow>
+              </CContainer>
+            </CCol>
+          </CRow>
+        </CModalBody>
+      ) : null}
       <CModalFooter>
-        <CButton color="secondary" onClick={(e) => toggle(e)}>
+        <CButton color="secondary" onClick={(e) => onEditButton(e)}>
           Editar
         </CButton>
-        <CButton color="success" onClick={(e) => toggle(e)}>
-          Confirmar
-        </CButton>
+        <CButton color="success" onClick={(e) => onConfirmData(e)}>Confirmar</CButton>
       </CModalFooter>
     </CModal>
   );

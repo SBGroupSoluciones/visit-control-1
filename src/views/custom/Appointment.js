@@ -67,24 +67,26 @@ const Appointment = () => {
 
   const onConfirmDate = () => {
     if (personaAppointment) {
+      console.log(personaAppointment);
       setPersonaConfirm(true);
     }
-    if (cargoAppointment) {
-      setCargoConfirm(true);
-    }
+    console.log("CA ?", cargoAppointment);
+    // if (cargoAppointment) {
+    //   setCargoConfirm(true);
+    // }
   };
 
   return (
     <>
       <ConfirmPersona
         show={personaConfirm}
-        confirmHandler={setPersonaConfirm}
+        setPersonaConfirm={setPersonaConfirm}
         appointmentData={personaAppointment}
       />{" "}
       <ConfirmCargo
-        show={personaConfirm}
-        confirmHandler={setPersonaConfirm}
-        appointmentData={personaAppointment}
+        show={cargoConfirm}
+        confirmHandler={setCargoConfirm}
+        appointmentData={cargoAppointment}
       />
       <PersonalVehicle show={newVehicle} setNotification={setNewVehicle} />
       <CRow>
@@ -112,7 +114,9 @@ const Appointment = () => {
                 </CNav>
                 <CTabContent>
                   <CTabPane>
-                    <PersonaAppointment appointmentData={setPersonaAppointment} />
+                    <PersonaAppointment
+                      setAppointmentData={setPersonaAppointment}
+                    />
                   </CTabPane>
                   <CTabPane>
                     <CargoAppointment />

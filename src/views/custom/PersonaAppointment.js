@@ -41,10 +41,11 @@ import {
   isValidCompanyName,
   isValidPhoneNumber,
 } from "../Auth/utils";
-import { hostList } from "./Host";
+import { hostList, uploadImage } from "./Host";
+import moment from "moment";
 
 const PersonaAppointment = (props) => {
-  const { appointmentData } = props;
+  const { setAppointmentData } = props;
 
   const [personAlready, setPersonAlready] = useState(false);
   const [active, setActive] = useState(0);
@@ -56,22 +57,12 @@ const PersonaAppointment = (props) => {
   const [appointmentDate, setAppointmentDate] = useState();
   const [appointmentHour, setAppointmentHour] = useState();
   const [hostId, setHostId] = useState();
+  const [image, setImage] = useState();
   const [newVehicle, setNewVehicle] = useState(false);
   const [host, setHost] = useState();
   const [warehouses, setWarehouses] = useState();
   const [warehouse, setWarehouse] = useState();
   const [hostWId, setHostWId] = useState();
-
-  let qrCode = {
-    recinto: {
-      id: "",
-      name: "",
-      address: "",
-      phone: "",
-      lat: "",
-      lon: "",
-    },
-  };
 
   const changeHandler = (e) => {
     console.log(e);
@@ -90,7 +81,44 @@ const PersonaAppointment = (props) => {
     if (!host) {
       fetchData();
     }
-  }, [personAlready, host]);
+
+    if (
+      (firstName &&
+        lastName &&
+        email &&
+        company &&
+        reason &&
+        appointmentDate &&
+        appointmentHour &&
+        hostId,
+      image)
+    ) {
+      console.log("SE ACTIVARON");
+      setAppointmentData({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        company: company,
+        reason: reason,
+        appointmentDate: appointmentDate,
+        appointmentHour: appointmentHour,
+        hostId: hostId,
+        warehouse: warehouse,
+        image: image,
+      });
+    }
+  }, [
+    personAlready,
+    host,
+    firstName,
+    lastName,
+    company,
+    reason,
+    appointmentDate,
+    appointmentHour,
+    hostId,
+    image,
+  ]);
 
   const onDataPrepare = (data) => {
     let whList = [];
@@ -129,6 +157,17 @@ const PersonaAppointment = (props) => {
     if (e == "new") {
       setNewVehicle(true);
     }
+  };
+
+  const onImageLoad = (image) => {
+    setImage(image)
+    let data = {
+      fileName: "IMAGEN TEST",
+      file: image,
+    };
+    uploadImage(data).then((uploaded) => {
+      console.log(uploaded);
+    });
   };
   return (
     <>
@@ -291,7 +330,7 @@ const PersonaAppointment = (props) => {
                   id="date-input"
                   name="date-input"
                   placeholder="date"
-                  min="2021-09-03"
+                  min={moment().format("YYYY-MM-DD")}
                   onChange={(e) => {
                     setAppointmentDate(e.target.value);
                   }}
@@ -336,7 +375,13 @@ const PersonaAppointment = (props) => {
               <CRow>
                 <CCol xs="12" md="4">
                   <CLabel htmlFor="file-input">Imagen</CLabel>
-                  <CInputFile id="file-input" name="file-input" />
+                  <CInputFile
+                    id="file-input"
+                    name="file-input"
+                    onChange={(e) => {
+                      onImageLoad(e.target.files[0]);
+                    }}
+                  />
                 </CCol>
                 <CCol xs="12" md="4">
                   <CLabel htmlFor="file-input">INE Frente</CLabel>
@@ -348,7 +393,6 @@ const PersonaAppointment = (props) => {
                 </CCol>
               </CRow>
             </CCol>
-            
           </CRow>
         </CCol>
       </CRow>
