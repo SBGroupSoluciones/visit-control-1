@@ -32,6 +32,8 @@ import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import CarbonDatePicker from "react-carbon-datepicker";
 import Notification from "./Notification";
+import ConfirmPersona from "./ConfirmPersona";
+import ConfirmCargo from "./ConfirmCargo";
 import PersonalVehicle from "./PersonalVehicle";
 import PersonaAppointment from "./PersonaAppointment";
 import CargoAppointment from "./CargoAppointment";
@@ -57,16 +59,33 @@ const Appointment = () => {
   const [active, setActive] = useState(0);
   const [newVehicle, setNewVehicle] = useState(false);
   const [personaConfirm, setPersonaConfirm] = useState(false);
+  const [cargoConfirm, setCargoConfirm] = useState(false);
+  const [personaAppointment, setPersonaAppointment] = useState();
+  const [cargoAppointment, setCargoAppointment] = useState();
 
   useEffect(() => {}, [personAlready]);
 
   const onConfirmDate = () => {
-    setPersonaConfirm(true);
+    if (personaAppointment) {
+      setPersonaConfirm(true);
+    }
+    if (cargoAppointment) {
+      setCargoConfirm(true);
+    }
   };
 
   return (
     <>
-      <Notification show={personaConfirm} confirmHandler={setPersonaConfirm} />
+      <ConfirmPersona
+        show={personaConfirm}
+        confirmHandler={setPersonaConfirm}
+        appointmentData={personaAppointment}
+      />{" "}
+      <ConfirmCargo
+        show={personaConfirm}
+        confirmHandler={setPersonaConfirm}
+        appointmentData={personaAppointment}
+      />
       <PersonalVehicle show={newVehicle} setNotification={setNewVehicle} />
       <CRow>
         <CCol md="12">
@@ -93,7 +112,7 @@ const Appointment = () => {
                 </CNav>
                 <CTabContent>
                   <CTabPane>
-                    <PersonaAppointment />
+                    <PersonaAppointment appointmentData={setPersonaAppointment} />
                   </CTabPane>
                   <CTabPane>
                     <CargoAppointment />

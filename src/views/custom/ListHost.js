@@ -30,6 +30,7 @@ import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import { accountList } from "../Auth/Account";
 import { userStatus } from "../Auth/AuthUtil";
+import { hostList } from "./Host";
 
 const getBadge = (status) => {
   switch (status) {
@@ -53,26 +54,48 @@ const spanishFieds = {
   warehouse: "Recinto",
 };
 
-const ListWarehouse = () => {
-  const [accounts, setAccounts] = useState();
+const ListHost = () => {
+  const [hosts, setHosts] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
-      const accounts = await accountList();
-      setAccounts(accounts);
+      const hostsList = await hostList();
+      onDataPrepare(hostsList);
+      console.log(hosts);
+      // setHosts(hosts);
     };
-    if (!accounts) {
+    if (!hosts) {
       fetchData();
     }
-  }, [accounts]);
+  }, [hosts]);
+
+  const onDataPrepare = (data) => {
+    let tableListHost = [];
+    data.map((host) => {
+      if (host.hostName || host.warehouse) {
+        let fullname = host.hostName.firstName + " " + host.hostName.lastName;
+        tableListHost.push({
+          warehouse: host.warehouse.name,
+          name: fullname,
+        });
+      }
+      // if (host.warehouse) {
+      //   console.log("ELDATO,", host.warehouse.name);
+      // }
+      // if (host.hostName) {
+      //   console.log("ELDATO,", host.hostName.firstName);
+      // }
+    });
+    setHosts(tableListHost);
+  };
 
   return (
     <>
-      <CCard  accentColor="info" >
-        <CCardHeader>Lista de Recintos</CCardHeader>
+      <CCard accentColor="info">
+        <CCardHeader>Lista de Anfitriones</CCardHeader>
         <CCardBody>
           <CDataTable
-            items={accounts}
+            items={hosts}
             fields={fields}
             striped
             itemsPerPage={10}
@@ -80,9 +103,15 @@ const ListWarehouse = () => {
             clickableRows={true}
             pagination
             columnFilter
-            tableFilter={{label:"Filtro",placeholder:"Escribe una palabra..."}}
-            itemsPerPageSelect={{label:"Registros por Página"}}
-            noItemsView={{noResults:"Sin resultados de filtrado", noItems:"No hay elementos"}}
+            tableFilter={{
+              label: "Filtro",
+              placeholder: "Escribe una palabra...",
+            }}
+            itemsPerPageSelect={{ label: "Registros por Página" }}
+            noItemsView={{
+              noResults: "Sin resultados de filtrado",
+              noItems: "No hay elementos",
+            }}
             hover
             sorter
             columnHeaderSlot={spanishFieds}
@@ -100,4 +129,4 @@ const ListWarehouse = () => {
   );
 };
 
-export default ListWarehouse;
+export default ListHost;

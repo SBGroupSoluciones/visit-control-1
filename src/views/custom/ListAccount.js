@@ -37,7 +37,7 @@ const getBadge = (status) => {
       return "success";
     case "Inactive":
       return "unregistered";
-    case "Pending":
+    case "HOST":
       return "warning";
     case "Banned":
       return "danger";

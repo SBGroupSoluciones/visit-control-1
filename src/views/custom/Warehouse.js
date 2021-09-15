@@ -24,14 +24,14 @@ export const warehouseCreate = async (params) => {
   }
 };
 
-// export const accountList = async () => {
-//   try {
-//     const accounts = await API.graphql(graphqlOperation(listAccounts));
-//     return accounts.data.listAccounts.items;
-//   } catch (e) {
-//     console.log(e);
-//   }
-// };
+export const warehouseList = async () => {
+  try {
+    const warehouse = await API.graphql(graphqlOperation(listWarehouses));
+    return warehouse.data.listWarehouses.items;
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 // export const GetAccount = async (email) => {
 

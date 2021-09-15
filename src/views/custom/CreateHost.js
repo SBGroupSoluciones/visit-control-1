@@ -1,130 +1,81 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import classNames from "classnames";
 import {
-  CContainer,
   CRow,
-  CBadge,
-  CDataTable,
   CCol,
   CCard,
   CCardHeader,
   CCardBody,
   CCardFooter,
-  CImg,
   CForm,
   CLabel,
-  CInput,
-  CInputFile,
-  CInputGroup,
-  CInputGroupPrepend,
-  CInputGroupText,
-  CInvalidFeedback,
-  CFormGroup,
   CSelect,
-  CTabs,
-  CNav,
-  CNavItem,
-  CNavLink,
-  CTabPane,
-  CTabContent,
-  CTextarea,
   CButton,
 } from "@coreui/react";
-import { DocsLink } from "src/reusable";
-import CIcon from "@coreui/icons-react";
-import usersData from "../users/UsersData";
-import CarbonDatePicker from "react-carbon-datepicker";
 import Notification from "./Notification";
-import PersonalVehicle from "./PersonalVehicle";
-import {
-  isValidFirstName,
-  isValidLastName,
-  isValidEmail,
-  isValidCompanyName,
-  isValidPhoneNumber,
-} from "../Auth/utils";
-import { accountCreate, GetAccount } from "../Auth/Account";
+import { getAccountByRole } from "../Auth/Account";
+import { warehouseList } from "./Warehouse";
+import { hostCreate } from "./Host";
 
-const CreateAccount = () => {
+const CreateHost = () => {
   const history = useHistory();
-  const [email, setEmail] = useState();
-  const [firstName, setFirstName] = useState();
-  const [lastName, setLastName] = useState();
-  const [company, setCompany] = useState();
-  const [phone, setPhone] = useState();
-  const [role, setRole] = useState("USER");
-  const [error, setError] = useState();
-  const [notify, setNotify] = useState(false);
-  const [showGuestData, setShowGuestData] = useState(false);
-  const [notyButton, setNotyButton] = useState();
-  const [guestData, setGuestData] = useState();
-  const [passValid, setPassValid] = useState(false);
-  const [emailValid, setEmailValid] = useState(false);
-  const [phoneValid, setPhoneValid] = useState(false);
-  const [firstNameValid, setFirstNameValid] = useState(false);
-  const [lastNameValid, setLastNameValid] = useState(false);
-  const [companyValid, setCompanyValid] = useState(false);
+  const [accounts, setAccounts] = useState();
+  const [warehouses, setWarehouses] = useState();
+  const [hostNameId, setHostNameId] = useState();
+  const [warehouseId, setWarehouseId] = useState();
 
-  useEffect(() => {}, []);
-
-  const onFirstNameValidation = (firstName) => {
-    setFirstNameValid(isValidFirstName(firstName) && firstName);
-    setFirstName(firstName);
-  };
-
-  const onLastNameValidation = (lastName) => {
-    setLastNameValid(isValidLastName(lastName) && lastName);
-    setLastName(lastName);
-  };
-
-  const onEmailValidation = (email) => {
-    setEmailValid(isValidEmail(email));
-    setEmail(email);
-  };
-
-  const onCompanyValidation = (company) => {
-    setCompanyValid(isValidCompanyName(company) && company);
-    setCompany(company);
-  };
-
-  const onPhoneValidation = (phone) => {
-    setPhoneValid(isValidPhoneNumber(phone));
-    setPhone(phone);
-  };
-
-  const onCreateAccount = async () => {
-    const accountData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      company: company,
-      phone: phone,
-      // role: role,
+  useEffect(() => {
+    const fetchAccounts = async () => {
+      getAccountByRole("HOST")
+        .then((hosts) => {
+          setAccounts(hosts.items);
+        })
+        .catch((error) => console.log(error));
     };
-    onRetriveAccount(accountData)
-      .then((account) => {
-        console.log(account);
-        // localStorage.setItem("account", account.email);
+    const fetchWarehouses = async () => {
+      warehouseList()
+        .then((whs) => {
+          console.log(whs);
+          setWarehouses(whs);
+        })
+        .catch((error) => console.log(error));
+    };
+    if (!accounts) {
+      fetchAccounts();
+    }
+    if (!warehouses) {
+      fetchWarehouses();
+    }
+  }, [accounts, warehouses]);
+
+  const onUserSelect = (event) => {
+    const selectedIndex = event.target.options.selectedIndex;
+    setHostNameId(event.target.options[selectedIndex].getAttribute("data-key"));
+  };
+
+  const onWarehouseSelect = (event) => {
+    const selectedIndex = event.target.options.selectedIndex;
+    setWarehouseId(
+      event.target.options[selectedIndex].getAttribute("data-key")
+    );
+  };
+
+  const onCreateHost = () => {
+    const hostData = {
+      hostNameId: hostNameId,
+      warehouseId: warehouseId,
+    };
+
+    hostCreate(hostData)
+      .then((host) => {
+        console.log("Se creo el Host correctamente ", host);
         history.push({
-          pathname: "/account/list",
+          pathname: "/host/list",
         });
       })
-      .catch((e) => {
-        console.log("==ERROR== al crear cuenta ", e);
+      .catch((error) => {
+        console.log(error);
       });
-  };
-
-  const onRetriveAccount = async (accountData) => {
-    return GetAccount(email).then((account) => {
-      if (!account) {
-        return accountCreate(accountData).then((newAccount) => {
-          return newAccount;
-        });
-      } else {
-        return account;
-      }
-    });
   };
 
   return (
@@ -144,17 +95,20 @@ const CreateAccount = () => {
                     <CSelect
                       custom
                       name="select"
-                      id="role"
-                      value={role}
+                      id="user"
+                      // value={role}
                       onChange={(e) => {
-                        setRole(e.target.value);
+                        onUserSelect(e);
                       }}
                     >
-                      <option value="USER">Usuario</option>
-                      <option value="HOST">Anfitrión</option>
-                      <option value="OPERATOR">Operador</option>
-                      <option value="ADMIN">Administrador</option>
-                      {/* <option value="SUPER_ADMIN"></option> */}
+                      <option>Seleccione una opcion...</option>
+                      {accounts
+                        ? accounts.map((x, y) => (
+                            <option key={y} data-key={x.email}>
+                              {x.firstName + " " + x.lastName}
+                            </option>
+                          ))
+                        : null}
                     </CSelect>
                   </CCol>
                   <CCol xs="12" md="6">
@@ -164,17 +118,20 @@ const CreateAccount = () => {
                     <CSelect
                       custom
                       name="select"
-                      id="role"
-                      value={role}
+                      id="warehouse"
+                      // value={role}
                       onChange={(e) => {
-                        setRole(e.target.value);
+                        onWarehouseSelect(e);
                       }}
                     >
-                      <option value="USER">Usuario</option>
-                      <option value="HOST">Anfitrión</option>
-                      <option value="OPERATOR">Operador</option>
-                      <option value="ADMIN">Administrador</option>
-                      {/* <option value="SUPER_ADMIN"></option> */}
+                      <option>Seleccione una opcion...</option>
+                      {warehouses
+                        ? warehouses.map((x, y) => (
+                            <option key={y} data-key={x.id}>
+                              {x.name}
+                            </option>
+                          ))
+                        : null}
                     </CSelect>
                   </CCol>
                 </CRow>
@@ -184,16 +141,7 @@ const CreateAccount = () => {
               <CButton
                 type="submit"
                 color="success"
-                onClick={(e) => onCreateAccount()}
-                disabled={
-                  !(
-                    firstNameValid &&
-                    lastNameValid &&
-                    emailValid &&
-                    companyValid &&
-                    phoneValid
-                  )
-                }
+                onClick={(e) => onCreateHost()}
               >
                 Añadir
               </CButton>
@@ -205,4 +153,4 @@ const CreateAccount = () => {
   );
 };
 
-export default CreateAccount;
+export default CreateHost;

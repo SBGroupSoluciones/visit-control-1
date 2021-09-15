@@ -16,7 +16,7 @@ import {
 
 import Notification from "./Notification";
 import { isValidText, isValidPhoneNumber } from "../Auth/utils";
-import { warehouseCreate } from "./warehouse";
+import { warehouseCreate } from "./Warehouse";
 
 const CreateWarehouse = () => {
   const history = useHistory();
@@ -57,9 +57,9 @@ const CreateWarehouse = () => {
     warehouseCreate(whData)
       .then((warehouse) => {
         console.log("Se creo el Warehouse correctamente ", warehouse);
-        // history.push({
-        //   pathname: "/warehouse/list",
-        // });
+        history.push({
+          pathname: "/warehouse/list",
+        });
       })
       .catch((e) => {
         console.log("Error al crear warehouse ", e);

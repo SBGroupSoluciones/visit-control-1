@@ -1,5 +1,5 @@
 import { createAccount } from "src/graphql/mutations";
-import { listAccounts, getAccount } from "src/graphql/queries";
+import { listAccounts, getAccount, accountsByRole } from "src/graphql/queries";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
 import awsconfig from "../../aws-exports";
@@ -38,21 +38,22 @@ export const accountList = async () => {
 };
 
 export const GetAccount = async (email) => {
-  // const client = new AWSAppSyncClient({
-  //   url: awsconfig.aws_appsync_graphqlEndpoint,
-  //   region: awsconfig.aws_appsync_region,
-  //   auth: {
-  //     type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
-  //     jwtToken: async () =>
-  //       (await Auth.currentSession()).getIdToken().getJwtToken(),
-  //   },
-  // });
-
   try {
     const account = await API.graphql(
       graphqlOperation(getAccount, { email: email })
     );
     return account.data.getAccount;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAccountByRole = async (role) => {
+  try {
+    const account = await API.graphql(
+      graphqlOperation(accountsByRole, { role: role })
+    );
+    return account.data.accountsByRole;
   } catch (error) {
     console.log(error);
   }

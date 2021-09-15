@@ -33,8 +33,19 @@ import usersData from "../users/UsersData";
 import CarbonDatePicker from "react-carbon-datepicker";
 import Notification from "./Notification";
 import PersonalVehicle from "./PersonalVehicle";
+import {
+  isValidText,
+  isValidFirstName,
+  isValidLastName,
+  isValidEmail,
+  isValidCompanyName,
+  isValidPhoneNumber,
+} from "../Auth/utils";
+import { hostList } from "./Host";
 
-const PersonaAppointment = () => {
+const PersonaAppointment = (props) => {
+  const { appointmentData } = props;
+
   const [personAlready, setPersonAlready] = useState(false);
   const [active, setActive] = useState(0);
   const [firstName, setFirstName] = useState();
@@ -46,6 +57,10 @@ const PersonaAppointment = () => {
   const [appointmentHour, setAppointmentHour] = useState();
   const [hostId, setHostId] = useState();
   const [newVehicle, setNewVehicle] = useState(false);
+  const [host, setHost] = useState();
+  const [warehouses, setWarehouses] = useState();
+  const [warehouse, setWarehouse] = useState();
+  const [hostWId, setHostWId] = useState();
 
   let qrCode = {
     recinto: {
@@ -65,7 +80,49 @@ const PersonaAppointment = () => {
     }
   };
 
-  useEffect(() => {}, [personAlready]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const hostsList = await hostList();
+      onDataPrepare(hostsList);
+      console.log("los host", hostsList);
+      setHost(hostsList);
+    };
+    if (!host) {
+      fetchData();
+    }
+  }, [personAlready, host]);
+
+  const onDataPrepare = (data) => {
+    let whList = [];
+
+    data.map((host) => {
+      if (host.warehouse) {
+        whList.push(host.warehouse.name);
+      }
+    });
+    setWarehouses(Array.from(new Set(whList)));
+  };
+
+  const onSetWarehouse = (wh) => {
+    setWarehouse(wh);
+    onGetHostbyWh(wh);
+  };
+
+  const onGetHostbyWh = (wh) => {
+    let hostNameList = [];
+    host.map((h) => {
+      if (h.warehouse || h.hostName) {
+        if (h.warehouse.name == wh) {
+          let fullname = h.hostName.firstName + " " + h.hostName.lastName;
+          hostNameList.push({
+            id: h.id,
+            name: fullname,
+          });
+        }
+      }
+    });
+    setHostWId(hostNameList);
+  };
 
   const onVehicleSelect = (e) => {
     console.log("data", e);
@@ -194,13 +251,14 @@ const PersonaAppointment = () => {
                   name="select"
                   id="select"
                   onChange={(e) => {
-                    setHostId(e.target.value);
+                    onSetWarehouse(e.target.value);
                   }}
                 >
                   <option value="0">Selecciona un recinto...</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
-                </CSelect>{" "}
+                  {warehouses
+                    ? warehouses.map((x, y) => <option key={y}>{x}</option>)
+                    : null}
+                </CSelect>
               </CFormGroup>
             </CCol>
             <CCol xs="12" md="3">
@@ -215,9 +273,13 @@ const PersonaAppointment = () => {
                   }}
                 >
                   <option value="0">Selecciona a tu Anfitrión...</option>
-                  <option value="any">Cualquiera</option>
-                  <option value="2">Option #2</option>
-                  <option value="3">Option #3</option>
+                  {hostWId
+                    ? hostWId.map((x, y) => (
+                        <option key={y} data-key={x.id}>
+                          {x.name}
+                        </option>
+                      ))
+                    : null}
                 </CSelect>{" "}
               </CFormGroup>
             </CCol>
@@ -286,18 +348,7 @@ const PersonaAppointment = () => {
                 </CCol>
               </CRow>
             </CCol>
-            {/* <CCol xs="12" md="12">
-              <CRow>
-
-                <CCol xs="12" md="11"></CCol>
-                <CCol xs="12" md="1">
-                  <div className="custom-separation"></div>
-                  <CButton type="submit" color="primary">
-                    Agendar
-                  </CButton>
-                </CCol>
-              </CRow>
-            </CCol> */}
+            
           </CRow>
         </CCol>
       </CRow>

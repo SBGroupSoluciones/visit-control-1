@@ -1,35 +1,12 @@
-import React, { useEffect, useState, createRef } from "react";
-import QRCode from "react-qr-code";
-import classNames from "classnames";
+import React, { useEffect, useState } from "react";
 import {
-  CRow,
   CBadge,
   CDataTable,
-  CCol,
   CCard,
   CCardHeader,
   CCardBody,
-  CImg,
-  CForm,
-  CLabel,
-  CInput,
-  CInputFile,
-  CFormGroup,
-  CSelect,
-  CTabs,
-  CNav,
-  CNavItem,
-  CNavLink,
-  CTabPane,
-  CTabContent,
-  CTextarea,
-  CButton,
 } from "@coreui/react";
-import { DocsLink } from "src/reusable";
-import CIcon from "@coreui/icons-react";
-import usersData from "../users/UsersData";
-import { accountList } from "../Auth/Account";
-import { userStatus } from "../Auth/AuthUtil";
+import { warehouseList } from "./Warehouse";
 
 const getBadge = (status) => {
   switch (status) {
@@ -55,35 +32,42 @@ const spanishFieds = {
 };
 
 const ListWarehouse = () => {
-  const [accounts, setAccounts] = useState();
+  const [warehouses, setWarehouses] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
-      const accounts = await accountList();
-      setAccounts(accounts);
+      const wh = await warehouseList();
+      setWarehouses(wh);
     };
-    if (!accounts) {
+    if (!warehouses) {
       fetchData();
     }
-  }, [accounts]);
+  }, [warehouses]);
 
   return (
     <>
-      <CCard  accentColor="info" >
+      <CCard accentColor="info">
         <CCardHeader>Lista de Recintos</CCardHeader>
         <CCardBody>
           <CDataTable
-            items={accounts}
+            items={warehouses}
             fields={fields}
             striped
             itemsPerPage={10}
             responsive={true}
             clickableRows={true}
+            onRowClick={e=>{console.log("se pico e",e)}}
             pagination
             columnFilter
-            tableFilter={{label:"Filtro",placeholder:"Escribe una palabra..."}}
-            itemsPerPageSelect={{label:"Registros por Página"}}
-            noItemsView={{noResults:"Sin resultados de filtrado", noItems:"No hay elementos"}}
+            tableFilter={{
+              label: "Filtro",
+              placeholder: "Escribe una palabra...",
+            }}
+            itemsPerPageSelect={{ label: "Registros por Página" }}
+            noItemsView={{
+              noResults: "Sin resultados de filtrado",
+              noItems: "No hay elementos",
+            }}
             hover
             sorter
             columnHeaderSlot={spanishFieds}
