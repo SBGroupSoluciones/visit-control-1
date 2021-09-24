@@ -26,7 +26,7 @@ export const updateAccount = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -48,7 +48,6 @@ export const updateAccount = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -63,7 +62,6 @@ export const updateAccount = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -74,6 +72,8 @@ export const updateAccount = /* GraphQL */ `
         items {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -81,10 +81,15 @@ export const updateAccount = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -152,7 +157,7 @@ export const deleteAccount = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -174,7 +179,6 @@ export const deleteAccount = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -189,7 +193,6 @@ export const deleteAccount = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -200,6 +203,8 @@ export const deleteAccount = /* GraphQL */ `
         items {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -207,10 +212,15 @@ export const deleteAccount = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -265,7 +275,7 @@ export const updateVisit = /* GraphQL */ `
       checkOutTimestamp
       reason
       status
-      qrUrl
+      qr
       timestamp
       adminApprove
       operApprove
@@ -314,7 +324,6 @@ export const updateVisit = /* GraphQL */ `
         company
         idFrontPath
         idBackPath
-        timestamp
         createdAt
         updatedAt
         account {
@@ -337,7 +346,7 @@ export const updateVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -355,7 +364,6 @@ export const updateVisit = /* GraphQL */ `
         brand
         subBrand
         model
-        timestamp
         createdAt
         updatedAt
         account {
@@ -378,7 +386,7 @@ export const updateVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -392,6 +400,8 @@ export const updateVisit = /* GraphQL */ `
       cargoVehicle {
         id
         line
+        vehiclePlate
+        platformPlate
         containerNumber
         tractNumber
         load
@@ -399,10 +409,15 @@ export const updateVisit = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        packageNumber
         petition
         petitionPath
         timestamp
         driverName
+        email
+        company
+        reason
+        phone
         createdAt
         updatedAt
         account {
@@ -425,7 +440,7 @@ export const updateVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -484,7 +499,7 @@ export const deleteVisit = /* GraphQL */ `
       checkOutTimestamp
       reason
       status
-      qrUrl
+      qr
       timestamp
       adminApprove
       operApprove
@@ -533,7 +548,6 @@ export const deleteVisit = /* GraphQL */ `
         company
         idFrontPath
         idBackPath
-        timestamp
         createdAt
         updatedAt
         account {
@@ -556,7 +570,7 @@ export const deleteVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -574,7 +588,6 @@ export const deleteVisit = /* GraphQL */ `
         brand
         subBrand
         model
-        timestamp
         createdAt
         updatedAt
         account {
@@ -597,7 +610,7 @@ export const deleteVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -611,6 +624,8 @@ export const deleteVisit = /* GraphQL */ `
       cargoVehicle {
         id
         line
+        vehiclePlate
+        platformPlate
         containerNumber
         tractNumber
         load
@@ -618,10 +633,15 @@ export const deleteVisit = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        packageNumber
         petition
         petitionPath
         timestamp
         driverName
+        email
+        company
+        reason
+        phone
         createdAt
         updatedAt
         account {
@@ -644,7 +664,7 @@ export const deleteVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -706,7 +726,6 @@ export const updatePerson = /* GraphQL */ `
       company
       idFrontPath
       idBackPath
-      timestamp
       createdAt
       updatedAt
       account {
@@ -747,7 +766,7 @@ export const updatePerson = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -778,7 +797,6 @@ export const updatePerson = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -790,7 +808,6 @@ export const updatePerson = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -798,6 +815,8 @@ export const updatePerson = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -805,10 +824,15 @@ export const updatePerson = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -839,7 +863,6 @@ export const deletePerson = /* GraphQL */ `
       company
       idFrontPath
       idBackPath
-      timestamp
       createdAt
       updatedAt
       account {
@@ -880,7 +903,7 @@ export const deletePerson = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -911,7 +934,6 @@ export const deletePerson = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -923,7 +945,6 @@ export const deletePerson = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -931,6 +952,8 @@ export const deletePerson = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -938,10 +961,15 @@ export const deletePerson = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -969,7 +997,6 @@ export const updatePrivateVehicle = /* GraphQL */ `
       brand
       subBrand
       model
-      timestamp
       createdAt
       updatedAt
       account {
@@ -1010,7 +1037,7 @@ export const updatePrivateVehicle = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -1041,7 +1068,6 @@ export const updatePrivateVehicle = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1053,7 +1079,6 @@ export const updatePrivateVehicle = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1061,6 +1086,8 @@ export const updatePrivateVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -1068,10 +1095,15 @@ export const updatePrivateVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -1099,7 +1131,6 @@ export const deletePrivateVehicle = /* GraphQL */ `
       brand
       subBrand
       model
-      timestamp
       createdAt
       updatedAt
       account {
@@ -1140,7 +1171,7 @@ export const deletePrivateVehicle = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -1171,7 +1202,6 @@ export const deletePrivateVehicle = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1183,7 +1213,6 @@ export const deletePrivateVehicle = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1191,6 +1220,8 @@ export const deletePrivateVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -1198,10 +1229,15 @@ export const deletePrivateVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -1225,6 +1261,8 @@ export const updateCargoVehicle = /* GraphQL */ `
     updateCargoVehicle(input: $input, condition: $condition) {
       id
       line
+      vehiclePlate
+      platformPlate
       containerNumber
       tractNumber
       load
@@ -1232,10 +1270,15 @@ export const updateCargoVehicle = /* GraphQL */ `
       sealsNumber
       additionalDoc
       additionalDocPath
+      packageNumber
       petition
       petitionPath
       timestamp
       driverName
+      email
+      company
+      reason
+      phone
       createdAt
       updatedAt
       account {
@@ -1276,7 +1319,7 @@ export const updateCargoVehicle = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -1307,7 +1350,6 @@ export const updateCargoVehicle = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1319,7 +1361,6 @@ export const updateCargoVehicle = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1327,6 +1368,8 @@ export const updateCargoVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -1334,10 +1377,15 @@ export const updateCargoVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -1361,6 +1409,8 @@ export const deleteCargoVehicle = /* GraphQL */ `
     deleteCargoVehicle(input: $input, condition: $condition) {
       id
       line
+      vehiclePlate
+      platformPlate
       containerNumber
       tractNumber
       load
@@ -1368,10 +1418,15 @@ export const deleteCargoVehicle = /* GraphQL */ `
       sealsNumber
       additionalDoc
       additionalDocPath
+      packageNumber
       petition
       petitionPath
       timestamp
       driverName
+      email
+      company
+      reason
+      phone
       createdAt
       updatedAt
       account {
@@ -1412,7 +1467,7 @@ export const deleteCargoVehicle = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -1443,7 +1498,6 @@ export const deleteCargoVehicle = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1455,7 +1509,6 @@ export const deleteCargoVehicle = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1463,6 +1516,8 @@ export const deleteCargoVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -1470,10 +1525,15 @@ export const deleteCargoVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -1591,7 +1651,7 @@ export const updateHost = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -1668,7 +1728,7 @@ export const deleteHost = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -1722,7 +1782,7 @@ export const createAccount = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -1744,7 +1804,6 @@ export const createAccount = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1759,7 +1818,6 @@ export const createAccount = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -1770,6 +1828,8 @@ export const createAccount = /* GraphQL */ `
         items {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -1777,10 +1837,15 @@ export const createAccount = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -1835,7 +1900,7 @@ export const createVisit = /* GraphQL */ `
       checkOutTimestamp
       reason
       status
-      qrUrl
+      qr
       timestamp
       adminApprove
       operApprove
@@ -1884,7 +1949,6 @@ export const createVisit = /* GraphQL */ `
         company
         idFrontPath
         idBackPath
-        timestamp
         createdAt
         updatedAt
         account {
@@ -1907,7 +1971,7 @@ export const createVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -1925,7 +1989,6 @@ export const createVisit = /* GraphQL */ `
         brand
         subBrand
         model
-        timestamp
         createdAt
         updatedAt
         account {
@@ -1948,7 +2011,7 @@ export const createVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -1962,6 +2025,8 @@ export const createVisit = /* GraphQL */ `
       cargoVehicle {
         id
         line
+        vehiclePlate
+        platformPlate
         containerNumber
         tractNumber
         load
@@ -1969,10 +2034,15 @@ export const createVisit = /* GraphQL */ `
         sealsNumber
         additionalDoc
         additionalDocPath
+        packageNumber
         petition
         petitionPath
         timestamp
         driverName
+        email
+        company
+        reason
+        phone
         createdAt
         updatedAt
         account {
@@ -1995,7 +2065,7 @@ export const createVisit = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove
@@ -2057,7 +2127,6 @@ export const createPerson = /* GraphQL */ `
       company
       idFrontPath
       idBackPath
-      timestamp
       createdAt
       updatedAt
       account {
@@ -2098,7 +2167,7 @@ export const createPerson = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -2129,7 +2198,6 @@ export const createPerson = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -2141,7 +2209,6 @@ export const createPerson = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -2149,6 +2216,8 @@ export const createPerson = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -2156,10 +2225,15 @@ export const createPerson = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -2187,7 +2261,6 @@ export const createPrivateVehicle = /* GraphQL */ `
       brand
       subBrand
       model
-      timestamp
       createdAt
       updatedAt
       account {
@@ -2228,7 +2301,7 @@ export const createPrivateVehicle = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -2259,7 +2332,6 @@ export const createPrivateVehicle = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -2271,7 +2343,6 @@ export const createPrivateVehicle = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -2279,6 +2350,8 @@ export const createPrivateVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -2286,10 +2359,15 @@ export const createPrivateVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -2313,6 +2391,8 @@ export const createCargoVehicle = /* GraphQL */ `
     createCargoVehicle(input: $input, condition: $condition) {
       id
       line
+      vehiclePlate
+      platformPlate
       containerNumber
       tractNumber
       load
@@ -2320,10 +2400,15 @@ export const createCargoVehicle = /* GraphQL */ `
       sealsNumber
       additionalDoc
       additionalDocPath
+      packageNumber
       petition
       petitionPath
       timestamp
       driverName
+      email
+      company
+      reason
+      phone
       createdAt
       updatedAt
       account {
@@ -2364,7 +2449,7 @@ export const createCargoVehicle = /* GraphQL */ `
         checkOutTimestamp
         reason
         status
-        qrUrl
+        qr
         timestamp
         adminApprove
         operApprove
@@ -2395,7 +2480,6 @@ export const createCargoVehicle = /* GraphQL */ `
           company
           idFrontPath
           idBackPath
-          timestamp
           createdAt
           updatedAt
           owner
@@ -2407,7 +2491,6 @@ export const createCargoVehicle = /* GraphQL */ `
           brand
           subBrand
           model
-          timestamp
           createdAt
           updatedAt
           owner
@@ -2415,6 +2498,8 @@ export const createCargoVehicle = /* GraphQL */ `
         cargoVehicle {
           id
           line
+          vehiclePlate
+          platformPlate
           containerNumber
           tractNumber
           load
@@ -2422,10 +2507,15 @@ export const createCargoVehicle = /* GraphQL */ `
           sealsNumber
           additionalDoc
           additionalDocPath
+          packageNumber
           petition
           petitionPath
           timestamp
           driverName
+          email
+          company
+          reason
+          phone
           createdAt
           updatedAt
           owner
@@ -2516,7 +2606,7 @@ export const createHost = /* GraphQL */ `
           checkOutTimestamp
           reason
           status
-          qrUrl
+          qr
           timestamp
           adminApprove
           operApprove

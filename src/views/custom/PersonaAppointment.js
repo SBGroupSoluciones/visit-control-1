@@ -41,7 +41,8 @@ import {
   isValidCompanyName,
   isValidPhoneNumber,
 } from "../Auth/utils";
-import { hostList, uploadImage } from "./Host";
+import { hostList, uploadImage, getImage } from "./Host";
+import { S3Image, PhotoPicker } from "aws-amplify-react";
 import moment from "moment";
 
 const PersonaAppointment = (props) => {
@@ -52,17 +53,22 @@ const PersonaAppointment = (props) => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
   const [company, setCompany] = useState();
   const [reason, setReason] = useState();
   const [appointmentDate, setAppointmentDate] = useState();
   const [appointmentHour, setAppointmentHour] = useState();
   const [hostId, setHostId] = useState();
   const [image, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState();
   const [newVehicle, setNewVehicle] = useState(false);
   const [host, setHost] = useState();
   const [warehouses, setWarehouses] = useState();
   const [warehouse, setWarehouse] = useState();
   const [hostWId, setHostWId] = useState();
+  const [imageName, setImageName] = useState();
+  const [imageData, setImageData] = useState();
+  const [imageKey, setImageKey] = useState();
 
   const changeHandler = (e) => {
     console.log(e);
@@ -83,21 +89,23 @@ const PersonaAppointment = (props) => {
     }
 
     if (
-      (firstName &&
-        lastName &&
-        email &&
-        company &&
-        reason &&
-        appointmentDate &&
-        appointmentHour &&
-        hostId,
-      image)
+      firstName &&
+      lastName &&
+      email &&
+      phone &&
+      company &&
+      reason &&
+      appointmentDate &&
+      appointmentHour &&
+      hostId &&
+      image &&
+      imageUrl
     ) {
-      console.log("SE ACTIVARON");
       setAppointmentData({
         firstName: firstName,
         lastName: lastName,
         email: email,
+        phone: phone, 
         company: company,
         reason: reason,
         appointmentDate: appointmentDate,
@@ -105,6 +113,19 @@ const PersonaAppointment = (props) => {
         hostId: hostId,
         warehouse: warehouse,
         image: image,
+        imageUrl: imageUrl,
+      });
+    }
+
+    if (imageName && imageData) {
+      console.log("ambos cargaron");
+      let data = {
+        fileName: imageName,
+        file: imageData,
+      };
+      uploadImage(data).then((uploaded) => {
+        console.log(uploaded.key);
+        setImageKey(uploaded.key);
       });
     }
   }, [
@@ -118,6 +139,9 @@ const PersonaAppointment = (props) => {
     appointmentHour,
     hostId,
     image,
+    imageUrl,
+    imageName,
+    imageData,
   ]);
 
   const onDataPrepare = (data) => {
@@ -160,13 +184,16 @@ const PersonaAppointment = (props) => {
   };
 
   const onImageLoad = (image) => {
-    setImage(image)
+    console.log("la imagen cargada", image);
+    setImage(image.name);
     let data = {
-      fileName: "IMAGEN TEST",
+      fileName: image.name,
       file: image,
     };
     uploadImage(data).then((uploaded) => {
-      console.log(uploaded);
+      getImage(image.name).then((imagePath) => {
+        setImageUrl(imagePath);
+      });
     });
   };
 
@@ -178,6 +205,7 @@ const PersonaAppointment = (props) => {
   return (
     <>
       <div className="custom-separation"></div>
+      <PersonalVehicle show={newVehicle} setNotification={setNewVehicle} />
       <CRow>
         <CCol xs="12" md="12">
           <CRow>
@@ -210,7 +238,7 @@ const PersonaAppointment = (props) => {
                 )}
               </CFormGroup>
             </CCol>
-            <CCol xs="12" md="3">
+            <CCol xs="12" md="3">    border: 1px solid #ccc;
               <CFormGroup>
                 <CLabel htmlFor="lastName">Apellido</CLabel>
                 <CInput
@@ -258,21 +286,20 @@ const PersonaAppointment = (props) => {
                 )}
               </CFormGroup>
             </CCol>
-            <CCol xs="12" md="6">
+            <CCol xs="12" md="3">
               <CFormGroup>
-                <CLabel htmlFor="firstName">Motivo de la visita</CLabel>
-                <CTextarea
-                  name="textarea-input"
-                  id="textarea-input"
-                  rows="3"
-                  placeholder="Escriba el motivo de su visita..."
+                <CLabel htmlFor="phone">Telefono</CLabel>
+                <CInput
+                  id="phone"
+                  placeholder=""
                   onChange={(e) => {
-                    setReason(e.target.value);
+                    setPhone(e.target.value);
                   }}
+                  required
                 />
               </CFormGroup>
             </CCol>
-            <CCol xs="12" md="6">
+            <CCol xs="12" md="3">
               <CFormGroup>
                 <CLabel htmlFor="firstName">Vechículo</CLabel>
                 <CSelect
@@ -286,6 +313,20 @@ const PersonaAppointment = (props) => {
                   <option value="none">Ninguno</option>
                   <option value="new">Añadir nuevo</option>
                 </CSelect>
+              </CFormGroup>
+            </CCol>
+            <CCol xs="12" md="6">
+              <CFormGroup>
+                <CLabel htmlFor="firstName">Motivo de la visita</CLabel>
+                <CTextarea
+                  name="textarea-input"
+                  id="textarea-input"
+                  rows="1"
+                  placeholder="Escriba el motivo de su visita..."
+                  onChange={(e) => {
+                    setReason(e.target.value);
+                  }}
+                />
               </CFormGroup>
             </CCol>
             <CCol xs="12" md="3">
@@ -371,7 +412,6 @@ const PersonaAppointment = (props) => {
                   <option value="15:30:00">03:30 p.m.</option>
                   <option value="16:00:00">04:00 p.m.</option>
                   <option value="16:30:00">04:30 p.m.</option>
-                  <option value="17:00:00">05:00 p.m.</option>
                   <option value="17:30:00">05:30 p.m.</option>
                 </CSelect>{" "}
               </CFormGroup>
@@ -380,22 +420,46 @@ const PersonaAppointment = (props) => {
             <CCol xs="12" md="12">
               <CRow>
                 <CCol xs="12" md="4">
-                  <CLabel htmlFor="file-input">Imagen</CLabel>
-                  <CInputFile
-                    id="file-input"
-                    name="file-input"
-                    onChange={(e) => {
-                      onImageLoad(e.target.files[0]);
-                    }}
-                  />
+                  <CRow>
+                    <CCol xs="12" md="6">
+                      <PhotoPicker
+                        onPick={(data) => setImageName(data.name)}
+                        preview
+                        title="Seleccione una Imagen"
+                        headerText="Imagen"
+                        headerHint=" "
+                        onLoad={(dataURL) => setImageData(dataURL)}
+                      />
+                    </CCol>
+                  </CRow>
                 </CCol>
                 <CCol xs="12" md="4">
-                  <CLabel htmlFor="file-input">INE Frente</CLabel>
-                  <CInputFile id="file-input" name="file-input" />
-                </CCol>{" "}
+                  <CRow>
+                    <CCol xs="12" md="6">
+                      <PhotoPicker
+                        onPick={(data) => setImageName(data.name)}
+                        preview
+                        title="Seleccione una Imagen"
+                        headerText="INE Frente"
+                        headerHint=" "
+                        onLoad={(dataURL) => setImageData(dataURL)}
+                      />
+                    </CCol>
+                  </CRow>
+                </CCol>
                 <CCol xs="12" md="4">
-                  <CLabel htmlFor="file-input">INE Reverso</CLabel>
-                  <CInputFile id="file-input" name="file-input" />
+                  <CRow>
+                    <CCol xs="12" md="6">
+                      <PhotoPicker
+                        onPick={(data) => setImageName(data.name)}
+                        preview
+                        title="Seleccione una Imagen"
+                        headerText="INE Reverso"
+                        headerHint=" "
+                        onLoad={(dataURL) => setImageData(dataURL)}
+                      />
+                    </CCol>
+                  </CRow>
                 </CCol>
               </CRow>
             </CCol>

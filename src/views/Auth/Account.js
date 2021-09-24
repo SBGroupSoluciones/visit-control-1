@@ -1,4 +1,4 @@
-import { createAccount } from "src/graphql/mutations";
+import { createAccount, updateAccount } from "src/graphql/mutations";
 import { listAccounts, getAccount, accountsByRole } from "src/graphql/queries";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import AWSAppSyncClient, { AUTH_TYPE } from "aws-appsync";
@@ -56,5 +56,27 @@ export const getAccountByRole = async (role) => {
     return account.data.accountsByRole;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const accountUpdate = async (params) => {
+  const { firstName, lastName, email, phones, company, role } = params;
+  const accountData = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    phones: phones,
+    company: company,
+    role: role,
+  };
+
+  try {
+    const account = await API.graphql({
+      query: updateAccount,
+      variables: { input: accountData },
+    });
+    return account.data.createAccount;
+  } catch (e) {
+    console.log(e);
   }
 };

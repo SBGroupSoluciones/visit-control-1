@@ -57,7 +57,6 @@ const fields = ["name", "registered", "role", "status"];
 const Appointment = () => {
   const [personAlready, setPersonAlready] = useState(false);
   const [active, setActive] = useState(0);
-  const [newVehicle, setNewVehicle] = useState(false);
   const [personaConfirm, setPersonaConfirm] = useState(false);
   const [cargoConfirm, setCargoConfirm] = useState(false);
   const [personaAppointment, setPersonaAppointment] = useState();
@@ -67,13 +66,11 @@ const Appointment = () => {
 
   const onConfirmDate = () => {
     if (personaAppointment) {
-      console.log(personaAppointment);
       setPersonaConfirm(true);
     }
-    console.log("CA ?", cargoAppointment);
-    // if (cargoAppointment) {
-    //   setCargoConfirm(true);
-    // }
+    if (cargoAppointment) {
+      setCargoConfirm(true);
+    }
   };
 
   return (
@@ -82,13 +79,12 @@ const Appointment = () => {
         show={personaConfirm}
         setPersonaConfirm={setPersonaConfirm}
         appointmentData={personaAppointment}
-      />{" "}
+      />
       <ConfirmCargo
         show={cargoConfirm}
         confirmHandler={setCargoConfirm}
         appointmentData={cargoAppointment}
       />
-      <PersonalVehicle show={newVehicle} setNotification={setNewVehicle} />
       <CRow>
         <CCol md="12">
           <CCard accentColor="success">
@@ -119,7 +115,9 @@ const Appointment = () => {
                     />
                   </CTabPane>
                   <CTabPane>
-                    <CargoAppointment />
+                    <CargoAppointment
+                      setAppointmentData={setCargoAppointment}
+                    />
                   </CTabPane>
                 </CTabContent>
               </CTabs>
@@ -133,6 +131,8 @@ const Appointment = () => {
                     className="mb-1"
                     onClick={(e) => onConfirmDate(e)}
                     block
+                    disabled={personaAppointment ||cargoAppointment ? false:true}
+
                   >
                     <span>Agendar</span>
                   </CButton>

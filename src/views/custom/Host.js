@@ -3,7 +3,6 @@ import { listHosts } from "src/graphql/queries";
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import awsconfig from "../../aws-exports";
 import CreateHost from "./CreateHost";
-
 Auth.configure(awsconfig);
 
 export const hostCreate = async (params) => {
@@ -41,12 +40,32 @@ export const uploadImage = async (data) => {
   // });
   try {
     const file = await Storage.put(data.fileName, data.file);
-    console.log("SE SUBIO ", file)
+    console.log("SE SUBIO ", file);
+    return file
   } catch (error) {
     console.log("elerror ", error);
   }
 };
 
+export const getImage = async (name) => {
+  try {
+    // const s3Image = await Storage.get(name);
+
+    const s3Image = await Storage.get(name, { level: "public" });
+    // Storage.get(name, { level: 'public' })
+    //   .then ( (result) => {
+    //     console.log("La imagen", result);
+    //     return result
+    //   })
+    //   .catch( (err) => {
+    //     console.log(err);
+    //   });
+
+    return s3Image;
+  } catch (error) {
+    console.log("elerror ", error);
+  }
+};
 // export const GetAccount = async (email) => {
 
 //   try {

@@ -1,14 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-
+import React, { useEffect, useState, createRef } from "react";
+import QRCode from "react-qr-code";
+import classNames from "classnames";
 import {
+  CRow,
   CBadge,
   CDataTable,
+  CCol,
   CCard,
   CCardHeader,
   CCardBody,
+  CImg,
+  CForm,
+  CLabel,
+  CInput,
+  CInputFile,
+  CFormGroup,
+  CSelect,
+  CTabs,
+  CNav,
+  CNavItem,
+  CNavLink,
+  CTabPane,
+  CTabContent,
+  CTextarea,
+  CButton,
 } from "@coreui/react";
+import { DocsLink } from "src/reusable";
+import CIcon from "@coreui/icons-react";
+import usersData from "../users/UsersData";
 import { accountList } from "../Auth/Account";
+import { get } from "enzyme/build/configuration";
 
 const getBadge = (status) => {
   switch (status) {
@@ -43,21 +64,16 @@ const getSpanishRole = (role) => {
 
 const fields = ["firstName", "lastName", "email", "company", "phones", "role"];
 const spanishFieds = {
-  id: "ID",
   firstName: "Nombre",
-  lastName: "Apellido",
-  company: "Empresa",
-  email: "Correo",
-  phones: "Telefono",
-  role: "Rol",
+  lastName: "Fecha",
+  company: "Recinto",
+  email: "Anfitrión",
+  phones: "Categoría",
   status: "Status",
 };
 
 const ListAccount = () => {
-  const history = useHistory();
   const [accounts, setAccounts] = useState();
-  const [account, setAccount] = useState();
-  const [editAccount, setEditAccount] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -69,8 +85,8 @@ const ListAccount = () => {
     }
   }, [accounts]);
 
-  const onAccountSelected = (item) => {
-    history.push(`/account/${item.id}`);
+  const seletedRow = (e) => {
+    console.log("LA ROWWW", e);
   };
 
   return (
@@ -99,7 +115,12 @@ const ListAccount = () => {
             hover
             sorter
             columnHeaderSlot={spanishFieds}
-            onRowClick={(item) => onAccountSelected(item)}
+            onClick={(e) => {
+              seletedRow(e);
+            }}
+            onRowClick={(e) => {
+              seletedRow(e);
+            }}
             scopedSlots={{
               role: (item) => (
                 <td>

@@ -62,6 +62,7 @@ const User = React.lazy(() => import("./views/users/User"));
 
 const Account = React.lazy(() => import("./views/custom/CreateAccount"));
 const AccountList = React.lazy(() => import("./views/custom/ListAccount"));
+const AccountEdit = React.lazy(()=>"./views/custom/EditAccount")
 const Vehicle = React.lazy(() => import("./views/custom/Vehicle"));
 const Person = React.lazy(() => import("./views/custom/Person"));
 const Appointment = React.lazy(() => import("./views/custom/Appointment"));
@@ -155,6 +156,12 @@ const routes = [
     exact: true,
     name: "Lista de Cuentas",
     component: AccountList,
+  },
+  {
+    path: "/account/:id",
+    exact: true,
+    name: "Editar Cuenta",
+    component: AccountEdit,
   },
   { path: "/appointment", exact: true, name: "Citas", component: Appointment },
   {

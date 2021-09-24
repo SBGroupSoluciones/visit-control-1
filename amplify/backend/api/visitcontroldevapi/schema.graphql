@@ -36,13 +36,13 @@ type Visit
   id: ID!
   person: Person @connection(name: "VisitPerson")
   dateTimestamp: String!
-  checkInTimestamp: String!
-  checkOutTimestamp: String!
+  checkInTimestamp: String
+  checkOutTimestamp: String
   privateVehicle: PrivateVehicle @connection(name: "VisitPrivateVehicle")
   cargoVehicle: CargoVehicle @connection(name: "VisitCargoVehicle")
   reason: String
   status: String!
-  qrUrl: String
+  qr: String
   timestamp: String
   adminApprove: Boolean
   operApprove: Boolean
@@ -69,7 +69,6 @@ type Person
   company: String!
   idFrontPath: String
   idBackPath: String
-  timestamp: String!
   visit: Visit @connection(name: "VisitPerson")
   account: Account @connection(name: "AccountPersons")
 }
@@ -91,7 +90,6 @@ type PrivateVehicle
   brand: String!
   subBrand: String!
   model: String!
-  timestamp: String!
   visit: Visit @connection(name: "VisitPrivateVehicle")
   account: Account @connection(name: "AccountPrivateVehicles")
 }
@@ -99,7 +97,11 @@ type PrivateVehicle
 type CargoVehicle
   @model
   @key(fields: ["id"])
-  @key(name: "ByPetition", fields: ["petition"], queryField: "cargoVehicleByPetition")
+  @key(
+    name: "ByPetition"
+    fields: ["petition"]
+    queryField: "cargoVehicleByPetition"
+  )
   @key(
     name: "ByDriverName"
     fields: ["driverName"]
@@ -114,6 +116,8 @@ type CargoVehicle
   ) {
   id: ID!
   line: String!
+  vehiclePlate: String
+  platformPlate: String
   containerNumber: String!
   tractNumber: String!
   load: Boolean!
@@ -121,10 +125,15 @@ type CargoVehicle
   sealsNumber: String!
   additionalDoc: String!
   additionalDocPath: String!
+  packageNumber: String
   petition: String!
   petitionPath: String!
   timestamp: String!
   driverName: String!
+  email: String!
+  company: String
+  reason: [String]
+  phone: String
   account: Account @connection(name: "AccountCargoVehicles")
   visit: Visit @connection(name: "VisitCargoVehicle")
 }

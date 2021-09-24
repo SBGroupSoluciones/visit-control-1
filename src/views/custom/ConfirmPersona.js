@@ -15,60 +15,50 @@ import QRCode from "react-qr-code";
 import moment from "moment";
 import "moment/locale/es";
 import { visitCreate } from "./Visit";
+import { S3Image, PhotoPicker } from "aws-amplify-react";
 moment.locale("es");
 
 const ConfirmPersona = (props) => {
-  const {
-    title,
-    body,
-    buttonText,
-    secundaryButton,
-    show,
-    setNotification,
-    setPressedButton,
-    setPersonaConfirm,
-    appointmentData,
-  } = props;
+  const { show, setPersonaConfirm, appointmentData } = props;
   const [appointment, setAppointment] = useState();
   useEffect(() => {
-    console.log("HORARIO MOMENT ", moment().format("YYYY-MM-DD")); // 2021-09-15T12:30:42-06:00);
     if (appointmentData) {
-      console.log("LA DATA DE LA CITA ", appointmentData);
+      const {
+        firstName,
+        lastName,
+        email,
+        company,
+        reason,
+        vehicle,
+        hostId,
+        appointmentDate,
+        appointmentHour,
+        warehouse,
+        image,
+        imageUrl,
+      } = appointmentData;
       const appointmentConfirmData = {
         type: "PERSON",
-        firstName: appointmentData.firstName,
-        lastName: appointmentData.lastName,
-        email: appointmentData.email,
-        company: appointmentData.company,
-        reason: appointmentData.company,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        company: company,
+        reason: reason,
         phone: "1111111111",
-        vehicle: appointmentData.vehicle ? appointmentData.vehicle : null,
-        host: appointmentData.hostId,
+        vehicle: vehicle ? vehicle : null,
+        host: hostId,
         date: appointmentData.appointmentDate,
-        time: appointmentData.appointmentHour,
-        cDate:
-          appointmentData.appointmentDate +
-          "T" +
-          appointmentData.appointmentHour,
-        warehouse: appointmentData.warehouse,
-        imgUrl: appointmentData.image,
+        time: appointmentHour,
+        cDate: appointmentDate + "T" + appointmentHour,
+        warehouse: warehouse,
+        imgUrl: imageUrl,
         ineFUrl: "",
         ineBUrl: "",
       };
       setAppointment(appointmentConfirmData);
     }
-  }, [appointmentData]);
-
-  const qrCode = {
-    recinto: {
-      id: "",
-      name: "",
-      address: "",
-      phone: "",
-      lat: "",
-      lon: "",
-    },
-  };
+    console.log("LACITA", appointmentData);
+  }, [appointmentData, show]);
 
   const onEditButton = (e) => {
     setPersonaConfirm(!show);
@@ -171,7 +161,7 @@ const ConfirmPersona = (props) => {
                     </CLabel>
                     <p className="h5">
                       <QRCode
-                        value={JSON.stringify(qrCode)}
+                        value={JSON.stringify(appointment)}
                         level="L"
                         fgColor="#212121"
                         size="128"
@@ -182,14 +172,26 @@ const ConfirmPersona = (props) => {
                     <CLabel htmlFor="firstName">
                       <strong>Imagen</strong>
                     </CLabel>
+                    <S3Image
+                      imgKey={appointment.image}
+                      onLoad={(url) => console.log(url)}
+                    />
+                    <PhotoPicker
+                      onPick={(data) => console.log(data)}
+                      preview
+                      title="Seleccione una Imagen"
+                      headerText="Foto"
+                      headerHint="Añade tus fotos dando click al botón"
+                      onLoad={(dataURL) => console.log(dataURL)}
+                    />
                     <CImg
-                      src={appointment.image}
+                      src={appointment.imageUrl}
                       shape="rounded-circle"
                       thumbnail
                       className="mb-2"
                       align="right"
                       fluidGrow
-                    />{" "}
+                    />
                   </CCol>
                 </CRow>
                 <CRow>

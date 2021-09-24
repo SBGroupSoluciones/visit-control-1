@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CButton,
+  CCard,
+  CCardHeader,
+  CCardBody,
+  CCardFooter,
   CModal,
   CModalHeader,
   CModalBody,
@@ -10,197 +15,212 @@ import {
   CLabel,
   CContainer,
   CImg,
+  CFormGroup,
+  CInput,
+  CForm,
+  CInvalidFeedback,
+  CSelect,
 } from "@coreui/react";
+import {
+  isValidFirstName,
+  isValidLastName,
+  isValidEmail,
+  isValidCompanyName,
+  isValidPhoneNumber,
+} from "../Auth/utils";
 import QRCode from "react-qr-code";
+import { accountUpdate } from "../Auth/Account";
 
-const EditAccount = (props) => {
-  const {
-    title,
-    body,
-    buttonText,
-    secundaryButton,
-    show,
-    setNotification,
-    setPressedButton,
-    setPersonaConfirm,
-  } = props;
-
-  const qrCode = {
-    recinto: {
-      id: "",
-      name: "",
-      address: "",
-      phone: "",
-      lat: "",
-      lon: "",
-    },
-  };
-
-  const appointment = {
-    firstName: "Angel",
-    lastName: "Ojeda",
-    email: "aojeda@sbgroup.com.mx",
-    company: "SBGroup",
-    reason: "Visita al recinto",
-    phone: "6122308184",
-    vehicle: "SKD-1234",
-    warehouse: "Irapuato",
-    host: "Marcela Rodriguez",
-    date: "20/10/2021",
-    time: "10:29",
-    imgUrl: "",
-    ineFUrl: "",
-    ineBUrl: "",
-  };
-
-  const toggle = (e) => {
-    setPressedButton(e.target.value);
-    setPersonaConfirm(!show);
-  };
-
+const EditAccount = ({ match }) => {
+  console.log("masdka ", match);
   return (
-    <CModal color="success" show={show} size="lg">
-      <CModalHeader closeButton>
-        <p className="h4">Confirmar cita</p>
-      </CModalHeader>
-      <CModalBody>
-        <CRow>
-          <CCol xs="12" md="6">
-            <CContainer>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Fecha y Hora</strong>
-                  </CLabel>
-                  <p className="h5">
-                    {appointment.date + " " + appointment.time}
-                  </p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Nombre</strong>
-                  </CLabel>
-                  <p className="h5">
-                    {appointment.firstName + " " + appointment.lastName}
-                  </p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Correo</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.email}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Empresa</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.company}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Teléfono</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.phone}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Motivo</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.reason}</p>
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="12">
-                  <CLabel htmlFor="firstName">
-                    <strong>Anfitrión</strong>
-                  </CLabel>
-                  <p className="h5">{appointment.host}</p>
-                </CCol>
-              </CRow>
-            </CContainer>
-          </CCol>
-          <CCol xs="12" md="6">
-            <CContainer>
-              <CRow>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>QR</strong>
-                  </CLabel>
-                  <p className="h5">
-                    <QRCode
-                      value={JSON.stringify(qrCode)}
-                      level="L"
-                      fgColor="#212121"
-                      size="128"
-                    />
-                  </p>
-                </CCol>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>Imagen</strong>
-                  </CLabel>
-                  <CImg
-                    src="https://images.generated.photos/wTiSoFr_r3EULmE2aKYB0Xh7rzjjTtjkTetI4Q_An5c/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvMzYyMTgy/NTYtMGM3MC00ZTVi/LWFlZDQtZGUwYmEw/NzdjMGNjLmpwZw.jpg"
-                    shape="rounded-circle"
-                    thumbnail
-                    className="mb-2"
-                    align="right"
-                    fluidGrow
-                  />{" "}
-                </CCol>
-              </CRow>
-              <CRow>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>INE Frente</strong>
-                  </CLabel>
-                  <CImg
-                    src="https://images.generated.photos/wTiSoFr_r3EULmE2aKYB0Xh7rzjjTtjkTetI4Q_An5c/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvMzYyMTgy/NTYtMGM3MC00ZTVi/LWFlZDQtZGUwYmEw/NzdjMGNjLmpwZw.jpg"
-                    shape="rounded"
-                    thumbnail
-                    className="mb-2"
-                    align="right"
-                    fluidGrow
-                  />
-                </CCol>
-                <CCol xs="12" md="6">
-                  <CLabel htmlFor="firstName">
-                    <strong>INE Atras</strong>
-                  </CLabel>
-                  <CImg
-                    src="https://images.generated.photos/wTiSoFr_r3EULmE2aKYB0Xh7rzjjTtjkTetI4Q_An5c/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LmNvbmQvMzYyMTgy/NTYtMGM3MC00ZTVi/LWFlZDQtZGUwYmEw/NzdjMGNjLmpwZw.jpg"
-                    shape="rounded"
-                    thumbnail
-                    className="mb-2"
-                    align="right"
-                    fluidGrow
-                  />
-                </CCol>
-              </CRow>
-            </CContainer>
-          </CCol>
-        </CRow>
-      </CModalBody>
-      <CModalFooter>
-        <CButton color="secondary" onClick={(e) => toggle(e)}>
-          Cancelar
-        </CButton>
-        <CButton color="success" onClick={(e) => toggle(e)}>
-          Guardar
-        </CButton>
-      </CModalFooter>
-    </CModal>
+    <div>
+      <h1>{match.params.id}</h1>
+    </div>
   );
 };
-
 export default EditAccount;
+
+//   const history = useHistory();
+//   const location = useLocation();
+//   const [color, setColor] = useState();
+//   const [brand, setBrand] = useState();
+//   const [subBran, setSubBrand] = useState();
+//   const [model, setModel] = useState();
+//   const [firstName, setFirstName] = useState();
+//   const [lastName, setLastName] = useState();
+//   const [email, setEmail] = useState();
+//   const [company, setCompany] = useState();
+//   const [phone, setPhone] = useState();
+//   const [role, setRole] = useState();
+
+//   const [firstNameValid, setFirstNameValid] = useState(false);
+
+//   useEffect(() => {
+//     if (match.data) {
+//       const { firstName, lastName, email, company, phones, role } =
+//         match.data;
+//       setFirstName(firstName);
+//       setLastName(lastName);
+//       setEmail(email);
+//       setCompany(company);
+//       setPhone(phones);
+//       setRole(role);
+//     }
+//   }, []);
+
+//   const onUpdateData = () => {
+//     const updatedData = {
+//       firstName: firstName,
+//       lastName: lastName,
+//       email: email,
+//       company: company,
+//       phones: phone,
+//       role: role,
+//     };
+
+//     accountUpdate(updatedData)
+//       .then((account) => {
+//         history.push({
+//           pathname: "/account/list",
+//         });
+//         console.log("Updated Account ", account);
+//       })
+//       .catch((e) => console.log("Error ", e));
+//   };
+
+//   const onCancel = () => {
+//     history.push("/account/list");
+//   };
+
+//   return (
+//     <>
+//       <CRow>
+//         <CCol md="6">
+//           <CCard accentColor="success">
+//             <CCardHeader>Editar cuenta</CCardHeader>
+//             <CCardBody>
+//               <CForm>
+//                 <CRow>
+//                   <CCol xs="12" md="12">
+//                     <CLabel htmlFor="firstName" className="ln-top">
+//                       Nombre
+//                     </CLabel>
+//                     <CInput
+//                       type="text"
+//                       autoComplete="firstName"
+//                       value={firstName ? firstName : null}
+//                       // value={firstName ? firstName : null}
+//                       onChange={(e) => {
+//                         setFirstName(e.target.value);
+//                         // onFirstNameValidation(e.target.value);
+//                       }}
+//                       // valid={firstNameValid}
+//                       // invalid={!firstNameValid && firstName}
+//                     />
+//                   </CCol>
+//                   <CCol xs="12" md="12">
+//                     <CLabel htmlFor="lastName" className="ln-top">
+//                       Apellido
+//                     </CLabel>
+//                     <CInput
+//                       type="text"
+//                       autoComplete="lastName"
+//                       value={lastName ? lastName : null}
+//                       // onChange={(e) => {
+//                       //   onLastNameValidation(e.target.value);
+//                       // }}
+//                       // valid={lastNameValid}
+//                       // invalid={!lastNameValid && lastName}
+//                     />
+//                   </CCol>
+//                   <CCol xs="12" md="12">
+//                     <CLabel htmlFor="firstName" className="ln-top">
+//                       Correo
+//                     </CLabel>
+//                     <CInput
+//                       type="text"
+//                       autoComplete="username"
+//                       disabled={true}
+//                       value={email ? email : null}
+//                       // onChange={(e) => {
+//                       //   onEmailValidation(e.target.value);
+//                       // }}
+//                       // valid={emailValid}
+//                       // invalid={!emailValid && email}
+//                     />
+//                     <CInvalidFeedback>
+//                       Introduzca una dirección de correo electrónico válida
+//                     </CInvalidFeedback>
+//                   </CCol>
+//                   <CCol xs="12" md="12">
+//                     <CLabel htmlFor="firstName" className="ln-top">
+//                       Empresa
+//                     </CLabel>
+//                     <CInput
+//                       type="text"
+//                       autoComplete="company"
+//                       value={company ? company : null}
+//                       // onChange={(e) => {
+//                       //   onCompanyValidation(e.target.value);
+//                       // }}
+//                       // valid={companyValid}
+//                       // invalid={!companyValid && company}
+//                     />
+//                   </CCol>
+//                   <CCol xs="12" md="12">
+//                     <CLabel htmlFor="firstName" className="ln-top">
+//                       Teléfono
+//                     </CLabel>
+//                     <CInput
+//                       type="text"
+//                       autoComplete="phone"
+//                       value={phone ? phone[0] : null}
+//                       // onChange={(e) => {
+//                       //   onPhoneValidation(e.target.value);
+//                       // }}
+//                       // valid={phoneValid}
+//                       // invalid={!phoneValid && phone}
+//                     />
+//                     <CInvalidFeedback>
+//                       Introduzca un numero de telefono valido
+//                     </CInvalidFeedback>
+//                   </CCol>
+//                   <CCol xs="12" md="12">
+//                     <CLabel htmlFor="role" className="ln-top">
+//                       Rol
+//                     </CLabel>
+//                     <CSelect
+//                       custom
+//                       name="select"
+//                       id="role"
+//                       value={role ? role : null}
+//                       // value={role}
+//                       // onChange={(e) => {
+//                       //   setRole(e.target.value);
+//                       // }}
+//                     >
+//                       <option value="USER">Usuario</option>
+//                       <option value="HOST">Anfitrión</option>
+//                       <option value="OPERATOR">Operador</option>
+//                       <option value="ADMIN">Administrador</option>
+//                       <option value="SUPER_ADMIN">Super Admin ✯</option>
+//                     </CSelect>
+//                   </CCol>
+//                 </CRow>
+//               </CForm>
+//             </CCardBody>
+//             <CCardFooter>
+//               <CButton color="secondary" onClick={(e) => onCancel(e)}>
+//                 Cancelar
+//               </CButton>
+//               <CButton color="primary" onClick={(e) => onUpdateData()}>
+//                 Guardar
+//               </CButton>
+//             </CCardFooter>
+//           </CCard>
+//         </CCol>
+//       </CRow>
+//     </>
+//   );
+// };

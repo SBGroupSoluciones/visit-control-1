@@ -8,8 +8,8 @@ Auth.configure(awsconfig);
 export const warehouseCreate = async (params) => {
   const { name, address, phone } = params;
   const warehouseData = {
-    name:name, 
-    address:address, 
+    name: name,
+    address: address,
     phone: phone,
   };
 
@@ -34,7 +34,6 @@ export const warehouseList = async () => {
 };
 
 // export const GetAccount = async (email) => {
-
 //   try {
 //     const account = await API.graphql(
 //       graphqlOperation(getAccount, { email: email })
