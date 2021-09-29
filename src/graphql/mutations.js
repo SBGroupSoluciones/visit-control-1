@@ -128,6 +128,9 @@ export const updateAccount = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -259,6 +262,9 @@ export const deleteAccount = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -483,6 +489,9 @@ export const updateVisit = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -707,6 +716,9 @@ export const deleteVisit = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -1677,6 +1689,17 @@ export const updateHost = /* GraphQL */ `
         }
       }
       owner
+      calendar {
+        items {
+          id
+          date
+          hours
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1750,6 +1773,119 @@ export const deleteHost = /* GraphQL */ `
         updatedAt
         owner
         host {
+          nextToken
+        }
+      }
+      owner
+      calendar {
+        items {
+          id
+          date
+          hours
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updateCalendar = /* GraphQL */ `
+  mutation UpdateCalendar(
+    $input: UpdateCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    updateCalendar(input: $input, condition: $condition) {
+      id
+      date
+      hours
+      createdAt
+      updatedAt
+      host {
+        id
+        createdAt
+        updatedAt
+        hostName {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const deleteCalendar = /* GraphQL */ `
+  mutation DeleteCalendar(
+    $input: DeleteCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    deleteCalendar(input: $input, condition: $condition) {
+      id
+      date
+      hours
+      createdAt
+      updatedAt
+      host {
+        id
+        createdAt
+        updatedAt
+        hostName {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
           nextToken
         }
       }
@@ -1884,6 +2020,9 @@ export const createAccount = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -2108,6 +2247,9 @@ export const createVisit = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -2628,6 +2770,68 @@ export const createHost = /* GraphQL */ `
         updatedAt
         owner
         host {
+          nextToken
+        }
+      }
+      owner
+      calendar {
+        items {
+          id
+          date
+          hours
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createCalendar = /* GraphQL */ `
+  mutation CreateCalendar(
+    $input: CreateCalendarInput!
+    $condition: ModelCalendarConditionInput
+  ) {
+    createCalendar(input: $input, condition: $condition) {
+      id
+      date
+      hours
+      createdAt
+      updatedAt
+      host {
+        id
+        createdAt
+        updatedAt
+        hostName {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
           nextToken
         }
       }

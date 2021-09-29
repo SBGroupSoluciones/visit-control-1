@@ -6,7 +6,7 @@ import {
   CCardHeader,
   CCardBody,
 } from "@coreui/react";
-import { warehouseList } from "./Warehouse";
+import { warehouseList } from "../custom/Warehouse";
 
 const getBadge = (status) => {
   switch (status) {

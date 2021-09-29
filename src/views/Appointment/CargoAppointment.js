@@ -32,10 +32,10 @@ import { DocsLink } from "src/reusable";
 import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import CarbonDatePicker from "react-carbon-datepicker";
-import Notification from "./Notification";
+import Notification from "../custom/Notification";
 import PersonalVehicle from "./PersonalVehicle";
 import PersonaAppointment from "./PersonaAppointment";
-import { hostList, uploadImage } from "./Host";
+import { hostList, uploadImage } from "../custom/Host";
 
 const getBadge = (status) => {
   switch (status) {

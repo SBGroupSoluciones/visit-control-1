@@ -125,6 +125,9 @@ export const onCreateAccount = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -253,6 +256,9 @@ export const onUpdateAccount = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -381,6 +387,9 @@ export const onDeleteAccount = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -602,6 +611,9 @@ export const onCreateVisit = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -823,6 +835,9 @@ export const onUpdateVisit = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -1044,6 +1059,9 @@ export const onDeleteVisit = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -2421,6 +2439,17 @@ export const onCreateHost = /* GraphQL */ `
         }
       }
       owner
+      calendar {
+        items {
+          id
+          date
+          hours
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -2495,6 +2524,17 @@ export const onUpdateHost = /* GraphQL */ `
         }
       }
       owner
+      calendar {
+        items {
+          id
+          date
+          hours
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -2565,6 +2605,161 @@ export const onDeleteHost = /* GraphQL */ `
         updatedAt
         owner
         host {
+          nextToken
+        }
+      }
+      owner
+      calendar {
+        items {
+          id
+          date
+          hours
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const onCreateCalendar = /* GraphQL */ `
+  subscription OnCreateCalendar {
+    onCreateCalendar {
+      id
+      date
+      hours
+      createdAt
+      updatedAt
+      host {
+        id
+        createdAt
+        updatedAt
+        hostName {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const onUpdateCalendar = /* GraphQL */ `
+  subscription OnUpdateCalendar {
+    onUpdateCalendar {
+      id
+      date
+      hours
+      createdAt
+      updatedAt
+      host {
+        id
+        createdAt
+        updatedAt
+        hostName {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const onDeleteCalendar = /* GraphQL */ `
+  subscription OnDeleteCalendar {
+    onDeleteCalendar {
+      id
+      date
+      hours
+      createdAt
+      updatedAt
+      host {
+        id
+        createdAt
+        updatedAt
+        hostName {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
           nextToken
         }
       }

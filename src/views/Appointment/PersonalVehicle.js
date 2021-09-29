@@ -9,23 +9,37 @@ import {
   CCol,
   CLabel,
   CContainer,
-  CImg,
   CFormGroup,
   CInput,
 } from "@coreui/react";
-import QRCode from "react-qr-code";
+import { vehicleCreate } from "src/util/Vehicle";
 
 const PersonalVehicle = (props) => {
+  const [plate, setPlate] = useState();
   const [color, setColor] = useState();
   const [brand, setBrand] = useState();
-  const [subBran, setSubBrand] = useState();
+  const [subBrand, setSubBrand] = useState();
   const [model, setModel] = useState();
-  const { show, setNotification } = props;
-
-
+  const { show, setNotification, setVehiclePlate } = props;
 
   const toggle = (e) => {
     setNotification(!show);
+  };
+
+  const onCreateVehicle = (e) => {
+    const vehicleData = {
+      plate: plate,
+      color: color,
+      brand: brand,
+      model: model,
+      subBrand: subBrand,
+      account: localStorage.getItem("account"),
+    };
+    vehicleCreate(vehicleData).then((vehicle) => {
+      console.log("Se Creo el vehiculo", vehicle);
+      setVehiclePlate(plate);
+      setNotification(!show);
+    });
   };
 
   return (
@@ -37,14 +51,14 @@ const PersonalVehicle = (props) => {
         <CRow>
           <CContainer>
             <CRow>
-            <CCol xs="12" md="12">
+              <CCol xs="12" md="12">
                 <CFormGroup>
                   <CLabel htmlFor="name">Placa</CLabel>
                   <CInput
                     id="name"
                     placeholder=""
                     onChange={(e) => {
-                      setColor(e.target.value);
+                      setPlate(e.target.value);
                     }}
                     required
                   />
@@ -110,7 +124,7 @@ const PersonalVehicle = (props) => {
         <CButton color="secondary" onClick={(e) => toggle(e)}>
           Cancelar
         </CButton>
-        <CButton color="success" onClick={(e) => toggle(e)}>
+        <CButton color="success" onClick={(e) => onCreateVehicle(e)}>
           Añadir
         </CButton>
       </CModalFooter>

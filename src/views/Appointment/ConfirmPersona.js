@@ -14,28 +14,32 @@ import {
 import QRCode from "react-qr-code";
 import moment from "moment";
 import "moment/locale/es";
-import { visitCreate } from "./Visit";
+import { visitCreate } from "../custom/Visit";
 import { S3Image, PhotoPicker } from "aws-amplify-react";
+import { jwtEncode } from "src/util/Utils";
+import { personCreate } from "src/util/Persona";
 moment.locale("es");
 
 const ConfirmPersona = (props) => {
   const { show, setPersonaConfirm, appointmentData } = props;
   const [appointment, setAppointment] = useState();
+  const [qrJson, setQrJson] = useState();
   useEffect(() => {
     if (appointmentData) {
       const {
         firstName,
         lastName,
         email,
+        phone,
         company,
         reason,
-        vehicle,
-        hostId,
+        plate,
         appointmentDate,
         appointmentHour,
-        warehouse,
-        image,
-        imageUrl,
+        host,
+        imageName,
+        ineFrontName,
+        ineBackName,
       } = appointmentData;
       const appointmentConfirmData = {
         type: "PERSON",
@@ -44,28 +48,85 @@ const ConfirmPersona = (props) => {
         email: email,
         company: company,
         reason: reason,
-        phone: "1111111111",
-        vehicle: vehicle ? vehicle : null,
-        host: hostId,
-        date: appointmentData.appointmentDate,
+        phone: phone,
+        plate: plate ? plate : null,
+        host: host,
+        date: appointmentDate,
         time: appointmentHour,
-        cDate: appointmentDate + "T" + appointmentHour,
-        warehouse: warehouse,
-        imgUrl: imageUrl,
-        ineFUrl: "",
-        ineBUrl: "",
+        cDate: `${appointmentDate}T${appointmentHour}`,
+        imgUrl: imageName,
+        ineFUrl: ineFrontName,
+        ineBUrl: ineBackName,
       };
       setAppointment(appointmentConfirmData);
+      setQrJson(
+        jwtEncode({
+          account: localStorage.getItem("account"),
+          email: appointmentData.email,
+          // host: appointmentData.host,
+          date: appointmentData.cDate,
+        })
+      );
     }
-    console.log("LACITA", appointmentData);
+    console.log("LACITACONFIRM", appointmentData);
   }, [appointmentData, show]);
+
+  const appoint = {
+    person: "",
+    dateTimestamp: "",
+    checkInTimestamp: "",
+    checkOutTimestamp: "",
+    privateVehicle: "",
+    cargoVehicle: "",
+    reason: "",
+    status: "",
+    qr: "",
+    timestamp: "",
+    adminApprove: "",
+    operApprove: "",
+    type: "",
+    host: "",
+    account: "",
+  };
 
   const onEditButton = (e) => {
     setPersonaConfirm(!show);
   };
 
   const onConfirmData = () => {
-    visitCreate(appointment);
+    const personaData = {
+      persona: {
+        firstName: appointment.firstName,
+        lastName: appointment.lastName,
+        email: appointment.email,
+        imgUrl: appointment.imgUrl,
+        phone: appointment.phone,
+        company: appointment.company,
+        idFrontPath: appointment.ineFUrl,
+        idBackPath: appointment.ineBUrl,
+        personAccountId: localStorage.getItem("account"),
+      },
+    };
+    personCreate(personaData).then((createdPerson) => {
+      console.log("Se creo la persona ", createdPerson);
+      const visit = {
+        reason: appointment.reason,
+        dateTimestamp: appointment.cDate,
+        status: "SCHEDULED",
+        qr: qrJson,
+        timestamp: "",
+        adminApprove: false,
+        operApprove: false,
+        type: "PERSON",
+        visitHostId: appointment.host.id,
+        visitAccountId: localStorage.getItem("account"),
+        visitPersonId: createdPerson.id,
+        visitPrivateVehicleId: appointment.plate ? appointment.plate : null,
+      };
+      visitCreate(visit).then((visitCreated) => {
+        console.log("VISiTA CREADA", visitCreated);
+      });
+    });
 
     // setPressedButton(e.target.value);
     setPersonaConfirm(!show);
@@ -98,7 +159,7 @@ const ConfirmPersona = (props) => {
                       <strong>Nombre</strong>
                     </CLabel>
                     <p className="h5">
-                      {appointment.firstName + " " + appointment.lastName}
+                      {`${appointment.firstName} ${appointment.lastName}`}
                     </p>
                   </CCol>
                 </CRow>
@@ -118,14 +179,14 @@ const ConfirmPersona = (props) => {
                     <p className="h5">{appointment.company}</p>
                   </CCol>
                 </CRow>
-                {/* <CRow>
+                <CRow>
                   <CCol xs="12" md="12">
                     <CLabel htmlFor="firstName">
                       <strong>Teléfono</strong>
                     </CLabel>
                     <p className="h5">{appointment.phone}</p>
                   </CCol>
-                </CRow> */}
+                </CRow>
                 <CRow>
                   <CCol xs="12" md="12">
                     <CLabel htmlFor="firstName">
@@ -134,12 +195,22 @@ const ConfirmPersona = (props) => {
                     <p className="h5">{appointment.reason}</p>
                   </CCol>
                 </CRow>
+                {appointment.plate ? (
+                  <CRow>
+                    <CCol xs="12" md="12">
+                      <CLabel htmlFor="firstName">
+                        <strong>Vehiculo Personal</strong>
+                      </CLabel>
+                      <p className="h5">{appointment.plate}</p>
+                    </CCol>
+                  </CRow>
+                ) : null}
                 <CRow>
                   <CCol xs="12" md="12">
                     <CLabel htmlFor="firstName">
                       <strong>Recinto</strong>
                     </CLabel>
-                    <p className="h5">{appointment.warehouse}</p>
+                    <p className="h5">{appointment.host.warehouse.name}</p>
                   </CCol>
                 </CRow>
                 <CRow>
@@ -147,7 +218,7 @@ const ConfirmPersona = (props) => {
                     <CLabel htmlFor="firstName">
                       <strong>Anfitrión</strong>
                     </CLabel>
-                    <p className="h5">{appointment.host}</p>
+                    <p className="h5">{`${appointment.host.hostName.firstName} ${appointment.host.hostName.lastName}`}</p>
                   </CCol>
                 </CRow>
               </CContainer>
@@ -161,7 +232,7 @@ const ConfirmPersona = (props) => {
                     </CLabel>
                     <p className="h5">
                       <QRCode
-                        value={JSON.stringify(appointment)}
+                        value={JSON.stringify(qrJson)}
                         level="L"
                         fgColor="#212121"
                         size="128"
@@ -173,24 +244,8 @@ const ConfirmPersona = (props) => {
                       <strong>Imagen</strong>
                     </CLabel>
                     <S3Image
-                      imgKey={appointment.image}
+                      imgKey={appointment.imageUrl}
                       onLoad={(url) => console.log(url)}
-                    />
-                    <PhotoPicker
-                      onPick={(data) => console.log(data)}
-                      preview
-                      title="Seleccione una Imagen"
-                      headerText="Foto"
-                      headerHint="Añade tus fotos dando click al botón"
-                      onLoad={(dataURL) => console.log(dataURL)}
-                    />
-                    <CImg
-                      src={appointment.imageUrl}
-                      shape="rounded-circle"
-                      thumbnail
-                      className="mb-2"
-                      align="right"
-                      fluidGrow
                     />
                   </CCol>
                 </CRow>
@@ -199,25 +254,18 @@ const ConfirmPersona = (props) => {
                     <CLabel htmlFor="firstName">
                       <strong>INE Frente</strong>
                     </CLabel>
-                    <CImg
-                      src={appointment.image}
-                      shape="rounded"
-                      thumbnail
-                      className="mb-2"
-                      align="right"
-                      fluidGrow
+                    <S3Image
+                      imgKey={appointment.ineFUrl}
+                      onLoad={(url) => console.log(url)}
                     />
                   </CCol>
                   <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>INE Atras</strong>
                     </CLabel>
-                    <CImg
-                      src={appointment.image}
-                      thumbnail
-                      className="mb-2"
-                      align="right"
-                      fluidGrow
+                    <S3Image
+                      imgKey={appointment.ineBUrl}
+                      onLoad={(url) => console.log(url)}
                     />
                   </CCol>
                 </CRow>

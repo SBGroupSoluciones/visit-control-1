@@ -30,7 +30,7 @@ import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import { accountList } from "../Auth/Account";
 import { userStatus } from "../Auth/AuthUtil";
-import { hostList } from "./Host";
+import { hostList } from "./../custom/Host";
 
 const getBadge = (status) => {
   switch (status) {

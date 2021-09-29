@@ -169,4 +169,21 @@ type Host
   hostName: Account @connection(name: "AccountHost")
   warehouse: Warehouse @connection(name: "WarehouseHost")
   visit: [Visit] @connection(name: "VisitHost")
+  calendar: [Calendar] @connection(name: "HostCalendar")
+}
+
+type Calendar
+  @model
+  @key(fields: ["date"])
+  @auth(
+    rules: [
+      { allow: owner, operations: [create, read, update, delete] }
+      { allow: private, operations: [create, read, update, delete] }
+      { allow: public, provider: apiKey, operations: [create, read] }
+    ]
+  ) {
+  id: ID
+  date: String!
+  hours: [String]
+  host: Host @connection(name: "HostCalendar")
 }

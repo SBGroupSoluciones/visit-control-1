@@ -125,6 +125,9 @@ export const getAccount = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -446,6 +449,9 @@ export const getVisit = /* GraphQL */ `
           owner
         }
         owner
+        calendar {
+          nextToken
+        }
       }
     }
   }
@@ -1469,6 +1475,17 @@ export const getHost = /* GraphQL */ `
         }
       }
       owner
+      calendar {
+        items {
+          id
+          date
+          hours
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -1506,6 +1523,90 @@ export const listHosts = /* GraphQL */ `
           phone
           lat
           lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getCalendar = /* GraphQL */ `
+  query GetCalendar($date: String!) {
+    getCalendar(date: $date) {
+      id
+      date
+      hours
+      createdAt
+      updatedAt
+      host {
+        id
+        createdAt
+        updatedAt
+        hostName {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        visit {
+          nextToken
+        }
+        warehouse {
+          id
+          name
+          address
+          phone
+          lat
+          lon
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        calendar {
+          nextToken
+        }
+      }
+      owner
+    }
+  }
+`;
+export const listCalendars = /* GraphQL */ `
+  query ListCalendars(
+    $date: String
+    $filter: ModelCalendarFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listCalendars(
+      date: $date
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        date
+        hours
+        createdAt
+        updatedAt
+        host {
+          id
           createdAt
           updatedAt
           owner

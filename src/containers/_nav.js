@@ -85,6 +85,11 @@ export const superAdminNav = [
         name: "Citas Agendadas",
         to: "/appointment/list",
       },
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Calendario de Citas",
+      //   to: "/appointment/calendar",
+      // },
     ],
   },
   {

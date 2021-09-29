@@ -3,49 +3,43 @@ import {
   createPerson,
   createCargoVehicle,
 } from "src/graphql/mutations";
-import { listHosts } from "src/graphql/queries";
+import { listHosts, listVisits } from "src/graphql/queries";
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import awsconfig from "../../aws-exports";
-import CreateHost from "./CreateHost";
+import CreateHost from "../Host/CreateHost";
 
 Auth.configure(awsconfig);
 
 export const visitCreate = async (params) => {
   const {
-    type,
-    firstName,
-    lastName,
-    email,
-    company,
     reason,
-    phone,
-    host,
-    cDate,
+    dateTimestamp,
+    status,
+    qr,
+    timestamp,
+    adminApprove,
+    operApprove,
+    type,
+    visitHostId,
+    visitAccountId,
+    visitPersonId,
+    visitPrivateVehicleId,
   } = params;
 
   if (type == "PERSON") {
-    const personData = {
-      company: company,
-      email: email,
-      firstName: firstName,
-      lastName: lastName,
-      personAccountId: localStorage.getItem("account"),
-      phone: phone,
-      timestamp: new Date(),
-    };
-    const personID = await personVisit(personData);
-
     const visitData = {
-      checkInTimestamp: cDate,
-      checkOutTimestamp: cDate,
-      dateTimestamp: cDate,
-      operApprove: false,
-      adminApprove: false,
-      status: "SCHEDULED",
+      reason: reason,
+      dateTimestamp: dateTimestamp,
+      status: status,
+      qr: qr,
+      timestamp: timestamp,
+      adminApprove: adminApprove,
+      operApprove: operApprove,
       type: type,
-      visitAccountId: localStorage.getItem("account"),
-      visitHostId: host,
-      visitPersonId: personID,
+      visitHostId: visitHostId,
+      visitAccountId: visitAccountId,
+      visitPersonId: visitPersonId,
+      visitPrivateVehicleId: visitPrivateVehicleId,
     };
 
     try {
@@ -67,6 +61,16 @@ const personVisit = async (personData) => {
       variables: { input: personData },
     });
     return person.data.createPerson.id;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const visitList = async () => {
+  try {
+    const visits = await API.graphql(graphqlOperation(listVisits));
+    console.log(visits.data.listVisits.items)
+    return visits.data.listVisits.items;
   } catch (e) {
     console.log(e);
   }

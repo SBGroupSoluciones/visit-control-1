@@ -12,10 +12,10 @@ import {
   CSelect,
   CButton,
 } from "@coreui/react";
-import Notification from "./Notification";
+import Notification from "../custom/Notification";
 import { getAccountByRole } from "../Auth/Account";
-import { warehouseList } from "./Warehouse";
-import { hostCreate } from "./Host";
+import { warehouseList } from "../custom/Warehouse";
+import { hostCreate } from "../custom/Host";
 
 const CreateHost = () => {
   const history = useHistory();

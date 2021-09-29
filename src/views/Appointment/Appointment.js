@@ -1,40 +1,22 @@
-import React, { useEffect, useState, createRef } from "react";
-import QRCode from "react-qr-code";
-import classNames from "classnames";
+import React, { useEffect, useState } from "react";
 import {
-  CContainer,
   CRow,
-  CBadge,
-  CDataTable,
   CCol,
   CCard,
   CCardHeader,
   CCardBody,
   CCardFooter,
-  CImg,
-  CForm,
-  CLabel,
-  CInput,
-  CInputFile,
-  CFormGroup,
-  CSelect,
   CTabs,
   CNav,
   CNavItem,
   CNavLink,
   CTabPane,
   CTabContent,
-  CTextarea,
   CButton,
 } from "@coreui/react";
-import { DocsLink } from "src/reusable";
 import CIcon from "@coreui/icons-react";
-import usersData from "../users/UsersData";
-import CarbonDatePicker from "react-carbon-datepicker";
-import Notification from "./Notification";
 import ConfirmPersona from "./ConfirmPersona";
 import ConfirmCargo from "./ConfirmCargo";
-import PersonalVehicle from "./PersonalVehicle";
 import PersonaAppointment from "./PersonaAppointment";
 import CargoAppointment from "./CargoAppointment";
 
@@ -131,8 +113,9 @@ const Appointment = () => {
                     className="mb-1"
                     onClick={(e) => onConfirmDate(e)}
                     block
-                    disabled={personaAppointment ||cargoAppointment ? false:true}
-
+                    disabled={
+                      personaAppointment || cargoAppointment ? false : true
+                    }
                   >
                     <span>Agendar</span>
                   </CButton>

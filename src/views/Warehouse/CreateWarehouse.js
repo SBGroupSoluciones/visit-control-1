@@ -14,9 +14,9 @@ import {
   CButton,
 } from "@coreui/react";
 
-import Notification from "./Notification";
+import Notification from "../custom/Notification";
 import { isValidText, isValidPhoneNumber } from "../Auth/utils";
-import { warehouseCreate } from "./Warehouse";
+import { warehouseCreate } from "../custom/Warehouse";
 
 const CreateWarehouse = () => {
   const history = useHistory();

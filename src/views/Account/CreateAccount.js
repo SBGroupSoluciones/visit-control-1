@@ -35,8 +35,8 @@ import { DocsLink } from "src/reusable";
 import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import CarbonDatePicker from "react-carbon-datepicker";
-import Notification from "./Notification";
-import PersonalVehicle from "./PersonalVehicle";
+import Notification from "../custom/Notification";
+import PersonalVehicle from "../Appointment/PersonalVehicle";
 import {
   isValidFirstName,
   isValidLastName,

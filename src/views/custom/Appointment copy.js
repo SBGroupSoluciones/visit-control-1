@@ -32,7 +32,7 @@ import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import CarbonDatePicker from "react-carbon-datepicker";
 import Notification from "./Notification";
-import PersonalVehicle from "./PersonalVehicle";
+import PersonalVehicle from "../Appointment/PersonalVehicle";
 
 const getBadge = (status) => {
   switch (status) {

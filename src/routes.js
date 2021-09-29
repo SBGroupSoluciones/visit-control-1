@@ -60,19 +60,24 @@ const Widgets = React.lazy(() => import("./views/widgets/Widgets"));
 const Users = React.lazy(() => import("./views/users/Users"));
 const User = React.lazy(() => import("./views/users/User"));
 
-const Account = React.lazy(() => import("./views/custom/CreateAccount"));
-const AccountList = React.lazy(() => import("./views/custom/ListAccount"));
-const AccountEdit = React.lazy(()=>"./views/custom/EditAccount")
+const Account = React.lazy(() => import("./views/Account/CreateAccount"));
+const AccountList = React.lazy(() => import("./views/Account/ListAccount"));
+const AccountEdit = React.lazy(() => "./views/custom/EditAccount");
 const Vehicle = React.lazy(() => import("./views/custom/Vehicle"));
 const Person = React.lazy(() => import("./views/custom/Person"));
-const Appointment = React.lazy(() => import("./views/custom/Appointment"));
+const Appointment = React.lazy(() => import("./views/Appointment/Appointment"));
 const AppointmentList = React.lazy(() =>
-  import("./views/custom/AppointmentList")
+  import("./views/Appointment/AppointmentList")
 );
-const Warehouse = React.lazy(() => import("./views/custom/CreateWarehouse"));
-const WarehouseList = React.lazy(() => import("./views/custom/ListWarehouse"));
-const Host = React.lazy(() => import("./views/custom/CreateHost"));
-const HostList = React.lazy(() => import("./views/custom/ListHost"));
+const AppointmentCalendar = React.lazy(() =>
+  import("./views/Appointment/AppointmentCalendar")
+);
+const Warehouse = React.lazy(() => import("./views/Warehouse/CreateWarehouse"));
+const WarehouseList = React.lazy(() =>
+  import("./views/Warehouse/ListWarehouse")
+);
+const Host = React.lazy(() => import("./views/Host/CreateHost"));
+const HostList = React.lazy(() => import("./views/Host/ListHost"));
 const PersonList = React.lazy(() => import("./views/custom/PersonList"));
 
 const routes = [
@@ -170,6 +175,13 @@ const routes = [
     name: "Lista de Citas",
     component: AppointmentList,
   },
+  // {
+  //   path: "/appointment/calendar",
+  //   exact: true,
+  //   name: "Calendario de Citas",
+  //   component: AppointmentCalendar,
+  // },
+
   { path: "/person", exact: true, name: "Personas", component: Person },
   {
     path: "/person/list",
