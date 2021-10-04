@@ -115,25 +115,28 @@ type CargoVehicle
     ]
   ) {
   id: ID!
-  line: String!
+  line: String
   vehiclePlate: String
   platformPlate: String
-  containerNumber: String!
-  tractNumber: String!
-  load: Boolean!
-  unload: Boolean!
-  sealsNumber: String!
-  additionalDoc: String!
-  additionalDocPath: String!
+  containerNumber: String
+  tractNumber: String
+  load: Boolean
+  unload: Boolean
+  sealsNumber: String
+  additionalDoc: String
+  additionalDocPath: String
   packageNumber: String
   petition: String!
-  petitionPath: String!
-  timestamp: String!
+  petitionPath: String
+  timestamp: String
   driverName: String!
-  email: String!
+  email: String
   company: String
   reason: [String]
   phone: String
+  imgUrl: String
+  idFrontPath: String
+  idBackPath: String
   account: Account @connection(name: "AccountCargoVehicles")
   visit: Visit @connection(name: "VisitCargoVehicle")
 }

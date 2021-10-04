@@ -25,7 +25,7 @@ const TheHeaderDropdown = (props) => {
     } catch (error) {
       console.log("error signing out: ", error);
     }
-    localStorage.removeItem("jwt");
+    // localStorage.removeItem("jwt");
     history.push("/");
   };
   return (

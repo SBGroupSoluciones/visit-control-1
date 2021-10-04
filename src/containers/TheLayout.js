@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import { GetAccount } from "src/views/Auth/Account";
 
-import { TheContent, TheSidebar, TheFooter, TheHeader } from "./index";
+import { TheContent, TheSidebar, TheHeader } from "./index";
 import { Auth } from "aws-amplify";
 import awsconfig from "../aws-exports";
 
@@ -17,8 +16,8 @@ const TheLayout = () => {
       console.log("sadads ", account);
       setUserData(account);
     };
-    if(!userData){
-    fetchData();
+    if (!userData) {
+      fetchData();
     }
     console.log();
   }, [userData]);

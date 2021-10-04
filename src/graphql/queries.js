@@ -87,6 +87,9 @@ export const getAccount = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -384,6 +387,9 @@ export const getVisit = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -537,6 +543,9 @@ export const listVisits = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -671,6 +680,9 @@ export const getPerson = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -856,6 +868,9 @@ export const getPrivateVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1014,6 +1029,9 @@ export const getCargoVehicle = /* GraphQL */ `
       company
       reason
       phone
+      imgUrl
+      idFrontPath
+      idBackPath
       createdAt
       updatedAt
       account {
@@ -1121,6 +1139,9 @@ export const getCargoVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1172,6 +1193,9 @@ export const listCargoVehicles = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -1245,6 +1269,9 @@ export const cargoVehicleByPetition = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -1318,6 +1345,9 @@ export const cargoVehicleByDirverName = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {

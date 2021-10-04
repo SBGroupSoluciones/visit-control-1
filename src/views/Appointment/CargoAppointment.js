@@ -1,41 +1,18 @@
-import React, { useEffect, useState, createRef } from "react";
-import QRCode from "react-qr-code";
-import classNames from "classnames";
+import React, { useEffect, useState } from "react";
 import {
-  CContainer,
   CRow,
-  CBadge,
-  CDataTable,
   CCol,
-  CCard,
-  CCardHeader,
-  CCardBody,
-  CCardFooter,
-  CImg,
-  CForm,
   CLabel,
   CInput,
-  CInputFile,
   CFormGroup,
   CSelect,
   CInputCheckbox,
-  CTabs,
-  CNav,
-  CNavItem,
-  CNavLink,
-  CTabPane,
-  CTabContent,
-  CTextarea,
-  CButton,
 } from "@coreui/react";
-import { DocsLink } from "src/reusable";
-import CIcon from "@coreui/icons-react";
-import usersData from "../users/UsersData";
-import CarbonDatePicker from "react-carbon-datepicker";
-import Notification from "../custom/Notification";
-import PersonalVehicle from "./PersonalVehicle";
-import PersonaAppointment from "./PersonaAppointment";
+import { calendarCreate, calendarUpdate, GetCalendar } from "src/util/Calendar";
+import { filterArray } from "../../util/Utils";
+import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { hostList, uploadImage } from "../custom/Host";
+import moment from "moment";
 
 const getBadge = (status) => {
   switch (status) {
@@ -51,18 +28,14 @@ const getBadge = (status) => {
       return "primary";
   }
 };
-const fields = ["name", "registered", "role", "status"];
 
 const CargoAppointment = (props) => {
   const { setAppointmentData } = props;
   const [personAlready, setPersonAlready] = useState(false);
-  const [active, setActive] = useState(0);
-
   const [driverName, setDriverName] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [company, setCompany] = useState();
-  const [reason, setReason] = useState();
   const [line, setLine] = useState();
   const [vehiclePlate, setVehiclePlate] = useState();
   const [platformPlate, setPlatformPlate] = useState();
@@ -75,13 +48,23 @@ const CargoAppointment = (props) => {
   const [warehouses, setWarehouses] = useState();
   const [load, setLoad] = useState(false);
   const [unload, setUnload] = useState(false);
+  const [hosts, setHosts] = useState();
+  const [hostName, setHostName] = useState();
   const [host, setHost] = useState();
+  const [selectedHost, setSelectedHost] = useState();
   const [appointmentDate, setAppointmentDate] = useState();
   const [appointmentHour, setAppointmentHour] = useState();
+  const [availableHours, setAvailableHours] = useState();
   const [hostId, setHostId] = useState();
-  const [newVehicle, setNewVehicle] = useState(false);
   const [hostWId, setHostWId] = useState();
-
+  const [imageName, setImageName] = useState();
+  const [imageData, setImageData] = useState();
+  const [ineFrontName, setIneFrontName] = useState();
+  const [ineFrontData, setIneFrontData] = useState();
+  const [ineBackName, setIneBackName] = useState();
+  const [ineBackData, setIneBackData] = useState();
+  const [petitionName, setPetitionName] = useState();
+  const [petitionData, setPetitionData] = useState();
   const changeHandler = (e) => {
     console.log(e);
     if (e == "new") {
@@ -93,41 +76,48 @@ const CargoAppointment = (props) => {
     const fetchData = async () => {
       const hostsList = await hostList();
       onDataPrepare(hostsList);
+      setHosts(hostsList);
       setHost(hostsList);
     };
-    if (!host) {
+    if (!hosts) {
       fetchData();
     }
+    console.log("conductor ", driverName)
 
     if (
       driverName &&
       email &&
       company &&
-      reason &&
       phone &&
       line &&
       appointmentDate &&
       appointmentHour &&
       hostId &&
-      load &&
-      unload &&
+      // load &&
+      // unload &&
+      // warehouse &&
       vehiclePlate &&
       platformPlate &&
       petition &&
       packageNumber &&
       containerNumber &&
       tractNumber &&
-      sealsNumber
+      sealsNumber &&
+      imageName &&
+      ineFrontName &&
+      ineBackName &&
+      petitionName 
+      // availableHours
     ) {
       setAppointmentData({
         driverName: driverName,
         email: email,
         company: company,
-        reason: reason,
         phone: phone,
         line: line,
         load: load,
         unload: unload,
+        host: selectedHost,
         appointmentDate: appointmentDate,
         appointmentHour: appointmentHour,
         vehiclePlate: vehiclePlate,
@@ -137,8 +127,47 @@ const CargoAppointment = (props) => {
         containerNumber: containerNumber,
         tractNumber: tractNumber,
         sealsNumber: sealsNumber,
-        hostId: hostId,
-        warehouse: warehouse,
+        imageName: imageName,
+        ineFrontName: ineFrontName,
+        ineBackName: ineBackName,
+        petitionName: petition
+      });
+    }
+
+    if (imageName && imageData) {
+      let data = {
+        fileName: imageName,
+        file: imageData,
+      };
+      uploadImage(data).then((uploaded) => {
+        console.log(uploaded.key);
+      });
+    }
+    if (ineFrontName && ineFrontData) {
+      let data = {
+        fileName: ineFrontName,
+        file: ineFrontData,
+      };
+      uploadImage(data).then((uploaded) => {
+        console.log(uploaded.key);
+      });
+    }
+    if (ineBackName && ineBackData) {
+      let data = {
+        fileName: ineBackName,
+        file: ineBackData,
+      };
+      uploadImage(data).then((uploaded) => {
+        console.log(uploaded.key);
+      });
+    }
+    if (petitionName && petitionData) {
+      let data = {
+        fileName: petitionName,
+        file: petitionData,
+      };
+      uploadImage(data).then((uploaded) => {
+        console.log(uploaded.key);
       });
     }
   }, [
@@ -146,11 +175,10 @@ const CargoAppointment = (props) => {
     driverName,
     email,
     company,
-    reason,
     phone,
     line,
-    load,
-    unload,
+    // load,
+    // unload,
     appointmentDate,
     appointmentHour,
     hostId,
@@ -161,6 +189,14 @@ const CargoAppointment = (props) => {
     containerNumber,
     tractNumber,
     sealsNumber,
+    imageName,
+    imageData,
+    ineFrontName,
+    ineFrontData,
+    ineBackName,
+    ineBackData,
+    petitionName,
+    petitionData,
   ]);
 
   const onDataPrepare = (data) => {
@@ -198,6 +234,102 @@ const CargoAppointment = (props) => {
   const onHostIdSelect = (event) => {
     const selectedIndex = event.target.options.selectedIndex;
     setHostId(event.target.options[selectedIndex].getAttribute("data-key"));
+    hosts.map((item) => {
+      if (
+        item.id == event.target.options[selectedIndex].getAttribute("data-key")
+      ) {
+        const fullHostName = `${item.firstName} ${item.lastName}`;
+        setHostName(fullHostName);
+        setSelectedHost(item);
+        console.log(item);
+      }
+    });
+  };
+
+  const onDateSelect = (date) => {
+    setAppointmentDate(date);
+    GetCalendar(date).then((calendar) => {
+      console.log("CALENDARIO  ", calendar);
+      if (calendar === null) {
+        const data = { hostId: hostId, date: date };
+        console.log("DATAA CALENDAR ", data);
+        calendarCreate(data).then((createdCalendar) => {
+          setAvailableHours(createdCalendar.hours);
+          console.log("CALENDARIO CREADO ", createdCalendar);
+        });
+      } else {
+        setAvailableHours(calendar.hours);
+      }
+    });
+  };
+
+  const onHourSelect = (hour) => {
+    if (!appointmentHour) {
+      setAppointmentHour(hour);
+      onAvailableHoursUpdate(hour);
+    } else {
+      const hourArray = filterArray({ hourList: availableHours, hour: hour });
+      hourArray.push(appointmentHour);
+      setAppointmentHour(hour);
+      onAvailableHoursUpdate(hour);
+    }
+  };
+
+  const onAvailableHoursUpdate = (hour) => {
+    GetCalendar(appointmentDate).then((currentCalendar) => {
+      currentCalendar.hours = filterArray({
+        hourList: availableHours,
+        hour: hour,
+      });
+      calendarUpdate(currentCalendar).then((updatedCalendar) => {
+        GetCalendar(appointmentDate).then((calendar) => {
+          setAvailableHours(calendar.hours);
+        });
+      });
+    });
+  };
+
+  const formatHour = (hour) => {
+    switch (hour) {
+      case "09:00:00":
+        return "09:00 a.m.";
+      case "09:30:00":
+        return "09:30 a.m.";
+      case "10:00:00":
+        return "10:00 a.m.";
+      case "10:30:00":
+        return "10:30 a.m.";
+      case "11:00:00":
+        return "11:00 a.m.";
+      case "11:30:00":
+        return "11:30 a.m.";
+      case "12:00:00":
+        return "12:00 p.m.";
+      case "12:30:00":
+        return "12:30 p.m.";
+      case "13:00:00":
+        return "01:00 p.m.";
+      case "13:30:00":
+        return "01:30 p.m.";
+      case "14:00:00":
+        return "02:00 p.m.";
+      case "14:30:00":
+        return "02:30 p.m.";
+      case "15:00:00":
+        return "03:00 p.m.";
+      case "15:30:00":
+        return "03:30 p.m.";
+      case "16:00:00":
+        return "04:00 p.m.";
+      case "16:30:00":
+        return "04:30 p.m.";
+      case "17:00:00":
+        return "05:00 p.m.";
+      case "17:30:00":
+        return "05:30 p.m.";
+      default:
+        break;
+    }
   };
 
   return (
@@ -287,7 +419,7 @@ const CargoAppointment = (props) => {
                 />
               </CFormGroup>
             </CCol>
-            <CCol xs="12" md="12">
+            <CCol xs="12" md="6">
               <CFormGroup>
                 <CLabel htmlFor="vehiclePlate">Placa Vehículo</CLabel>
                 <CInput
@@ -300,10 +432,9 @@ const CargoAppointment = (props) => {
                 />
               </CFormGroup>
             </CCol>
-            <CCol xs="12" md="12">
+            <CCol xs="12" md="6">
               <CFormGroup>
                 <CLabel htmlFor="platformPlate">Placa Plataforma</CLabel>
-
                 <CInput
                   id="platformPlate"
                   placeholder=""
@@ -450,9 +581,9 @@ const CargoAppointment = (props) => {
                     id="date-input"
                     name="date-input"
                     placeholder="date"
-                    min="2021-09-03"
+                    min={moment().format("YYYY-MM-DD")}
                     onChange={(e) => {
-                      setAppointmentDate(e.target.value);
+                      onDateSelect(e.target.value);
                     }}
                   />
                 </CFormGroup>
@@ -463,31 +594,20 @@ const CargoAppointment = (props) => {
                   <CSelect
                     custom
                     name="select"
-                    id="time"
+                    id="select"
                     onChange={(e) => {
-                      setAppointmentHour(e.target.value);
+                      onHourSelect(e.target.value);
                     }}
                   >
-                    <option value="0">Seleccione una hora...</option>
-                    <option value="09:00:00">09:00 a.m.</option>
-                    <option value="09:30:00">09:30 a.m.</option>
-                    <option value="10:00:00">10:00 a.m.</option>
-                    <option value="10:30:00">10:30 a.m.</option>
-                    <option value="11:00:00">11:00 a.m.</option>
-                    <option value="11:30:00">11:30 a.m.</option>
-                    <option value="12:00:00">12:00 p.m.</option>
-                    <option value="12:30:00">12:30 p.m.</option>
-                    <option value="13:00:00">01:00 p.m.</option>
-                    <option value="13:30:00">01:30 p.m.</option>
-                    <option value="14:00:00">02:00 p.m.</option>
-                    <option value="14:30:00">02:30 p.m.</option>
-                    <option value="15:00:00">03:00 p.m.</option>
-                    <option value="15:30:00">03:30 p.m.</option>
-                    <option value="16:00:00">04:00 p.m.</option>
-                    <option value="16:30:00">04:30 p.m.</option>
-                    <option value="17:00:00">05:00 p.m.</option>
-                    <option value="17:30:00">05:30 p.m.</option>
-                  </CSelect>{" "}
+                    <option value="0">Selecciona una hora...</option>
+                    {availableHours
+                      ? availableHours.map((x, y) => (
+                          <option key={y} value={x}>
+                            {formatHour(x)}
+                          </option>
+                        ))
+                      : null}
+                  </CSelect>
                 </CFormGroup>
               </CCol>
             </CRow>
@@ -521,22 +641,66 @@ const CargoAppointment = (props) => {
               </CLabel>
             </CFormGroup>
           </CCol>
-          <CCol xs="12" md="12" className="fix-files-upload">
-            <CRow>
-              <CCol xs="12" md="4">
-                <CLabel htmlFor="file-input">Pedimento</CLabel>
-                <CInputFile id="file-input" name="file-input" />
-              </CCol>
-              <CCol xs="12" md="4">
-                <CLabel htmlFor="file-input">INE Frente</CLabel>
-                <CInputFile id="file-input" name="file-input" />
-              </CCol>
-              <CCol xs="12" md="4">
-                <CLabel htmlFor="file-input">INE Reverso</CLabel>
-                <CInputFile id="file-input" name="file-input" />
-              </CCol>
-            </CRow>
-          </CCol>
+        </CCol>
+        <CCol xs="12" md="12" className="fix-files-upload">
+          <CRow>
+            <CCol xs="12" md="3">
+              <CRow>
+                <CCol xs="12" md="6">
+                  <PhotoPicker
+                    onPick={(data) => setImageName(data.name)}
+                    preview
+                    title="Seleccione una Imagen"
+                    headerText="Imagen"
+                    headerHint=" "
+                    onLoad={(dataURL) => setImageData(dataURL)}
+                  />
+                </CCol>
+              </CRow>
+            </CCol>
+            <CCol xs="12" md="3">
+              <CRow>
+                <CCol xs="12" md="6">
+                  <PhotoPicker
+                    onPick={(data) => setIneFrontName(data.name)}
+                    preview
+                    title="Seleccione una Imagen"
+                    headerText="INE Frente"
+                    headerHint=" "
+                    onLoad={(dataURL) => setIneFrontData(dataURL)}
+                  />
+                </CCol>
+              </CRow>
+            </CCol>
+            <CCol xs="12" md="3">
+              <CRow>
+                <CCol xs="12" md="6">
+                  <PhotoPicker
+                    onPick={(data) => setIneBackName(data.name)}
+                    preview
+                    title="Seleccione una Imagen"
+                    headerText="INE Reverso"
+                    headerHint=" "
+                    onLoad={(dataURL) => setIneBackData(dataURL)}
+                  />
+                </CCol>
+              </CRow>
+            </CCol>
+            <CCol xs="12" md="3">
+              <CRow>
+                <CCol xs="12" md="6">
+                  <PhotoPicker
+                    onPick={(data) => setPetitionName(data.name)}
+                    preview
+                    title="Seleccione una Imagen"
+                    headerText="Pedimento"
+                    headerHint=" "
+                    onLoad={(dataURL) => setPetitionData(dataURL)}
+                  />
+                </CCol>
+              </CRow>
+            </CCol>
+          </CRow>
         </CCol>
       </CRow>
     </>

@@ -15,7 +15,7 @@ import {
 import CIcon from "@coreui/icons-react";
 
 // sidebar nav config
-import { adminNav, userNav, guestNav, superAdminNav } from "./_nav";
+import { adminNav, superAdminNav } from "./_nav";
 
 const TheSidebar = () => {
   const dispatch = useDispatch();

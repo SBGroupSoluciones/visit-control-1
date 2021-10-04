@@ -31,6 +31,10 @@ import { DocsLink } from "src/reusable";
 import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import { visitList } from "../custom/Visit";
+import { GetHost } from "../custom/Host";
+
+import moment from "moment";
+import "moment/locale/es";
 
 const getBadge = (status) => {
   switch (status) {
@@ -57,62 +61,168 @@ const Appointment = () => {
   useEffect(() => {
     const fetchData = async () => {
       const allVisits = await visitList();
+      console.log(getHostData(allVisits));
+
       setVisits(allVisits);
-      console.log("Las visitas ", allVisits);
+      console.log("Las visitas ", visits);
     };
     if (!visits) {
       fetchData();
     }
   }, [visits]);
 
-  const getBadge = (status) => {
-    switch (status) {
-      case "SUPER_ADMIN":
+  const getVisitData = (list) => {
+    const outputList = [];
+    list.map((item) => {
+      console.log(
+        "FECHA ",
+        moment(item.dateTimestamp).format("MMMM Do YYYY, h:mm a")
+      );
+      console.log(item.person.firstName);
+      // outputList.push({
+      //   fullName: `${item.person.firstName} ${item.person.lastName}`,
+
+      // });
+    });
+  };
+
+  const getHostData = (visit) => {
+    const visitHost = [];
+    visit.map((item) => {
+      return GetHost(item.host.id).then((host) => {
+        item.hostName = `${host.hostName.firstName} ${host.hostName.lastName}`;
+        item.hostWarehouse = host.warehouse.name;
+        visitHost.push(item);
+      });
+    });
+    return visitHost;
+  };
+
+  const objecto = {
+    id: "4be57ce3-a2ac-41fa-94b6-8f360a6396d1",
+    dateTimestamp: "2021-10-04T11:00:00",
+    checkInTimestamp: null,
+    checkOutTimestamp: null,
+    reason: "Visita de prueba",
+    status: "SCHEDULED",
+    qr: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiYW9qZWRhQHNiZ3JvdXAuY29tLm14IiwiZW1haWwiOiJhb2plZGFjc0BnbWFpbC5jb20ifQ.TPOwCxIOan1gEUT4MUkJYZI1KtdVAi4D6okrgpL32qI",
+    timestamp: "",
+    adminApprove: false,
+    operApprove: false,
+    type: "PERSON",
+    createdAt: "2021-10-03T21:48:32.675Z",
+    updatedAt: "2021-10-03T21:48:32.675Z",
+    account: {
+      id: "afcf58da-291f-4d10-adb3-d409dff374b8",
+      firstName: "Angel de Jesus",
+      lastName: "Ojeda Castro",
+      imgUrl: null,
+      company: "SBGroup",
+      email: "aojeda@sbgroup.com.mx",
+      role: "SUPER_ADMIN",
+      phones: ["6122308184"],
+      createdAt: "2021-09-14T19:11:56.090Z",
+      updatedAt: "2021-09-14T19:11:56.090Z",
+      owner: null,
+    },
+    owner: null,
+    person: {
+      id: "6ea0eac0-2b5e-43f0-883a-42a1342b2650",
+      firstName: "Angel ",
+      lastName: "Ojeda",
+      email: "aojedacs@gmail.com",
+      imgUrl: "b9b820a2d84c530126b1e92efba9f8b5.jpg",
+      phone: "6122308184",
+      company: "SBGroup.com",
+      idFrontPath: "aaaaaaaa.jpg",
+      idBackPath: "user-profile-defoult.jpg",
+      createdAt: "2021-10-03T21:48:32.091Z",
+      updatedAt: "2021-10-03T21:48:32.091Z",
+      owner: null,
+    },
+    privateVehicle: null,
+    cargoVehicle: null,
+    host: {
+      id: "b844c298-705d-4db0-b60c-91ac6db13e46",
+      createdAt: "2021-09-15T09:56:38.863Z",
+      updatedAt: "2021-09-15T09:56:38.863Z",
+      owner: null,
+    },
+  };
+
+  const getTypeBadge = (type) => {
+    switch (type) {
+      case "PERSON":
+        return "primary";
+      case "CARGO":
         return "success";
-      case "Inactive":
-        return "unregistered";
-      case "HOST":
+      default:
+        return "primary";
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "SCHEDULED":
+        return "success";
+      case "IN_PROGRESS":
         return "warning";
-      case "Banned":
+      case "FINISHED":
+        return "unregistered";
+      case "REJECTED_BY_ADMIN":
+        return "danger";
+      case "REJECTED_BY_OPER":
         return "danger";
       default:
         return "primary";
     }
   };
-  const getSpanishRole = (role) => {
-    switch (role) {
-      case "SUPER_ADMIN":
-        return "SUPER ADMIN";
-      case "ADMIN":
-        return "ADMINISTRADOR";
-      case "OPERATOR":
-        return "OPERADOR";
-      case "HOST":
-        return "ANFITRIÓN";
-      case "USER":
-        return "USUARIO";
+
+  const getSpanishType = (type) => {
+    switch (type) {
+      case "PERSON":
+        return "Persona";
+      case "CARGO":
+        return "Vehiculo de Carga";
       default:
         return "DESCONOCIDO";
     }
   };
 
+  const getSpanishStatus = (status) => {
+    switch (status) {
+      case "SCHEDULED":
+        return "Agendado";
+      case "IN_PROGRESS":
+        return "En Progreso";
+      case "FINISHED":
+        return "Finalizada";
+      case "REJECTED_BY_ADMIN":
+        return "Rechazada por Admin";
+      case "REJECTED_BY_OPER":
+        return "Rechazada por Operador";
+      default:
+        return "";
+    }
+  };
+
   const fields = [
-    "firstName",
-    "lastName",
-    "email",
+    "dateTimestamp",
+    "person",
     "company",
-    "phones",
-    "role",
+    "hostWarehouse",
+    "hostName",
+    "status",
+    "type",
   ];
   const spanishFieds = {
-    id: "ID",
-    firstName: "Nombre",
-    lastName: "Apellido",
+    dateTimestamp: "Fecha y Hora",
+    person: "Nombre",
     company: "Empresa",
-    email: "Correo",
-    phones: "Telefono",
-    role: "Rol",
+    hostWarehouse: "Recinto",
+    hostName: "Anfitrión",
     status: "Status",
+    type: "Categoria",
   };
   return (
     <>
@@ -139,16 +249,32 @@ const Appointment = () => {
             }}
             hover
             sorter
-            // columnHeaderSlot={spanishFieds}
-            // onRowClick={(item) => onAccountSelected(item)} 
+            columnHeaderSlot={spanishFieds}
+            // onRowClick={(item) => onAccountSelected(item)}
             scopedSlots={{
-              role: (item) => (
+              type: (item) => (
                 <td>
-                  <CBadge color={getBadge(item.role)}>
-                    {getSpanishRole(item.role)}
+                  <CBadge color={getTypeBadge(item.type)}>
+                    {getSpanishType(item.type)}
                   </CBadge>
                 </td>
               ),
+              status: (item) => (
+                <td>
+                  <CBadge color={getStatusBadge(item.status)}>
+                    {getSpanishStatus(item.status)}
+                  </CBadge>
+                </td>
+              ),
+              person: (item) => (
+                <td>{`${item.person.firstName} ${item.person.lastName}`}</td>
+              ),
+              dateTimestamp: (item) => (
+                <td>
+                  {moment(item.dateTimestamp).format("MMMM Do YYYY, h:mm a")}
+                </td>
+              ),
+              company: (item) => <td>{item.person.company}</td>,
             }}
           />
         </CCardBody>

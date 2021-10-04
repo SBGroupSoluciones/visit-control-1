@@ -90,6 +90,9 @@ export const updateAccount = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -224,6 +227,9 @@ export const deleteAccount = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -424,6 +430,9 @@ export const updateVisit = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -651,6 +660,9 @@ export const deleteVisit = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -845,6 +857,9 @@ export const updatePerson = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -982,6 +997,9 @@ export const deletePerson = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1116,6 +1134,9 @@ export const updatePrivateVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1250,6 +1271,9 @@ export const deletePrivateVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1291,6 +1315,9 @@ export const updateCargoVehicle = /* GraphQL */ `
       company
       reason
       phone
+      imgUrl
+      idFrontPath
+      idBackPath
       createdAt
       updatedAt
       account {
@@ -1398,6 +1425,9 @@ export const updateCargoVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1439,6 +1469,9 @@ export const deleteCargoVehicle = /* GraphQL */ `
       company
       reason
       phone
+      imgUrl
+      idFrontPath
+      idBackPath
       createdAt
       updatedAt
       account {
@@ -1546,6 +1579,9 @@ export const deleteCargoVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1982,6 +2018,9 @@ export const createAccount = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -2182,6 +2221,9 @@ export const createVisit = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -2376,6 +2418,9 @@ export const createPerson = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -2510,6 +2555,9 @@ export const createPrivateVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -2551,6 +2599,9 @@ export const createCargoVehicle = /* GraphQL */ `
       company
       reason
       phone
+      imgUrl
+      idFrontPath
+      idBackPath
       createdAt
       updatedAt
       account {
@@ -2658,6 +2709,9 @@ export const createCargoVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner

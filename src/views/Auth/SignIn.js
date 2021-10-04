@@ -28,7 +28,7 @@ Amplify.configure(awsconfig);
 
 Auth.configure(awsconfig);
 
-const SignIn = (props) => {
+const SignIn = ({ loggedIn }) => {
   const history = useHistory();
   const location = useLocation();
   const [email, setEmail] = useState();
@@ -41,16 +41,20 @@ const SignIn = (props) => {
     setUserData(location.data);
   }, [email, password, history]);
 
-  const onSignIn = async () => {
+  const onSignInPush = async () => {
     try {
       const user = await Auth.signIn(email, password);
-      localStorage.setItem("jwt", user.signInUserSession.idToken.jwtToken);
-      onRetriveAccount().then((account) => {
-        localStorage.setItem("account", account.email);
-        history.push({
-          pathname: "/dashboard",
-        });
-      });
+      console.log("LA cuenta se logeo ", user);
+      localStorage.setItem("account", user.attributes.email);
+      // localStorage.setItem("jwt", user.signInUserSession.idToken.jwtToken);
+      loggedIn(user);
+      history.push("/dashboard");
+      // onRetriveAccount().then((account) => {
+      //   localStorage.setItem("account", account.email);
+      //   history.push({
+      //     pathname: "/dashboard",
+      //   });
+      // });
     } catch (e) {
       setError(e.code);
       setNotify(true);
@@ -126,7 +130,7 @@ const SignIn = (props) => {
                         <CButton
                           color="primary"
                           className="px-4"
-                          onClick={(e) => onSignIn()}
+                          onClick={(e) => onSignInPush()}
                         >
                           Ingresar
                         </CButton>

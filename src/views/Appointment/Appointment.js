@@ -34,7 +34,6 @@ const getBadge = (status) => {
       return "primary";
   }
 };
-const fields = ["name", "registered", "role", "status"];
 
 const Appointment = () => {
   const [personAlready, setPersonAlready] = useState(false);
@@ -51,7 +50,8 @@ const Appointment = () => {
       setPersonaConfirm(true);
     }
     if (cargoAppointment) {
-      setCargoConfirm(true);
+      console.log("CARGO",cargoAppointment)
+      // setCargoConfirm(true);
     }
   };
 

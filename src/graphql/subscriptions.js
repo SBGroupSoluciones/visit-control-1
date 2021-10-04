@@ -87,6 +87,9 @@ export const onCreateAccount = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -218,6 +221,9 @@ export const onUpdateAccount = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -349,6 +355,9 @@ export const onDeleteAccount = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -546,6 +555,9 @@ export const onCreateVisit = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -770,6 +782,9 @@ export const onUpdateVisit = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -994,6 +1009,9 @@ export const onDeleteVisit = /* GraphQL */ `
         company
         reason
         phone
+        imgUrl
+        idFrontPath
+        idBackPath
         createdAt
         updatedAt
         account {
@@ -1185,6 +1203,9 @@ export const onCreatePerson = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1319,6 +1340,9 @@ export const onUpdatePerson = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1453,6 +1477,9 @@ export const onDeletePerson = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1584,6 +1611,9 @@ export const onCreatePrivateVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1715,6 +1745,9 @@ export const onUpdatePrivateVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1846,6 +1879,9 @@ export const onDeletePrivateVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -1884,6 +1920,9 @@ export const onCreateCargoVehicle = /* GraphQL */ `
       company
       reason
       phone
+      imgUrl
+      idFrontPath
+      idBackPath
       createdAt
       updatedAt
       account {
@@ -1991,6 +2030,9 @@ export const onCreateCargoVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -2029,6 +2071,9 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
       company
       reason
       phone
+      imgUrl
+      idFrontPath
+      idBackPath
       createdAt
       updatedAt
       account {
@@ -2136,6 +2181,9 @@ export const onUpdateCargoVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
@@ -2174,6 +2222,9 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
       company
       reason
       phone
+      imgUrl
+      idFrontPath
+      idBackPath
       createdAt
       updatedAt
       account {
@@ -2281,6 +2332,9 @@ export const onDeleteCargoVehicle = /* GraphQL */ `
           company
           reason
           phone
+          imgUrl
+          idFrontPath
+          idBackPath
           createdAt
           updatedAt
           owner
