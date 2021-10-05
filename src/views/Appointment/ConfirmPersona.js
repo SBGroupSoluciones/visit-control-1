@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   CButton,
   CModal,
@@ -22,6 +23,7 @@ moment.locale("es");
 
 const ConfirmPersona = (props) => {
   const { show, setPersonaConfirm, appointmentData } = props;
+  const history = useHistory();
   const [appointment, setAppointment] = useState();
   const [qrJson, setQrJson] = useState();
   useEffect(() => {
@@ -63,31 +65,11 @@ const ConfirmPersona = (props) => {
         jwtEncode({
           account: localStorage.getItem("account"),
           email: appointmentData.email,
-          // host: appointmentData.host,
           date: appointmentData.cDate,
         })
       );
     }
-    console.log("LACITACONFIRM", appointmentData);
   }, [appointmentData, show]);
-
-  const appoint = {
-    person: "",
-    dateTimestamp: "",
-    checkInTimestamp: "",
-    checkOutTimestamp: "",
-    privateVehicle: "",
-    cargoVehicle: "",
-    reason: "",
-    status: "",
-    qr: "",
-    timestamp: "",
-    adminApprove: "",
-    operApprove: "",
-    type: "",
-    host: "",
-    account: "",
-  };
 
   const onEditButton = (e) => {
     setPersonaConfirm(!show);
@@ -125,6 +107,7 @@ const ConfirmPersona = (props) => {
       };
       visitCreate(visit).then((visitCreated) => {
         console.log("VISiTA CREADA", visitCreated);
+        history.push("/appointment/list")
       });
     });
 
@@ -226,7 +209,7 @@ const ConfirmPersona = (props) => {
             <CCol xs="12" md="6">
               <CContainer>
                 <CRow>
-                  <CCol xs="12" md="6">
+                  {/* <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>QR</strong>
                     </CLabel>
@@ -238,7 +221,7 @@ const ConfirmPersona = (props) => {
                         size="128"
                       />
                     </p>
-                  </CCol>
+                  </CCol> */}
                   <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>Imagen</strong>

@@ -61,10 +61,11 @@ const Appointment = () => {
   useEffect(() => {
     const fetchData = async () => {
       const allVisits = await visitList();
-      console.log(getHostData(allVisits));
+      console.log("CNOHOST ", getHostData(allVisits));
 
-      setVisits(allVisits);
-      console.log("Las visitas ", visits);
+      setVisits(allVisits)
+      // getHostData(allVisits).then((visitWithHost) => setVisits(visitWithHost));
+      console.log("Las visitas ", allVisits);
     };
     if (!visits) {
       fetchData();
@@ -86,7 +87,7 @@ const Appointment = () => {
     });
   };
 
-  const getHostData = (visit) => {
+  const getHostData = async (visit) => {
     const visitHost = [];
     visit.map((item) => {
       return GetHost(item.host.id).then((host) => {
@@ -173,6 +174,8 @@ const Appointment = () => {
         return "danger";
       case "REJECTED_BY_OPER":
         return "danger";
+      case "CANCELLED":
+        return "danger";
       default:
         return "primary";
     }
@@ -201,6 +204,8 @@ const Appointment = () => {
         return "Rechazada por Admin";
       case "REJECTED_BY_OPER":
         return "Rechazada por Operador";
+      case "CANCELLED":
+        return "Cancelada";
       default:
         return "";
     }
@@ -266,15 +271,21 @@ const Appointment = () => {
                   </CBadge>
                 </td>
               ),
-              person: (item) => (
-                <td>{`${item.person.firstName} ${item.person.lastName}`}</td>
-              ),
+              person: (item) =>
+                item.person ? (
+                  <td>{`${item.person.firstName} ${item.person.lastName}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              cargoVehicle: (item) =>
+                item.cargoVehicle ? <td>{`${item.driverName}`}</td> : <td></td>,
               dateTimestamp: (item) => (
                 <td>
                   {moment(item.dateTimestamp).format("MMMM Do YYYY, h:mm a")}
                 </td>
               ),
-              company: (item) => <td>{item.person.company}</td>,
+              company: (item) =>
+                item.person ? <td>{item.person.company}</td> : <td></td>,
             }}
           />
         </CCardBody>

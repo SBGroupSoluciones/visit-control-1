@@ -92,39 +92,7 @@ export const superAdminNav = [
       // },
     ],
   },
-  {
-    _tag: "CSidebarNavDropdown",
-    name: "Personas",
-    route: "/apointment",
-    icon: "cil-puzzle",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Personas registradas",
-        to: "/person/list",
-      }
-    ],
-  },
-  {
-    _tag: "CSidebarNavDropdown",
-    name: "Vehículos",
-    route: "/apointment",
-    icon: "cil-puzzle",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Vehículos de Carga",
-        to: "/appointment",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Vehículos Personales",
-        to: "/appointment",
-      }
-    ],
-  }
 ];
-
 
 export const adminNav = [
   {
@@ -143,99 +111,96 @@ export const adminNav = [
   },
   {
     _tag: "CSidebarNavDropdown",
-    name: "Anfitrion",
-    route: "/host",
-    icon: "cil-user",
+    name: "Citas",
+    route: "/apointment",
+    icon: "cil-puzzle",
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Añadir",
-        to: "/base/breadcrumbs",
+        name: "Agendar Cita",
+        to: "/appointment",
       },
       {
         _tag: "CSidebarNavItem",
-        name: "Listar",
-        to: "/base/breadcrumbs",
+        name: "Citas Agendadas",
+        to: "/appointment/list",
       },
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Calendario de Citas",
+      //   to: "/appointment/calendar",
+      // },
     ],
+  },
+];
+
+export const operNav = [
+  {
+    _tag: "CSidebarNavItem",
+    name: "Tablero",
+    to: "/dashboard",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _tag: "CSidebarNavTitle",
+    _children: ["Operador"],
   },
   {
     _tag: "CSidebarNavDropdown",
     name: "Citas",
-    route: "/appointment",
-    icon: "cil-calendar-plus",
+    route: "/apointment",
+    icon: "cil-puzzle",
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Añadir",
-        to: "/base/breadcrumbs",
+        name: "Citas Agendadas",
+        to: "/appointment/list",
       },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Listar",
-        to: "/base/breadcrumbs",
-      },
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Calendario de Citas",
+      //   to: "/appointment/calendar",
+      // },
     ],
+  },
+];
+
+export const authorityNav = [
+  {
+    _tag: "CSidebarNavItem",
+    name: "Tablero",
+    to: "/dashboard",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _tag: "CSidebarNavTitle",
+    _children: ["Autoridad"],
   },
   {
     _tag: "CSidebarNavDropdown",
-    name: "Cuentas",
-    route: "/base",
-    icon: "cil-calendar-plus",
+    name: "Citas",
+    route: "/apointment",
+    icon: "cil-puzzle",
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Añadir",
-        to: "/base/breadcrumbs",
+        name: "Citas Agendadas",
+        to: "/appointment/list",
       },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Listar",
-        to: "/base/breadcrumbs",
-      },
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Calendario de Citas",
+      //   to: "/appointment/calendar",
+      // },
     ],
-  },
-
-  {
-    _tag: "CSidebarNavDropdown",
-    name: "Personas",
-    route: "/base",
-    icon: "cil-user",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Añadir",
-        to: "/base/breadcrumbs",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Listar",
-        to: "/base/breadcrumbs",
-      },
-    ],
-  },
-
-  {
-    _tag: "CSidebarNavDropdown",
-    name: "Recintos",
-    route: "/warehouse",
-    icon: "cil-building",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Añadir",
-        to: "/warehouse/list",
-      },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Listar",
-        to: "/warehouse/list",
-      },
-    ],
-  },
-
-  {
-    _tag: "CSidebarNavDivider",
   },
 ];
 
@@ -252,7 +217,7 @@ export const userNav = [
   },
   {
     _tag: "CSidebarNavTitle",
-    _children: ["Admin"],
+    _children: ["Usuario"],
   },
 
   {
@@ -271,39 +236,49 @@ export const userNav = [
         name: "Citas Agendadas",
         to: "/appointment/list",
       },
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Calendario de Citas",
+      //   to: "/appointment/calendar",
+      // },
     ],
   },
+];
+
+export const hostNav = [
+  {
+    _tag: "CSidebarNavItem",
+    name: "Dashboard",
+    to: "/dashboard",
+    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+    badge: {
+      color: "info",
+      text: "NEW",
+    },
+  },
+  {
+    _tag: "CSidebarNavTitle",
+    _children: ["Anfitrion"],
+  },
+
   {
     _tag: "CSidebarNavDropdown",
-    name: "Personas",
+    name: "Citas",
     route: "/apointment",
     icon: "cil-puzzle",
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Personas registradas",
-        to: "/person/list",
-      }
-    ],
-  },
-  {
-    _tag: "CSidebarNavDropdown",
-    name: "Vehículos",
-    route: "/apointment",
-    icon: "cil-puzzle",
-    _children: [
-      {
-        _tag: "CSidebarNavItem",
-        name: "Vehículos de Carga",
-        to: "/appointment",
+        name: "Citas Agendadas",
+        to: "/appointment/list",
       },
-      {
-        _tag: "CSidebarNavItem",
-        name: "Vehículos Personales",
-        to: "/appointment",
-      }
+      // {
+      //   _tag: "CSidebarNavItem",
+      //   name: "Calendario de Citas",
+      //   to: "/appointment/calendar",
+      // },
     ],
-  }
+  },
 ];
 
 export const guestNav = [

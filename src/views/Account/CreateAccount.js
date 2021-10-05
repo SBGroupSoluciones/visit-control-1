@@ -235,6 +235,7 @@ const CreateAccount = () => {
                       <option value="HOST">Anfitrión</option>
                       <option value="OPERATOR">Operador</option>
                       <option value="ADMIN">Administrador</option>
+                      <option value="AUTHORITY">Autoridad</option>
                       {/* <option value="SUPER_ADMIN"></option> */}
                     </CSelect>
                   </CCol>

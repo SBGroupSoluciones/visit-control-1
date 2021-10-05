@@ -12,6 +12,8 @@ import PersonalVehicle from "./PersonalVehicle";
 import { hostList, uploadImage, getImage, GetHost } from "../custom/Host";
 import { calendarCreate, calendarUpdate, GetCalendar } from "src/util/Calendar";
 import { S3Image, PhotoPicker } from "aws-amplify-react";
+import Amplify from "aws-amplify";
+import { AmplifyS3Image, AmplifyS3ImagePicker } from "@aws-amplify/ui-react";
 import { filterArray } from "../../util/Utils";
 import moment from "moment";
 import { icons } from "src/assets/icons";
@@ -19,6 +21,7 @@ import { vehiclesList } from "src/util/Vehicle";
 
 const PersonaAppointment = (props) => {
   const { setAppointmentData } = props;
+  const [account, setAccount] = useState();
 
   const [newVehicle, setNewVehicle] = useState(false);
   const [personAlready, setPersonAlready] = useState(false);
@@ -60,6 +63,7 @@ const PersonaAppointment = (props) => {
       onDataPrepare(hostsList);
       setHosts(hostsList);
       onGetVehicleList();
+      setAccount(localStorage.getItem("account"));
     };
     if (!hosts) {
       fetchData();
@@ -96,34 +100,40 @@ const PersonaAppointment = (props) => {
         ineFrontName: ineFrontName,
         ineBackName: ineBackName,
       });
-    }
 
-    if (imageName && imageData) {
-      let data = {
-        fileName: imageName,
-        file: imageData,
-      };
-      uploadImage(data).then((uploaded) => {
-        console.log(uploaded.key);
-      });
-    }
-    if (ineFrontName && ineFrontData) {
-      let data = {
-        fileName: ineFrontName,
-        file: ineFrontData,
-      };
-      uploadImage(data).then((uploaded) => {
-        console.log(uploaded.key);
-      });
-    }
-    if (ineBackName && ineBackData) {
-      let data = {
-        fileName: ineBackName,
-        file: ineBackData,
-      };
-      uploadImage(data).then((uploaded) => {
-        console.log(uploaded.key);
-      });
+      if (imageName && imageData) {
+        let data = {
+          fileName: `${account}/${onNameFormat(firstName)}-${onNameFormat(
+            lastName
+          )}/${imageName}`,
+          file: imageData,
+        };
+        uploadImage(data).then((uploaded) => {
+          if (uploaded) console.log(uploaded.key);
+        });
+      }
+      if (ineFrontName && ineFrontData) {
+        let data = {
+          fileName: `${account}/${onNameFormat(firstName)}-${onNameFormat(
+            lastName
+          )}/${ineFrontName}`,
+          file: ineFrontData,
+        };
+        uploadImage(data).then((uploaded) => {
+          if (uploaded) console.log(uploaded.key);
+        });
+      }
+      if (ineBackName && ineBackData) {
+        let data = {
+          fileName: `${account}/${onNameFormat(firstName)}-${onNameFormat(
+            lastName
+          )}/${ineBackName}`,
+          file: ineBackData,
+        };
+        uploadImage(data).then((uploaded) => {
+          if (uploaded) console.log(uploaded.key);
+        });
+      }
     }
   }, [
     personAlready,
@@ -135,7 +145,7 @@ const PersonaAppointment = (props) => {
     appointmentDate,
     appointmentHour,
     hostId,
-    plate, 
+    plate,
     imageName,
     imageData,
     ineFrontName,
@@ -144,6 +154,10 @@ const PersonaAppointment = (props) => {
     ineBackData,
     availableHours,
   ]);
+
+  const onNameFormat = (name) => {
+    return name.replaceAll(" ", "-");
+  };
 
   const onDataPrepare = (data) => {
     let whList = [];
@@ -199,13 +213,6 @@ const PersonaAppointment = (props) => {
         console.log(item);
       }
     });
-    // GetHost(event.target.options[selectedIndex].getAttribute("data-key")).then(
-    //   (currentHost) => {
-    //     const fullHostName = `${firstName} ${lastName}`;
-    //     setHostName(fullHostName);
-    //     console.log(currentHost);
-    //   }
-    // );
   };
 
   const onDateSelect = (date) => {
@@ -556,7 +563,14 @@ const PersonaAppointment = (props) => {
                         headerHint=" "
                         onLoad={(dataURL) => setIneBackData(dataURL)}
                       />
+                      {/* <AmplifyS3Image imgKey="aaaaaaaa.jpg" level="protected" */}
                     </CCol>
+                    {/* <AmplifyS3ImagePicker
+                      path={`${account}/`}
+                      buttonText="Subir Imagen"
+                    /> */}
+                    {/* <AmplifyS3Image 
+                    imgKey={`${account}/Screenshot%20from%202021-09-29%2022-51-17.png`}/> */}
                   </CRow>
                 </CCol>
               </CRow>

@@ -24,6 +24,7 @@ export const visitCreate = async (params) => {
     visitAccountId,
     visitPersonId,
     visitPrivateVehicleId,
+    visitCargoVehicleId,
   } = params;
 
   if (type == "PERSON") {
@@ -40,6 +41,31 @@ export const visitCreate = async (params) => {
       visitAccountId: visitAccountId,
       visitPersonId: visitPersonId,
       visitPrivateVehicleId: visitPrivateVehicleId,
+    };
+
+    try {
+      const visit = await API.graphql({
+        query: createVisit,
+        variables: { input: visitData },
+      });
+      return visit.data.createVisit;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  if (type == "CARGO") {
+    const visitData = {
+      reason: reason,
+      dateTimestamp: dateTimestamp,
+      status: status,
+      qr: qr,
+      timestamp: timestamp,
+      adminApprove: adminApprove,
+      operApprove: operApprove,
+      type: type,
+      visitHostId: visitHostId,
+      visitAccountId: visitAccountId,
+      visitCargoVehicleId: visitCargoVehicleId,
     };
 
     try {

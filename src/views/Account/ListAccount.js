@@ -14,8 +14,8 @@ const getBadge = (status) => {
   switch (status) {
     case "SUPER_ADMIN":
       return "success";
-    case "Inactive":
-      return "unregistered";
+    case "AUTHORITY":
+      return "danger";
     case "HOST":
       return "warning";
     case "Banned":
@@ -36,6 +36,8 @@ const getSpanishRole = (role) => {
       return "ANFITRIÓN";
     case "USER":
       return "USUARIO";
+    case "AUTHORITY":
+      return "AUTORIDAD"
     default:
       return "DESCONOCIDO";
   }

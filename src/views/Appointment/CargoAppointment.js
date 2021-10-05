@@ -82,7 +82,7 @@ const CargoAppointment = (props) => {
     if (!hosts) {
       fetchData();
     }
-    console.log("conductor ", driverName)
+    console.log("conductor ", driverName);
 
     if (
       driverName &&
@@ -106,7 +106,7 @@ const CargoAppointment = (props) => {
       imageName &&
       ineFrontName &&
       ineBackName &&
-      petitionName 
+      petitionName
       // availableHours
     ) {
       setAppointmentData({
@@ -130,7 +130,7 @@ const CargoAppointment = (props) => {
         imageName: imageName,
         ineFrontName: ineFrontName,
         ineBackName: ineBackName,
-        petitionName: petition
+        petitionName: petition,
       });
     }
 
@@ -140,7 +140,7 @@ const CargoAppointment = (props) => {
         file: imageData,
       };
       uploadImage(data).then((uploaded) => {
-        console.log(uploaded.key);
+        if (uploaded) console.log(uploaded.key);
       });
     }
     if (ineFrontName && ineFrontData) {
@@ -149,7 +149,7 @@ const CargoAppointment = (props) => {
         file: ineFrontData,
       };
       uploadImage(data).then((uploaded) => {
-        console.log(uploaded.key);
+        if (uploaded) console.log(uploaded.key);
       });
     }
     if (ineBackName && ineBackData) {
@@ -158,7 +158,7 @@ const CargoAppointment = (props) => {
         file: ineBackData,
       };
       uploadImage(data).then((uploaded) => {
-        console.log(uploaded.key);
+        if (uploaded) console.log(uploaded.key);
       });
     }
     if (petitionName && petitionData) {
@@ -167,7 +167,7 @@ const CargoAppointment = (props) => {
         file: petitionData,
       };
       uploadImage(data).then((uploaded) => {
-        console.log(uploaded.key);
+        if (uploaded) console.log(uploaded.key);
       });
     }
   }, [

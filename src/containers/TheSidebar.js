@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   CCreateElement,
@@ -11,15 +11,49 @@ import {
   CSidebarNavDropdown,
   CSidebarNavItem,
 } from "@coreui/react";
+import { GetAccount } from "src/views/Auth/Account";
 
 import CIcon from "@coreui/icons-react";
 
 // sidebar nav config
-import { adminNav, superAdminNav } from "./_nav";
+import {
+  adminNav,
+  superAdminNav,
+  operNav,
+  authorityNav,
+  hostNav,
+  userNav,
+} from "./_nav";
 
 const TheSidebar = () => {
   const dispatch = useDispatch();
   const show = useSelector((state) => state.sidebarShow);
+  const [currentRole, setCurrentRole] = useState();
+
+  useEffect(() => {
+    GetAccount(localStorage.getItem("account")).then((currentAccount) =>
+      setCurrentRole(currentAccount.role)
+    );
+  }, []);
+
+  const onRoleScreen = (role) => {
+    switch (role) {
+      case "SUPER_ADMIN":
+        return superAdminNav;
+      case "AUTHORITY":
+        return authorityNav;
+      case "HOST":
+        return hostNav;
+      case "ADMIN":
+        return adminNav;
+      case "OPERATOR":
+        return operNav;
+      case "USER":
+        return userNav;
+      default:
+        return userNav;
+    }
+  };
 
   return (
     <CSidebar
@@ -40,7 +74,7 @@ const TheSidebar = () => {
       </CSidebarBrand>
       <CSidebarNav>
         <CCreateElement
-          items={false ? adminNav : superAdminNav}
+          items={onRoleScreen(currentRole)}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,

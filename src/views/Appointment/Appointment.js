@@ -20,21 +20,6 @@ import ConfirmCargo from "./ConfirmCargo";
 import PersonaAppointment from "./PersonaAppointment";
 import CargoAppointment from "./CargoAppointment";
 
-const getBadge = (status) => {
-  switch (status) {
-    case "Active":
-      return "success";
-    case "Inactive":
-      return "secondary";
-    case "Pending":
-      return "warning";
-    case "Banned":
-      return "danger";
-    default:
-      return "primary";
-  }
-};
-
 const Appointment = () => {
   const [personAlready, setPersonAlready] = useState(false);
   const [active, setActive] = useState(0);
@@ -51,7 +36,7 @@ const Appointment = () => {
     }
     if (cargoAppointment) {
       console.log("CARGO",cargoAppointment)
-      // setCargoConfirm(true);
+      setCargoConfirm(true);
     }
   };
 
@@ -64,7 +49,7 @@ const Appointment = () => {
       />
       <ConfirmCargo
         show={cargoConfirm}
-        confirmHandler={setCargoConfirm}
+        setCargoConfirm={setCargoConfirm}
         appointmentData={cargoAppointment}
       />
       <CRow>
