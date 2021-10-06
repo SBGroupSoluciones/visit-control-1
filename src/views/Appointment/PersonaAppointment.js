@@ -58,11 +58,12 @@ const PersonaAppointment = (props) => {
   };
 
   useEffect(() => {
+    console.log("LA PLACA DEL VEHICULO NUEVO ES ", plate)
+    onGetVehicleList();
     const fetchData = async () => {
       const hostsList = await hostList();
       onDataPrepare(hostsList);
       setHosts(hostsList);
-      onGetVehicleList();
       setAccount(localStorage.getItem("account"));
     };
     if (!hosts) {
@@ -153,6 +154,7 @@ const PersonaAppointment = (props) => {
     ineBackName,
     ineBackData,
     availableHours,
+    vehicleList
   ]);
 
   const onNameFormat = (name) => {
@@ -192,7 +194,7 @@ const PersonaAppointment = (props) => {
   };
 
   const onVehicleSelect = (e) => {
-    console.log("data", e);
+    console.log("data vehicle selectr", e);
     if (e == "new") {
       setNewVehicle(true);
     } else {

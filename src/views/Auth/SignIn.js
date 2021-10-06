@@ -48,13 +48,11 @@ const SignIn = ({ loggedIn }) => {
       localStorage.setItem("account", user.attributes.email);
       // localStorage.setItem("jwt", user.signInUserSession.idToken.jwtToken);
       loggedIn(user);
-      history.push("/dashboard");
-      // onRetriveAccount().then((account) => {
-      //   localStorage.setItem("account", account.email);
-      //   history.push({
-      //     pathname: "/dashboard",
-      //   });
-      // });
+
+      onRetriveAccount().then((account) => {
+        localStorage.setItem("account", account.email);
+        history.push("/dashboard");
+      });
     } catch (e) {
       setError(e.code);
       setNotify(true);

@@ -32,6 +32,7 @@ import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
 import { visitList } from "../custom/Visit";
 import { GetHost } from "../custom/Host";
+import IngressPersona from "./IngressPersona";
 
 import moment from "moment";
 import "moment/locale/es";
@@ -57,13 +58,15 @@ const Appointment = () => {
   const [visits, setVisits] = useState();
   const [account, setAccount] = useState();
   const [editAccount, setEditAccount] = useState(false);
+  const [visit, setVisit] = useState();
+  const [ingressPerson, setIngressPerson] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       const allVisits = await visitList();
       console.log("CNOHOST ", getHostData(allVisits));
 
-      setVisits(allVisits)
+      setVisits(allVisits);
       // getHostData(allVisits).then((visitWithHost) => setVisits(visitWithHost));
       console.log("Las visitas ", allVisits);
     };
@@ -97,58 +100,6 @@ const Appointment = () => {
       });
     });
     return visitHost;
-  };
-
-  const objecto = {
-    id: "4be57ce3-a2ac-41fa-94b6-8f360a6396d1",
-    dateTimestamp: "2021-10-04T11:00:00",
-    checkInTimestamp: null,
-    checkOutTimestamp: null,
-    reason: "Visita de prueba",
-    status: "SCHEDULED",
-    qr: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiYW9qZWRhQHNiZ3JvdXAuY29tLm14IiwiZW1haWwiOiJhb2plZGFjc0BnbWFpbC5jb20ifQ.TPOwCxIOan1gEUT4MUkJYZI1KtdVAi4D6okrgpL32qI",
-    timestamp: "",
-    adminApprove: false,
-    operApprove: false,
-    type: "PERSON",
-    createdAt: "2021-10-03T21:48:32.675Z",
-    updatedAt: "2021-10-03T21:48:32.675Z",
-    account: {
-      id: "afcf58da-291f-4d10-adb3-d409dff374b8",
-      firstName: "Angel de Jesus",
-      lastName: "Ojeda Castro",
-      imgUrl: null,
-      company: "SBGroup",
-      email: "aojeda@sbgroup.com.mx",
-      role: "SUPER_ADMIN",
-      phones: ["6122308184"],
-      createdAt: "2021-09-14T19:11:56.090Z",
-      updatedAt: "2021-09-14T19:11:56.090Z",
-      owner: null,
-    },
-    owner: null,
-    person: {
-      id: "6ea0eac0-2b5e-43f0-883a-42a1342b2650",
-      firstName: "Angel ",
-      lastName: "Ojeda",
-      email: "aojedacs@gmail.com",
-      imgUrl: "b9b820a2d84c530126b1e92efba9f8b5.jpg",
-      phone: "6122308184",
-      company: "SBGroup.com",
-      idFrontPath: "aaaaaaaa.jpg",
-      idBackPath: "user-profile-defoult.jpg",
-      createdAt: "2021-10-03T21:48:32.091Z",
-      updatedAt: "2021-10-03T21:48:32.091Z",
-      owner: null,
-    },
-    privateVehicle: null,
-    cargoVehicle: null,
-    host: {
-      id: "b844c298-705d-4db0-b60c-91ac6db13e46",
-      createdAt: "2021-09-15T09:56:38.863Z",
-      updatedAt: "2021-09-15T09:56:38.863Z",
-      owner: null,
-    },
   };
 
   const getTypeBadge = (type) => {
@@ -229,8 +180,15 @@ const Appointment = () => {
     status: "Status",
     type: "Categoria",
   };
+
+  const onRowSelected = (item) => {
+    setVisit(item);
+    setIngressPerson(!ingressPerson);
+  };
+
   return (
     <>
+      <IngressPersona show={ingressPerson} visit={visit} />
       <CCard>
         <CCardHeader>Lista de Citas</CCardHeader>
         <CCardBody>
@@ -255,7 +213,7 @@ const Appointment = () => {
             hover
             sorter
             columnHeaderSlot={spanishFieds}
-            // onRowClick={(item) => onAccountSelected(item)}
+            onRowClick={(item) => onRowSelected(item)}
             scopedSlots={{
               type: (item) => (
                 <td>
