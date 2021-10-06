@@ -58,7 +58,7 @@ const PersonaAppointment = (props) => {
   };
 
   useEffect(() => {
-    console.log("LA PLACA DEL VEHICULO NUEVO ES ", plate)
+    // console.log("LA PLACA DEL VEHICULO NUEVO ES ", plate)
     onGetVehicleList();
     const fetchData = async () => {
       const hostsList = await hostList();
@@ -81,10 +81,11 @@ const PersonaAppointment = (props) => {
       appointmentHour &&
       hostId &&
       hostName &&
-      warehouse &&
-      imageName &&
-      ineFrontName &&
-      ineBackName
+      warehouse
+      // &&
+      // imageName &&
+      // ineFrontName &&
+      // ineBackName
     ) {
       setAppointmentData({
         firstName: firstName,
@@ -109,9 +110,11 @@ const PersonaAppointment = (props) => {
           )}/${imageName}`,
           file: imageData,
         };
-        uploadImage(data).then((uploaded) => {
-          if (uploaded) console.log(uploaded.key);
-        });
+        uploadImage(data)
+          .then((uploaded) => {
+            if (uploaded) console.log(uploaded.key);
+          })
+          .catch((error) => console.log("error al subir imagen", error));
       }
       if (ineFrontName && ineFrontData) {
         let data = {
@@ -120,9 +123,11 @@ const PersonaAppointment = (props) => {
           )}/${ineFrontName}`,
           file: ineFrontData,
         };
-        uploadImage(data).then((uploaded) => {
-          if (uploaded) console.log(uploaded.key);
-        });
+        uploadImage(data)
+          .then((uploaded) => {
+            if (uploaded) console.log(uploaded.key);
+          })
+          .catch((error) => console.log("error al subir imagen", error));
       }
       if (ineBackName && ineBackData) {
         let data = {
@@ -131,9 +136,11 @@ const PersonaAppointment = (props) => {
           )}/${ineBackName}`,
           file: ineBackData,
         };
-        uploadImage(data).then((uploaded) => {
-          if (uploaded) console.log(uploaded.key);
-        });
+        uploadImage(data)
+          .then((uploaded) => {
+            if (uploaded) console.log(uploaded.key);
+          })
+          .catch((error) => console.log("error al subir imagen", error));
       }
     }
   }, [
@@ -154,7 +161,7 @@ const PersonaAppointment = (props) => {
     ineBackName,
     ineBackData,
     availableHours,
-    vehicleList
+    vehicleList,
   ]);
 
   const onNameFormat = (name) => {
@@ -237,7 +244,7 @@ const PersonaAppointment = (props) => {
   const onGetVehicleList = () => {
     vehiclesList().then((vehicles) => {
       setVehicleList(vehicles);
-      console.log("LOS VEHICULOS ", vehicles);
+      // console.log("LOS VEHICULOS ", vehicles);
     });
   };
 

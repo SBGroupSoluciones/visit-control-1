@@ -8,7 +8,7 @@ import {
   CLabel,
   CInput,
   CFormGroup,
-  CSelect,
+  CButton,
   CTextarea,
   CModalFooter,
 } from "@coreui/react";
@@ -37,7 +37,7 @@ const IngressPersona = (props) => {
         hostWarehouse,
         account,
         person,
-        privateVehicle
+        privateVehicle,
       } = visit;
       const { firstName, lastName, email, phone, company } = person;
       const { role } = account;
@@ -57,11 +57,11 @@ const IngressPersona = (props) => {
         email: email,
         phone: phone,
         company: company,
-        brand:privateVehicle? privateVehicle:null,
-        color:privateVehicle?privateVehicle:null,
-        model:privateVehicle?privateVehicle:null,
-        plate:privateVehicle?privateVehicle:null,
-        subBrand:privateVehicle? privateVehicle:null,
+        brand: privateVehicle ? privateVehicle.brand : null,
+        color: privateVehicle ? privateVehicle.color : null,
+        model: privateVehicle ? privateVehicle.model : null,
+        plate: privateVehicle ? privateVehicle.plate : null,
+        subBrand: privateVehicle ? privateVehicle.subBrand : null,
       });
 
       setRole(role);
@@ -121,6 +121,13 @@ const IngressPersona = (props) => {
     hostName: "Prescott Errichiello",
     hostWarehouse: "ARBRUS",
   };
+
+  const onIngress = () => {
+
+  };
+  const onReject = () => {
+    
+  }
 
   return (
     <>
@@ -311,7 +318,14 @@ const IngressPersona = (props) => {
             </CRow>
           ) : null}
         </CModalBody>
-        <CModalFooter></CModalFooter>
+        <CModalFooter>
+          <CButton color="danger" onClick={(e) => onReject(e)}>
+            Rechazar
+          </CButton>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Ingresar
+          </CButton>
+        </CModalFooter>
       </CModal>
     </>
   );

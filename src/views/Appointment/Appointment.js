@@ -32,6 +32,7 @@ const Appointment = () => {
 
   const onConfirmDate = () => {
     if (personaAppointment) {
+      console.log("DATA DE PERSONA ALTA ", personaAppointment)
       setPersonaConfirm(true);
     }
     if (cargoAppointment) {
