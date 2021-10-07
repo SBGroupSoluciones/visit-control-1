@@ -70,7 +70,7 @@ const ListAccount = () => {
     if (!accounts) {
       fetchData();
     }
-  }, [accounts]);
+  }, [accounts, editAccount]);
 
   const onAccountSelected = (item) => {
     console.log("ITEM," ,item)

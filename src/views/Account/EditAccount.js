@@ -20,7 +20,7 @@ import {
   isValidCompanyName,
   isValidPhoneNumber,
 } from "../Auth/utils";
-import { set } from "core-js/core/dict";
+import { accountUpdate } from "../Auth/Account";
 
 const EditAccount = (props) => {
   const { show, account, showHandler } = props;
@@ -38,15 +38,16 @@ const EditAccount = (props) => {
   const [phoneValid, setPhoneValid] = useState();
 
   useEffect(() => {
-    const { firstName, lastName, email, company, phones, role } = account;
-
-    setFirstName(firstName);
-    setLastName(lastName);
-    setEmail(email);
-    setCompany(company);
-    setPhone(phones[0]);
-    setRole(role);
-  }, []);
+    if (account) {
+      const { firstName, lastName, email, company, phones, role } = account;
+      setFirstName(firstName);
+      setLastName(lastName);
+      setEmail(email);
+      setCompany(company);
+      setPhone(phones[0]);
+      setRole(role);
+    }
+  }, [account]);
 
   const onFirstNameValidation = (firstName) => {
     setFirstNameValid(isValidFirstName(firstName) && firstName);
@@ -73,8 +74,22 @@ const EditAccount = (props) => {
     setPhone(phone);
   };
 
-  const toggle = (e) => {
+  const onCancel = (e) => {
     showHandler(!show);
+  };
+
+  const onEditAccount = () => {
+    accountUpdate({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      phones: phone,
+      company: company,
+      role: role,
+    }).then((updated) => {
+      console.log("Se a editado la cuenta ", updated);
+      showHandler(!show);
+    });
   };
 
   return (
@@ -96,8 +111,6 @@ const EditAccount = (props) => {
                 onChange={(e) => {
                   onFirstNameValidation(e.target.value);
                 }}
-                valid={firstNameValid}
-                invalid={!firstNameValid && firstName}
               />
             </CCol>
             <CCol xs="12" md="12">
@@ -111,8 +124,6 @@ const EditAccount = (props) => {
                 onChange={(e) => {
                   onLastNameValidation(e.target.value);
                 }}
-                valid={lastNameValid}
-                invalid={!lastNameValid && lastName}
               />
             </CCol>
             <CCol xs="12" md="12">
@@ -126,8 +137,6 @@ const EditAccount = (props) => {
                 onChange={(e) => {
                   onEmailValidation(e.target.value);
                 }}
-                valid={emailValid}
-                invalid={!emailValid && email}
                 disabled
               />
             </CCol>
@@ -142,8 +151,6 @@ const EditAccount = (props) => {
                 onChange={(e) => {
                   onCompanyValidation(e.target.value);
                 }}
-                valid={companyValid}
-                invalid={!companyValid && company}
               />
             </CCol>
             <CCol xs="12" md="12">
@@ -157,12 +164,7 @@ const EditAccount = (props) => {
                 onChange={(e) => {
                   onPhoneValidation(e.target.value);
                 }}
-                valid={phoneValid}
-                invalid={!phoneValid && phone}
               />
-              <CInvalidFeedback>
-                Introduzca un numero de telefono valido
-              </CInvalidFeedback>
             </CCol>
             <CCol xs="12" md="12">
               <CLabel htmlFor="role" className="ln-top">
@@ -182,17 +184,17 @@ const EditAccount = (props) => {
                 <option value="OPERATOR">Operador</option>
                 <option value="ADMIN">Administrador</option>
                 <option value="AUTHORITY">Autoridad</option>
-                {/* <option value="SUPER_ADMIN"></option> */}
+                <option value="SUPER_ADMIN">Super Admin</option>
               </CSelect>
             </CCol>
           </CRow>
         </CForm>
       </CModalBody>
       <CModalFooter>
-        <CButton color="secondary" onClick={(e) => toggle(e)}>
+        <CButton color="secondary" onClick={(e) => onCancel(e)}>
           Cancelar
         </CButton>
-        <CButton color="success" onClick={(e) => toggle(e)}>
+        <CButton color="success" onClick={(e) => onEditAccount(e)}>
           Guardar
         </CButton>
       </CModalFooter>

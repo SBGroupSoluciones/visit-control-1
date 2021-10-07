@@ -82,6 +82,11 @@ export const superAdminNav = [
       },
       {
         _tag: "CSidebarNavItem",
+        name: "Escanear QR",
+        to: "/appointment/scan",
+      },
+      {
+        _tag: "CSidebarNavItem",
         name: "Citas Agendadas",
         to: "/appointment/list",
       },
