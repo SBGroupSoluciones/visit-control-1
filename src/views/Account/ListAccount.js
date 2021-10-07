@@ -9,6 +9,7 @@ import {
   CCardBody,
 } from "@coreui/react";
 import { accountList } from "../Auth/Account";
+import EditAccount from "./EditAccount";
 
 const getBadge = (status) => {
   switch (status) {
@@ -37,7 +38,7 @@ const getSpanishRole = (role) => {
     case "USER":
       return "USUARIO";
     case "AUTHORITY":
-      return "AUTORIDAD"
+      return "AUTORIDAD";
     default:
       return "DESCONOCIDO";
   }
@@ -72,11 +73,18 @@ const ListAccount = () => {
   }, [accounts]);
 
   const onAccountSelected = (item) => {
-    history.push(`/account/${item.id}`);
+    console.log("ITEM," ,item)
+    setAccount(item);
+    setEditAccount(!editAccount);
   };
 
   return (
     <>
+      <EditAccount
+        show={editAccount}
+        showHandler={setEditAccount}
+        account={account}
+      />
       <CCard accentColor="info">
         <CCardHeader>Lista de Cuentas</CCardHeader>
         <CCardBody>

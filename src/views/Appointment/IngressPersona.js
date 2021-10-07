@@ -122,12 +122,8 @@ const IngressPersona = (props) => {
     hostWarehouse: "ARBRUS",
   };
 
-  const onIngress = () => {
-
-  };
-  const onReject = () => {
-    
-  }
+  const onIngress = () => {};
+  const onReject = () => {};
 
   return (
     <>
@@ -300,9 +296,61 @@ const IngressPersona = (props) => {
               <CCol xs="12" md="12">
                 <CLabel htmlFor="firstName">Datos del Vehiculo</CLabel>
                 <CRow>
-                  <CCol xs="12" md="3">
+                  <CCol xs="12" md="4">
                     <CFormGroup>
-                      <CLabel htmlFor="firstName">Hora</CLabel>
+                      <CLabel htmlFor="firstName">Placa</CLabel>
+                      <CInput
+                        id="lastName"
+                        placeholder=""
+                        disabled
+                        required
+                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        required
+                      />
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="12" md="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="firstName">Color</CLabel>
+                      <CInput
+                        id="lastName"
+                        placeholder=""
+                        disabled
+                        required
+                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        required
+                      />
+                    </CFormGroup>
+                  </CCol>
+                  <CCol xs="12" md="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="firstName">Marca</CLabel>
+                      <CInput
+                        id="lastName"
+                        placeholder=""
+                        disabled
+                        required
+                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        required
+                      />
+                    </CFormGroup>
+                  </CCol>{" "}
+                  <CCol xs="12" md="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="firstName">Sub-Marca</CLabel>
+                      <CInput
+                        id="lastName"
+                        placeholder=""
+                        disabled
+                        required
+                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        required
+                      />
+                    </CFormGroup>
+                  </CCol>{" "}
+                  <CCol xs="12" md="4">
+                    <CFormGroup>
+                      <CLabel htmlFor="firstName">Modelo</CLabel>
                       <CInput
                         id="lastName"
                         placeholder=""

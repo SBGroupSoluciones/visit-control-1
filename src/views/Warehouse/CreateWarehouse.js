@@ -15,14 +15,20 @@ import {
 } from "@coreui/react";
 
 import Notification from "../custom/Notification";
-import { isValidText, isValidPhoneNumber } from "../Auth/utils";
+import {
+  isValidText,
+  isValidPhoneNumber,
+  isValidWarehouseCode,
+} from "../Auth/utils";
 import { warehouseCreate } from "../custom/Warehouse";
 
 const CreateWarehouse = () => {
   const history = useHistory();
+  const [code, setCode] = useState();
   const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [phone, setPhone] = useState();
+  const [codeValid, setCodeValid] = useState();
   const [nameValid, setNameValid] = useState(false);
   const [addressValid, setAddressValid] = useState(false);
   const [phoneValid, setPhoneValid] = useState(false);
@@ -47,6 +53,11 @@ const CreateWarehouse = () => {
     setPhone(phone);
   };
 
+  const onCodeValidation = (code) => {
+    setCodeValid(isValidWarehouseCode(code));
+    setCode(code);
+  };
+
   const onCreateWarehouse = async () => {
     const whData = {
       name: name,
@@ -66,6 +77,8 @@ const CreateWarehouse = () => {
       });
   };
 
+  const onCodeGenerate = () => {};
+
   return (
     <>
       <Notification show={false} />
@@ -76,6 +89,21 @@ const CreateWarehouse = () => {
             <CCardBody>
               <CForm>
                 <CRow>
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="name" className="ln-top">
+                      Código
+                    </CLabel>
+                    <CInput
+                      type="text"
+                      autoComplete="code"
+                      value={code ? code : null}
+                      onChange={(e) => {
+                        onCodeValidation(e.target.value);
+                      }}
+                      valid={codeValid}
+                      invalid={!codeValid && code}
+                    />
+                  </CCol>
                   <CCol xs="12" md="12">
                     <CLabel htmlFor="name" className="ln-top">
                       Nombre

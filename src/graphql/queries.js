@@ -27,6 +27,14 @@ export const getAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -118,6 +126,7 @@ export const getAccount = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -248,6 +257,14 @@ export const getVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      adminInProgress
+      operInProgress
+      adminFinished
+      operFinished
+      adminInTimestamp
+      operInTimestamp
+      adminOutTimestamp
+      operOutTimestamp
       type
       createdAt
       updatedAt
@@ -319,6 +336,14 @@ export const getVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -359,6 +384,14 @@ export const getVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -416,6 +449,14 @@ export const getVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -445,6 +486,7 @@ export const getVisit = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -480,6 +522,14 @@ export const listVisits = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -617,6 +667,14 @@ export const getPerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -741,6 +799,14 @@ export const listPersons = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -805,6 +871,14 @@ export const getPrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -936,6 +1010,14 @@ export const listPrivateVehicles = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -995,6 +1077,14 @@ export const privateVehicleByPlate = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -1076,6 +1166,14 @@ export const getCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -1222,6 +1320,14 @@ export const listCargoVehicles = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -1298,6 +1404,14 @@ export const cargoVehicleByPetition = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -1374,6 +1488,14 @@ export const cargoVehicleByDirverName = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -1386,9 +1508,10 @@ export const cargoVehicleByDirverName = /* GraphQL */ `
   }
 `;
 export const getWarehouse = /* GraphQL */ `
-  query GetWarehouse($id: ID!) {
-    getWarehouse(id: $id) {
+  query GetWarehouse($code: String!) {
+    getWarehouse(code: $code) {
       id
+      code
       name
       address
       phone
@@ -1411,13 +1534,22 @@ export const getWarehouse = /* GraphQL */ `
 `;
 export const listWarehouses = /* GraphQL */ `
   query ListWarehouses(
+    $code: String
     $filter: ModelWarehouseFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listWarehouses(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listWarehouses(
+      code: $code
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
+        code
         name
         address
         phone
@@ -1483,6 +1615,14 @@ export const getHost = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -1492,6 +1632,7 @@ export const getHost = /* GraphQL */ `
       }
       warehouse {
         id
+        code
         name
         address
         phone
@@ -1548,6 +1689,7 @@ export const listHosts = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -1596,6 +1738,7 @@ export const getCalendar = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone

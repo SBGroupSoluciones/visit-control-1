@@ -46,6 +46,14 @@ type Visit
   timestamp: String
   adminApprove: Boolean
   operApprove: Boolean
+  adminInProgress:Boolean
+  operInProgress:Boolean
+  adminFinished:Boolean
+  operFinished:Boolean 
+  adminInTimestamp:String
+  operInTimestamp:String
+  adminOutTimestamp:String
+  operOutTimestamp:String 
   type: String!
   host: Host! @connection(name: "VisitHost")
   account: Account @connection(name: "AccountVisits")
@@ -143,6 +151,7 @@ type CargoVehicle
 
 type Warehouse
   @model
+  @key(fields: ["code"])
   @auth(
     rules: [
       { allow: owner, operations: [create, read, update, delete] }
@@ -151,6 +160,7 @@ type Warehouse
     ]
   ) {
   id: ID!
+  code: String!
   name: String!
   address: String
   phone: String

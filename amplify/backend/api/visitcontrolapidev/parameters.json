@@ -1,5 +1,5 @@
 {
-  "AppSyncApiName": "visitcontroldevapi",
+  "AppSyncApiName": "visitcontrolapidev",
   "DynamoDBBillingMode": "PAY_PER_REQUEST",
   "DynamoDBEnableServerSideEncryption": false,
   "AuthCognitoUserPoolId": {

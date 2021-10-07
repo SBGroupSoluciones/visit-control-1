@@ -8,6 +8,7 @@ const PASS_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})/;
 const COMPANY_NAME_REGEX = /^[0-9A-Za-zÀ-ÿ\s,._+;()*~'#@!?&-]+$/;
 const PHONE_NUMBER_REGEX = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/;
 const VERIFICATION_CODE = /^[0-9][0-9][0-9][0-9][0-9][0-9]$/;
+const WAREHOUSE_CODE = /^[A-Z]{3}$/;
 
 export const isValidText = (text) =>{
   let result = false;
@@ -69,6 +70,15 @@ export const isValidPhoneNumber = (phone) => {
 export const isValidVerificationCode = (code) => {
   let result = false;
   if (VERIFICATION_CODE.test(code)) {
+    result = true;
+  }
+  return result;
+};
+
+
+export const isValidWarehouseCode = (code) => {
+  let result = false;
+  if (WAREHOUSE_CODE.test(code)) {
     result = true;
   }
   return result;

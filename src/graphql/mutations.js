@@ -30,6 +30,14 @@ export const updateAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -121,6 +129,7 @@ export const updateAccount = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -167,6 +176,14 @@ export const deleteAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -258,6 +275,7 @@ export const deleteAccount = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -291,6 +309,14 @@ export const updateVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      adminInProgress
+      operInProgress
+      adminFinished
+      operFinished
+      adminInTimestamp
+      operInTimestamp
+      adminOutTimestamp
+      operOutTimestamp
       type
       createdAt
       updatedAt
@@ -362,6 +388,14 @@ export const updateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -402,6 +436,14 @@ export const updateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -459,6 +501,14 @@ export const updateVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -488,6 +538,7 @@ export const updateVisit = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -521,6 +572,14 @@ export const deleteVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      adminInProgress
+      operInProgress
+      adminFinished
+      operFinished
+      adminInTimestamp
+      operInTimestamp
+      adminOutTimestamp
+      operOutTimestamp
       type
       createdAt
       updatedAt
@@ -592,6 +651,14 @@ export const deleteVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -632,6 +699,14 @@ export const deleteVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -689,6 +764,14 @@ export const deleteVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -718,6 +801,7 @@ export const deleteVisit = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -794,6 +878,14 @@ export const updatePerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -934,6 +1026,14 @@ export const deletePerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -1071,6 +1171,14 @@ export const updatePrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -1208,6 +1316,14 @@ export const deletePrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -1362,6 +1478,14 @@ export const updateCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -1516,6 +1640,14 @@ export const deleteCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -1604,6 +1736,7 @@ export const updateWarehouse = /* GraphQL */ `
   ) {
     updateWarehouse(input: $input, condition: $condition) {
       id
+      code
       name
       address
       phone
@@ -1631,6 +1764,7 @@ export const deleteWarehouse = /* GraphQL */ `
   ) {
     deleteWarehouse(input: $input, condition: $condition) {
       id
+      code
       name
       address
       phone
@@ -1703,6 +1837,14 @@ export const updateHost = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -1712,6 +1854,7 @@ export const updateHost = /* GraphQL */ `
       }
       warehouse {
         id
+        code
         name
         address
         phone
@@ -1791,6 +1934,14 @@ export const deleteHost = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -1800,6 +1951,7 @@ export const deleteHost = /* GraphQL */ `
       }
       warehouse {
         id
+        code
         name
         address
         phone
@@ -1860,6 +2012,7 @@ export const updateCalendar = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -1911,6 +2064,7 @@ export const deleteCalendar = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -1958,6 +2112,14 @@ export const createAccount = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -2049,6 +2211,7 @@ export const createAccount = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -2082,6 +2245,14 @@ export const createVisit = /* GraphQL */ `
       timestamp
       adminApprove
       operApprove
+      adminInProgress
+      operInProgress
+      adminFinished
+      operFinished
+      adminInTimestamp
+      operInTimestamp
+      adminOutTimestamp
+      operOutTimestamp
       type
       createdAt
       updatedAt
@@ -2153,6 +2324,14 @@ export const createVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -2193,6 +2372,14 @@ export const createVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -2250,6 +2437,14 @@ export const createVisit = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -2279,6 +2474,7 @@ export const createVisit = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone
@@ -2355,6 +2551,14 @@ export const createPerson = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -2492,6 +2696,14 @@ export const createPrivateVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -2646,6 +2858,14 @@ export const createCargoVehicle = /* GraphQL */ `
         timestamp
         adminApprove
         operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
         type
         createdAt
         updatedAt
@@ -2734,6 +2954,7 @@ export const createWarehouse = /* GraphQL */ `
   ) {
     createWarehouse(input: $input, condition: $condition) {
       id
+      code
       name
       address
       phone
@@ -2806,6 +3027,14 @@ export const createHost = /* GraphQL */ `
           timestamp
           adminApprove
           operApprove
+          adminInProgress
+          operInProgress
+          adminFinished
+          operFinished
+          adminInTimestamp
+          operInTimestamp
+          adminOutTimestamp
+          operOutTimestamp
           type
           createdAt
           updatedAt
@@ -2815,6 +3044,7 @@ export const createHost = /* GraphQL */ `
       }
       warehouse {
         id
+        code
         name
         address
         phone
@@ -2875,6 +3105,7 @@ export const createCalendar = /* GraphQL */ `
         }
         warehouse {
           id
+          code
           name
           address
           phone

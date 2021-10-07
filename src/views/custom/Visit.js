@@ -43,6 +43,8 @@ export const visitCreate = async (params) => {
       visitPrivateVehicleId: visitPrivateVehicleId,
     };
 
+    console.log("SE VA A CREAR LA VISITA COn", visitData)
+
     try {
       const visit = await API.graphql({
         query: createVisit,
