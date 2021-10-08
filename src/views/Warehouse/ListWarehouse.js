@@ -7,6 +7,7 @@ import {
   CCardBody,
 } from "@coreui/react";
 import { warehouseList } from "../custom/Warehouse";
+import EditWarehouse from "./EditWarehouse";
 
 const getBadge = (status) => {
   switch (status) {
@@ -23,9 +24,9 @@ const getBadge = (status) => {
   }
 };
 
-const fields = ["id", "name", "address", "phone"];
+const fields = ["code", "name", "address", "phone"];
 const spanishFieds = {
-  id: "ID",
+  code: "Código",
   name: "Nombre",
   address: "Dirección",
   phone: "Teléfono",
@@ -33,6 +34,8 @@ const spanishFieds = {
 
 const ListWarehouse = () => {
   const [warehouses, setWarehouses] = useState();
+  const [warehouse, setWarehouse] = useState();
+  const [editWarehouse, setEditWarehouse] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,8 +47,17 @@ const ListWarehouse = () => {
     }
   }, [warehouses]);
 
+  const onEditWarehouse = (item) => {
+    setWarehouse(item);
+    setEditWarehouse(true);
+  };
   return (
     <>
+      <EditWarehouse
+        show={editWarehouse}
+        showHandler={setEditWarehouse}
+        warehouse={warehouse}
+      />
       <CCard accentColor="info">
         <CCardHeader>Lista de Recintos</CCardHeader>
         <CCardBody>
@@ -56,7 +68,7 @@ const ListWarehouse = () => {
             itemsPerPage={10}
             responsive={true}
             clickableRows={true}
-            onRowClick={e=>{console.log("se pico e",e)}}
+            onRowClick={(item) => onEditWarehouse(item)}
             pagination
             columnFilter
             tableFilter={{

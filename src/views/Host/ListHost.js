@@ -62,7 +62,7 @@ const ListHost = () => {
       const hostsList = await hostList();
       onDataPrepare(hostsList);
       console.log(hosts);
-      // setHosts(hosts);
+      setHosts(hosts);
     };
     if (!hosts) {
       fetchData();
@@ -72,7 +72,7 @@ const ListHost = () => {
   const onDataPrepare = (data) => {
     let tableListHost = [];
     data.map((host) => {
-      if (host.hostName || host.warehouse) {
+      if (host.hostName && host.warehouse) {
         let fullname = host.hostName.firstName + " " + host.hostName.lastName;
         tableListHost.push({
           warehouse: host.warehouse.name,

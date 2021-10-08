@@ -15,7 +15,8 @@ import {
 import QRCode from "react-qr-code";
 import moment from "moment";
 import "moment/locale/es";
-import { visitCreate } from "../custom/Visit";
+import { visitCreate } from "../../util/Visit";
+import { idGenerate } from "../../util/IdUtils";
 import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { jwtEncode } from "src/util/Utils";
 import { personCreate } from "src/util/Persona";
@@ -29,6 +30,7 @@ const ConfirmPersona = (props) => {
   useEffect(() => {
     if (appointmentData) {
       const {
+        id,
         firstName,
         lastName,
         email,
@@ -45,6 +47,7 @@ const ConfirmPersona = (props) => {
       } = appointmentData;
       const appointmentConfirmData = {
         type: "PERSON",
+        id: id,
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -61,13 +64,6 @@ const ConfirmPersona = (props) => {
         ineBUrl: ineBackName,
       };
       setAppointment(appointmentConfirmData);
-      setQrJson(
-        jwtEncode({
-          account: localStorage.getItem("account"),
-          email: appointmentData.email,
-          date: appointmentData.cDate,
-        })
-      );
     }
   }, [appointmentData, show]);
 
@@ -75,7 +71,7 @@ const ConfirmPersona = (props) => {
     setPersonaConfirm(!show);
   };
 
-  const onConfirmData = () => {
+  const onConfirmData = async () => {
     const personaData = {
       persona: {
         firstName: appointment.firstName,
@@ -92,10 +88,11 @@ const ConfirmPersona = (props) => {
     personCreate(personaData).then((createdPerson) => {
       console.log("Se creo la persona ", createdPerson);
       const visit = {
+        id: appointment.id,
         reason: appointment.reason,
         dateTimestamp: appointment.cDate,
         status: "SCHEDULED",
-        qr: qrJson,
+        qr: appointment.qr,
         timestamp: "",
         adminApprove: false,
         operApprove: false,
@@ -107,7 +104,7 @@ const ConfirmPersona = (props) => {
       };
       visitCreate(visit).then((visitCreated) => {
         console.log("VISiTA CREADA", visitCreated);
-        history.push("/appointment/list")
+        history.push("/appointment/list");
       });
     });
 
@@ -209,19 +206,23 @@ const ConfirmPersona = (props) => {
             <CCol xs="12" md="6">
               <CContainer>
                 <CRow>
-                  {/* <CCol xs="12" md="6">
+                  <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>QR</strong>
                     </CLabel>
                     <p className="h5">
-                      <QRCode
-                        value={JSON.stringify(qrJson)}
-                        level="L"
-                        fgColor="#212121"
-                        size="128"
-                      />
+                      {appointment.id ? (
+                        <QRCode
+                          value={appointment.id}
+                          level="L"
+                          fgColor="#212121"
+                          size="128"
+                        />
+                      ) : (
+                        <p>EL QR NO SE CARGO CORRECTAMENTE</p>
+                      )}
                     </p>
-                  </CCol> */}
+                  </CCol>
                   <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>Imagen</strong>

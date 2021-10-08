@@ -14,7 +14,7 @@ import {
 } from "@coreui/react";
 import QRCode from "react-qr-code";
 import { jwtEncode } from "src/util/Utils";
-import { visitCreate } from "../custom/Visit";
+import { visitCreate } from "../../util/Visit";
 import moment from "moment";
 import "moment/locale/es";
 import { cargoCreate } from "src/util/Cargo";

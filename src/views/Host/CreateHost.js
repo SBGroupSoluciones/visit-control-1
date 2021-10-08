@@ -127,7 +127,7 @@ const CreateHost = () => {
                       <option>Seleccione una opcion...</option>
                       {warehouses
                         ? warehouses.map((x, y) => (
-                            <option key={y} data-key={x.id}>
+                            <option key={y} data-key={x.code}>
                               {x.name}
                             </option>
                           ))

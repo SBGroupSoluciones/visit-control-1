@@ -30,7 +30,7 @@ import {
 import { DocsLink } from "src/reusable";
 import CIcon from "@coreui/icons-react";
 import usersData from "../users/UsersData";
-import { visitList } from "../custom/Visit";
+import { visitList } from "../../util/Visit";
 import { GetHost } from "../custom/Host";
 import IngressPersona from "./IngressPersona";
 

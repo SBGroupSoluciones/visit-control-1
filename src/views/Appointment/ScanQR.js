@@ -20,14 +20,22 @@ import ConfirmCargo from "./ConfirmCargo";
 import PersonaAppointment from "./PersonaAppointment";
 import CargoAppointment from "./CargoAppointment";
 import QrReader from "react-qr-reader";
+import IngressPersona from "./IngressPersona";
+import { GetVisit } from "src/util/Visit";
 
 const Appointment = () => {
   const [active, setActive] = useState(0);
+  const [ingressPerson, setIngressPerson] = useState(false);
+  const [visit, setVisit] = useState();
 
   useEffect(() => {}, []);
   const onHandleScan = (data) => {
-    if (data) {
+    if (data && !ingressPerson) {
       console.log(data);
+      GetVisit(data).then((visit) => {
+        setVisit(visit);
+        setIngressPerson(true);
+      });
     }
   };
   const onHandleError = (err) => {
@@ -36,6 +44,7 @@ const Appointment = () => {
 
   return (
     <>
+      <IngressPersona show={ingressPerson} visit={visit} />
       <CRow>
         <CCol md="4">
           <CCard accentColor="success">

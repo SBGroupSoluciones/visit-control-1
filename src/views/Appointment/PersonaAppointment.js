@@ -18,11 +18,13 @@ import { filterArray } from "../../util/Utils";
 import moment from "moment";
 import { icons } from "src/assets/icons";
 import { vehiclesList } from "src/util/Vehicle";
+import { idGenerate } from "../../util/IdUtils";
 
 const PersonaAppointment = (props) => {
   const { setAppointmentData } = props;
   const [account, setAccount] = useState();
 
+  const [id, setId] = useState();
   const [newVehicle, setNewVehicle] = useState(false);
   const [personAlready, setPersonAlready] = useState(false);
   const [firstName, setFirstName] = useState();
@@ -87,21 +89,27 @@ const PersonaAppointment = (props) => {
       // ineFrontName &&
       // ineBackName
     ) {
-      setAppointmentData({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phone,
-        company: company,
-        reason: reason,
-        plate: plate,
-        appointmentDate: appointmentDate,
-        appointmentHour: appointmentHour,
-        host: selectedHost,
-        imageName: imageName,
-        ineFrontName: ineFrontName,
-        ineBackName: ineBackName,
-      });
+      if (selectedHost) {
+        idGenerate(selectedHost.warehouse.code).then((newId)=>{
+          setAppointmentData({
+            id:newId,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            company: company,
+            reason: reason,
+            plate: plate,
+            appointmentDate: appointmentDate,
+            appointmentHour: appointmentHour,
+            host: selectedHost,
+            imageName: imageName,
+            ineFrontName: ineFrontName,
+            ineBackName: ineBackName,
+          });
+        });
+      }
+
 
       if (imageName && imageData) {
         let data = {

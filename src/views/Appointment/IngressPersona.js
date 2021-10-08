@@ -23,6 +23,7 @@ const IngressPersona = (props) => {
   const [role, setRole] = useState();
 
   useEffect(() => {
+
     if (visit) {
       console.log("LA visita seleccioanada", visit);
       const {
@@ -63,6 +64,7 @@ const IngressPersona = (props) => {
         plate: privateVehicle ? privateVehicle.plate : null,
         subBrand: privateVehicle ? privateVehicle.subBrand : null,
       });
+
 
       setRole(role);
     }
@@ -304,7 +306,7 @@ const IngressPersona = (props) => {
                         placeholder=""
                         disabled
                         required
-                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        value={visitData.plate}
                         required
                       />
                     </CFormGroup>
@@ -317,7 +319,7 @@ const IngressPersona = (props) => {
                         placeholder=""
                         disabled
                         required
-                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        value={visitData.color}
                         required
                       />
                     </CFormGroup>
@@ -330,7 +332,7 @@ const IngressPersona = (props) => {
                         placeholder=""
                         disabled
                         required
-                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        value={visitData.brand}
                         required
                       />
                     </CFormGroup>
@@ -343,7 +345,7 @@ const IngressPersona = (props) => {
                         placeholder=""
                         disabled
                         required
-                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        value={visitData.subBrand}
                         required
                       />
                     </CFormGroup>
@@ -356,7 +358,7 @@ const IngressPersona = (props) => {
                         placeholder=""
                         disabled
                         required
-                        value={moment(visitData.dateTimestamp).format("h:mm a")}
+                        value={visitData.model}
                         required
                       />
                     </CFormGroup>

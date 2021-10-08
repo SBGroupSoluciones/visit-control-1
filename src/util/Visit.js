@@ -3,15 +3,16 @@ import {
   createPerson,
   createCargoVehicle,
 } from "src/graphql/mutations";
-import { listHosts, listVisits } from "src/graphql/queries";
+import { listHosts, listVisits, getVisit } from "src/graphql/queries";
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
-import awsconfig from "../../aws-exports";
-import CreateHost from "../Host/CreateHost";
+import awsconfig from "../aws-exports";
+import { idGenerate } from "./IdUtils";
 
 Auth.configure(awsconfig);
 
 export const visitCreate = async (params) => {
   const {
+    id,
     reason,
     dateTimestamp,
     status,
@@ -27,12 +28,14 @@ export const visitCreate = async (params) => {
     visitCargoVehicleId,
   } = params;
 
+
   if (type == "PERSON") {
     const visitData = {
+      id:id,
+      qr:qr, 
       reason: reason,
       dateTimestamp: dateTimestamp,
       status: status,
-      qr: qr,
       timestamp: timestamp,
       adminApprove: adminApprove,
       operApprove: operApprove,
@@ -43,9 +46,8 @@ export const visitCreate = async (params) => {
       visitPrivateVehicleId: visitPrivateVehicleId,
     };
 
-    console.log("SE VA A CREAR LA VISITA COn", visitData)
-
     try {
+      console.log("ANTES DE CREAR LA VISITA ",visitData)
       const visit = await API.graphql({
         query: createVisit,
         variables: { input: visitData },
@@ -60,7 +62,6 @@ export const visitCreate = async (params) => {
       reason: reason,
       dateTimestamp: dateTimestamp,
       status: status,
-      qr: qr,
       timestamp: timestamp,
       adminApprove: adminApprove,
       operApprove: operApprove,
@@ -101,7 +102,6 @@ export const visitList = async () => {
     return visits.data.listVisits.items;
   } catch (e) {
     console.log("Error al obtener visitas ", e);
-
     if (e.data) {
       return e.data.listVisits.items;
     }
@@ -131,14 +131,14 @@ export const uploadImage = async (data) => {
   }
 };
 
-// export const GetAccount = async (email) => {
+export const GetVisit = async (id) => {
 
-//   try {
-//     const account = await API.graphql(
-//       graphqlOperation(getAccount, { email: email })
-//     );
-//     return account.data.getAccount;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+  try {
+    const visit = await API.graphql(
+      graphqlOperation(getVisit, { id: id })
+    );
+    return visit.data.getVisit;
+  } catch (error) {
+    console.log(error);
+  }
+};

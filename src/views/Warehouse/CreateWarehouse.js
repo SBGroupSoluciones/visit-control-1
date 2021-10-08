@@ -36,7 +36,10 @@ const CreateWarehouse = () => {
   // const [error, setError] = useState();
   // const [notify, setNotify] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+
+
+  }, []);
 
   const onNameValidation = (name) => {
     setNameValid(isValidText(name) && name);
@@ -60,6 +63,7 @@ const CreateWarehouse = () => {
 
   const onCreateWarehouse = async () => {
     const whData = {
+      code:code, 
       name: name,
       address: address,
       phone: phone,
@@ -77,11 +81,9 @@ const CreateWarehouse = () => {
       });
   };
 
-  const onCodeGenerate = () => {};
-
   return (
     <>
-      <Notification show={false} />
+      {/* <Notification show={false} /> */}
       <CRow>
         <CCol md="6">
           <CCard accentColor="success">

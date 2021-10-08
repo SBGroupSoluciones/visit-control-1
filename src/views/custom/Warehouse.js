@@ -6,8 +6,9 @@ import awsconfig from "../../aws-exports";
 Auth.configure(awsconfig);
 
 export const warehouseCreate = async (params) => {
-  const { name, address, phone } = params;
+  const { code, name, address, phone } = params;
   const warehouseData = {
+    code: code,
     name: name,
     address: address,
     phone: phone,
