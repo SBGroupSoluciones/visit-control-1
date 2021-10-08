@@ -59,6 +59,8 @@ export const visitCreate = async (params) => {
   }
   if (type == "CARGO") {
     const visitData = {
+      id:id,
+      qr:qr, 
       reason: reason,
       dateTimestamp: dateTimestamp,
       status: status,

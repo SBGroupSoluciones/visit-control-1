@@ -31,6 +31,7 @@ const ConfirmCargo = (props) => {
   useEffect(() => {
     if (appointmentData) {
       const {
+        id,
         driverName,
         email,
         company,
@@ -56,6 +57,7 @@ const ConfirmCargo = (props) => {
 
       setAppointmentConfirmData({
         type: "CARGO",
+        id:id,
         driverName: driverName,
         email: email,
         company: company,
@@ -121,9 +123,10 @@ const ConfirmCargo = (props) => {
     cargoCreate(vehicleData).then((createdVehicle) => {
       console.log("Se creo el cargo ", createdVehicle);
       const visit = {
+        id:appointmentConfirmData.id,
         dateTimestamp: appointmentConfirmData.cDate,
         status: "SCHEDULED",
-        qr: qrJson,
+        qr: appointmentConfirmData.id,
         timestamp: "",
         adminApprove: false,
         operApprove: false,
@@ -278,19 +281,23 @@ const ConfirmCargo = (props) => {
             <CCol xs="12" md="6">
               <CContainer>
                 <CRow>
-                  {/* <CCol xs="12" md="6">
+                <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>QR</strong>
                     </CLabel>
                     <p className="h5">
-                      <QRCode
-                        value={JSON.stringify("CARGO")}
-                        level="L"
-                        fgColor="#212121"
-                        size="128"
-                      />
+                      {appointmentData.id ? (
+                        <QRCode
+                          value={appointmentData.id}
+                          level="L"
+                          fgColor="#212121"
+                          size="128"
+                        />
+                      ) : (
+                        <p>EL QR NO SE CARGO CORRECTAMENTE</p>
+                      )}
                     </p>
-                  </CCol> */}
+                  </CCol>
                   <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>Imagen</strong>

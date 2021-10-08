@@ -13,6 +13,7 @@ import { filterArray } from "../../util/Utils";
 import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { hostList, uploadImage } from "../custom/Host";
 import moment from "moment";
+import { idGenerate } from "src/util/IdUtils";
 
 const getBadge = (status) => {
   switch (status) {
@@ -111,29 +112,34 @@ const CargoAppointment = (props) => {
       petitionName
       // availableHours
     ) {
-      setAppointmentData({
-        driverName: driverName,
-        email: email,
-        company: company,
-        phone: phone,
-        line: line,
-        load: load,
-        unload: unload,
-        host: selectedHost,
-        appointmentDate: appointmentDate,
-        appointmentHour: appointmentHour,
-        vehiclePlate: vehiclePlate,
-        platformPlate: platformPlate,
-        petition: petition,
-        packageNumber: packageNumber,
-        containerNumber: containerNumber,
-        tractNumber: tractNumber,
-        sealsNumber: sealsNumber,
-        imageName: imageName,
-        ineFrontName: ineFrontName,
-        ineBackName: ineBackName,
-        petitionName: petition,
-      });
+      if (selectedHost) {
+        idGenerate(selectedHost.warehouse.code).then((newId) => {
+          setAppointmentData({
+            id:newId,
+            driverName: driverName,
+            email: email,
+            company: company,
+            phone: phone,
+            line: line,
+            load: load,
+            unload: unload,
+            host: selectedHost,
+            appointmentDate: appointmentDate,
+            appointmentHour: appointmentHour,
+            vehiclePlate: vehiclePlate,
+            platformPlate: platformPlate,
+            petition: petition,
+            packageNumber: packageNumber,
+            containerNumber: containerNumber,
+            tractNumber: tractNumber,
+            sealsNumber: sealsNumber,
+            imageName: imageName,
+            ineFrontName: ineFrontName,
+            ineBackName: ineBackName,
+            petitionName: petition,
+          });
+        });
+      }
     }
 
     if (imageName && imageData) {
