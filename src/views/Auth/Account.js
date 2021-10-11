@@ -76,7 +76,7 @@ export const accountUpdate = async (params) => {
       variables: { input: accountData },
     });
     console.log("la cuenta se edito ", account);
-    return account.data.createAccount;
+    return account.data;
   } catch (e) {
     console.log(e);
   }

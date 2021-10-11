@@ -36,7 +36,6 @@ import IngressPersona from "./IngressPersona";
 
 import moment from "moment";
 import "moment/locale/es";
-import { GetAccount } from "../custom/PrivateVehicle";
 
 const getBadge = (status) => {
   switch (status) {
@@ -57,43 +56,21 @@ const fields = ["name", "registered", "role", "status"];
 const Appointment = () => {
   const history = useHistory();
   const [visits, setVisits] = useState();
-  const [role, setRole] = useState();
+  const [account, setAccount] = useState();
+  const [editAccount, setEditAccount] = useState(false);
   const [visit, setVisit] = useState();
   const [ingressPerson, setIngressPerson] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
-      return GetAccount(localStorage.getItem("account")).then((account) => {
-        if (account) {
-          setRole(account.role);
-          return visitList().then((allVisits) => {
-            console.log("SI LLEGO? ", allVisits);
-            return getHostData(allVisits).then((visitsWHost) => {
-              console.log("DESPUS DE GETHOST", visitsWHost);
-              let filteredList = [];
-              visitsWHost.map((visit) => {
-                console.log("ASFSAFSAFSAFSAFSADF ", visit);
-                if (account.company == visit.id.split("-")[0]) {
-                  console.log("THE CURRENT VISIT HOST", visit);
-                  filteredList.push(visit);
-                }
-                if (account.role == "SUPER_ADMIN") {
-                  console.log("THE CURRENT VISIT SA", visit);
-                }
-                if (account.role == "AUTHORITY") {
-                  console.log("THE CURRENT VISIT AUT", visit);
-                }
-              });
-              setVisits(filteredList);
-            });
-          });
-        }
-      });
+      const allVisits = await visitList();
+      console.log("CNOHOST ", getHostData(allVisits));
 
+      setVisits(allVisits);
       // getHostData(allVisits).then((visitWithHost) => setVisits(visitWithHost));
-      // console.log("Las visitas ", allVisits);
+      console.log("Las visitas ", allVisits);
     };
-    if (!visits && !role) {
+    if (!visits) {
       fetchData();
     }
   }, [visits]);
@@ -114,19 +91,15 @@ const Appointment = () => {
   };
 
   const getHostData = async (visit) => {
-    if (visit) {
-      var visitHost = [];
-
-      await Promise.all(
-        visit.map(async (item) => {
-          const host = await GetHost(item.host.id);
-          item.hostName = `${host.hostName.firstName} ${host.hostName.lastName}`;
-          item.hostWarehouse = host.warehouse.name;
-          visitHost.push(item);
-        })
-      );
-      return visitHost;
-    }
+    const visitHost = [];
+    visit.map((item) => {
+      return GetHost(item.host.id).then((host) => {
+        item.hostName = `${host.hostName.firstName} ${host.hostName.lastName}`;
+        item.hostWarehouse = host.warehouse.name;
+        visitHost.push(item);
+      });
+    });
+    return visitHost;
   };
 
   const getTypeBadge = (type) => {
@@ -151,7 +124,7 @@ const Appointment = () => {
       case "IN_PROGRESS_OPERATOR":
         return "warning";
       case "FINISHED_OPERATOR":
-        return "warning";
+          return "warning";
       case "FINISHED":
         return "unregistered";
       case "REJECTED_BY_ADMIN":
@@ -250,7 +223,7 @@ const Appointment = () => {
             hover
             sorter
             columnHeaderSlot={spanishFieds}
-            // onRowClick={(item) => onRowSelected(item)}
+            onRowClick={(item) => onRowSelected(item)}
             scopedSlots={{
               type: (item) => (
                 <td>
@@ -270,7 +243,7 @@ const Appointment = () => {
                 item.person ? (
                   <td>{`${item.person.firstName} ${item.person.lastName}`}</td>
                 ) : (
-                  <td>{`${item.cargoVehicle.driverName}`}</td>
+                  <td></td>
                 ),
               cargoVehicle: (item) =>
                 item.cargoVehicle ? <td>{`${item.driverName}`}</td> : <td></td>,
@@ -280,11 +253,7 @@ const Appointment = () => {
                 </td>
               ),
               company: (item) =>
-                item.person ? (
-                  <td>{item.person.company}</td>
-                ) : (
-                  <td>{`${item.cargoVehicle.company}`}</td>
-                ),
+                item.person ? <td>{item.person.company}</td> : <td></td>,
             }}
           />
         </CCardBody>

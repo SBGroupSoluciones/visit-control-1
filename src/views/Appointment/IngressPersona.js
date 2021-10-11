@@ -49,41 +49,43 @@ const IngressPersona = (props) => {
         hostName,
         hostWarehouse,
       } = visit;
-      const { firstName, lastName, email, phone, company } = person;
-      const { role } = account;
+      if (person) {
+        const { firstName, lastName, email, phone, company } = person;
+        const { role } = account;
 
-      setVisitData({
-        id: id,
-        dateTimestamp: dateTimestamp,
-        checkInTimestamp: checkInTimestamp,
-        checkOutTimestamp: checkOutTimestamp,
-        reason: reason,
-        status: status,
-        adminApprove: adminApprove,
-        operApprove: operApprove,
-        adminInProgress: adminInProgress,
-        operInProgress: operInProgress,
-        adminFinished: adminFinished,
-        operFinished: operFinished,
-        adminInTimestamp: adminInTimestamp,
-        operInTimestamp: operInTimestamp,
-        adminOutTimestamp: adminOutTimestamp,
-        operOutTimestamp: operOutTimestamp,
-        hostName: hostName,
-        hostWarehouse: hostWarehouse,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        phone: phone,
-        company: company,
-        brand: privateVehicle ? privateVehicle.brand : null,
-        color: privateVehicle ? privateVehicle.color : null,
-        model: privateVehicle ? privateVehicle.model : null,
-        plate: privateVehicle ? privateVehicle.plate : null,
-        subBrand: privateVehicle ? privateVehicle.subBrand : null,
-      });
+        setVisitData({
+          id: id,
+          dateTimestamp: dateTimestamp,
+          checkInTimestamp: checkInTimestamp,
+          checkOutTimestamp: checkOutTimestamp,
+          reason: reason,
+          status: status,
+          adminApprove: adminApprove,
+          operApprove: operApprove,
+          adminInProgress: adminInProgress,
+          operInProgress: operInProgress,
+          adminFinished: adminFinished,
+          operFinished: operFinished,
+          adminInTimestamp: adminInTimestamp,
+          operInTimestamp: operInTimestamp,
+          adminOutTimestamp: adminOutTimestamp,
+          operOutTimestamp: operOutTimestamp,
+          hostName: hostName,
+          hostWarehouse: hostWarehouse,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phone: phone,
+          company: company,
+          brand: privateVehicle ? privateVehicle.brand : null,
+          color: privateVehicle ? privateVehicle.color : null,
+          model: privateVehicle ? privateVehicle.model : null,
+          plate: privateVehicle ? privateVehicle.plate : null,
+          subBrand: privateVehicle ? privateVehicle.subBrand : null,
+        });
 
-      setRole(role);
+        setRole(role);
+      }
     }
   }, [visit]);
 
@@ -157,6 +159,7 @@ const IngressPersona = (props) => {
         visitData.operInTimestamp = moment().tz("America/Mexico_City").format();
       }
     }
+    return visitData
   };
 
   return (

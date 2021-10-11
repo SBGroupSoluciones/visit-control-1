@@ -18,7 +18,7 @@ import { visitUpdate } from "src/util/Visit";
 import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { hostList, uploadImage } from "../custom/Host";
 
-const CargoAppointment = (props) => {
+const IngressCargo = (props) => {
   const { setAppointmentData, show, visit } = props;
   const [visitData, setVisitData] = useState();
   const [role, setRole] = useState();
@@ -48,73 +48,78 @@ const CargoAppointment = (props) => {
         hostName,
         hostWarehouse,
       } = visit;
-      const {
-        line,
-        vehiclePlate,
-        platformPlate,
-        containerNumber,
-        tractNumber,
-        load,
-        unload,
-        sealsNumber,
-        additionalDoc,
-        additionalDocPath,
-        packageNumber,
-        petition,
-        petitionPath,
-        driverName,
-        email,
-        company,
-        phone,
-        imgUrl,
-        idFrontPath,
-        idBackPath,
-      } = cargoVehicle;
-      const { role } = account;
 
-      setVisitData({
-        id: id,
-        dateTimestamp: dateTimestamp,
-        checkInTimestamp: checkInTimestamp,
-        checkOutTimestamp: checkOutTimestamp,
-        privateVehicle: privateVehicle,
-        reason: reason,
-        status: status,
-        adminApprove: adminApprove,
-        operApprove: operApprove,
-        adminInProgress: adminInProgress,
-        operInProgress: operInProgress,
-        adminFinished: adminFinished,
-        operFinished: operFinished,
-        adminInTimestamp: adminInTimestamp,
-        operInTimestamp: operInTimestamp,
-        adminOutTimestamp: adminOutTimestamp,
-        operOutTimestamp: operOutTimestamp,
-        hostName: hostName,
-        hostWarehouse: hostWarehouse,
-        line: line,
-        vehiclePlate: vehiclePlate,
-        platformPlate: platformPlate,
-        containerNumber: containerNumber,
-        tractNumber: tractNumber,
-        load: load,
-        unload: unload,
-        sealsNumber: sealsNumber,
-        additionalDoc: additionalDoc,
-        additionalDocPath: additionalDocPath,
-        packageNumber: packageNumber,
-        petition: petition,
-        petitionPath: petitionPath,
-        driverName: driverName,
-        email: email,
-        company: company,
-        phone: phone,
-        imgUrl: imgUrl,
-        idFrontPath: idFrontPath,
-        idBackPath: idBackPath,
-      });
+      if (cargoVehicle) {
+        const {
+          line,
+          vehiclePlate,
+          platformPlate,
+          containerNumber,
+          tractNumber,
+          load,
+          unload,
+          sealsNumber,
+          additionalDoc,
+          additionalDocPath,
+          packageNumber,
+          petition,
+          petitionPath,
+          driverName,
+          email,
+          company,
+          phone,
+          imgUrl,
+          idFrontPath,
+          idBackPath,
+        } = cargoVehicle;
+        const { role } = account;
 
-      setRole(role);
+        setVisitData({
+          id: id,
+          dateTimestamp: dateTimestamp,
+          checkInTimestamp: checkInTimestamp,
+          checkOutTimestamp: checkOutTimestamp,
+          privateVehicle: privateVehicle,
+          reason: reason,
+          status: status,
+          adminApprove: adminApprove,
+          operApprove: operApprove,
+          adminInProgress: adminInProgress,
+          operInProgress: operInProgress,
+          adminFinished: adminFinished,
+          operFinished: operFinished,
+          adminInTimestamp: adminInTimestamp,
+          operInTimestamp: operInTimestamp,
+          adminOutTimestamp: adminOutTimestamp,
+          operOutTimestamp: operOutTimestamp,
+          hostName: hostName,
+          hostWarehouse: hostWarehouse,
+          line: line,
+          vehiclePlate: vehiclePlate,
+          platformPlate: platformPlate,
+          containerNumber: containerNumber,
+          tractNumber: tractNumber,
+          load: load,
+          unload: unload,
+          sealsNumber: sealsNumber,
+          additionalDoc: additionalDoc,
+          additionalDocPath: additionalDocPath,
+          packageNumber: packageNumber,
+          petition: petition,
+          petitionPath: petitionPath,
+          driverName: driverName,
+          email: email,
+          company: company,
+          phone: phone,
+          imgUrl: imgUrl,
+          idFrontPath: idFrontPath,
+          idBackPath: idBackPath,
+        });
+
+        console.log(visitData);
+
+        setRole(role);
+      }
     }
   }, [visit]);
 
@@ -148,6 +153,7 @@ const CargoAppointment = (props) => {
       visitData.operInProgress = false;
       visitData.operInTimestamp = REJECTED;
     }
+    return visitData
   };
 
   const visitIngressHandler = (visitData) => {
@@ -172,7 +178,15 @@ const CargoAppointment = (props) => {
         visitData.checkInTimestamp = moment()
           .tz("America/Mexico_City")
           .format();
+          visitData.adminFinished = false;
+          visitData.adminOutTimestamp = "";
+          visitData.checkOutTimestamp = "";
+          visitData.operFinished = false;
+          visitData.operInProgress = false;
+        visitData.operInTimestamp = "";
+        visitData.operOutTimestamp = "";
       }
+      return removeEmpty(visitData);
     }
     if (role == "OPERATOR" && visitData.adminApprove) {
       if (visitData.operApprove) {
@@ -187,8 +201,13 @@ const CargoAppointment = (props) => {
         visitData.operInProgress = true;
         visitData.operInTimestamp = moment().tz("America/Mexico_City").format();
       }
+      return visitData
     }
   };
+
+  function removeEmpty(obj) {
+    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null));
+  }
 
   return (
     <>
@@ -205,31 +224,60 @@ const CargoAppointment = (props) => {
                     <CFormGroup>
                       <CLabel htmlFor="driverName">Conductor</CLabel>
 
-                      <CInput id="driverName" placeholder="" disabled />
+                      <CInput
+                        id="driverName"
+                        placeholder=""
+                        disabled
+                        value={visitData.driverName}
+                      />
                     </CFormGroup>
                   </CCol>
                   <CCol xs="12" md="12">
                     <CFormGroup>
                       <CLabel htmlFor="email">Correo</CLabel>
-                      <CInput id="email" placeholder="" required disabled />
+                      <CInput
+                        id="email"
+                        placeholder=""
+                        required
+                        disabled
+                        value={visitData.email}
+                      />
                     </CFormGroup>
                   </CCol>
                   <CCol xs="12" md="12">
                     <CFormGroup>
                       <CLabel htmlFor="phone">Teléfono</CLabel>
-                      <CInput id="phone" placeholder="" required disabled />
+                      <CInput
+                        id="phone"
+                        placeholder=""
+                        required
+                        disabled
+                        value={visitData.phone}
+                      />
                     </CFormGroup>
                   </CCol>
                   <CCol xs="12" md="12">
                     <CFormGroup>
                       <CLabel htmlFor="company">Empresa</CLabel>
-                      <CInput id="company" placeholder="" required disabled />
+                      <CInput
+                        id="company"
+                        placeholder=""
+                        required
+                        disabled
+                        value={visitData.company}
+                      />
                     </CFormGroup>
                   </CCol>
                   <CCol xs="12" md="12">
                     <CFormGroup>
                       <CLabel htmlFor="line">Linea Transportista</CLabel>
-                      <CInput id="line" placeholder="" required disabled />
+                      <CInput
+                        id="line"
+                        placeholder=""
+                        required
+                        disabled
+                        value={visitData.line}
+                      />
                     </CFormGroup>
                   </CCol>
                   <CCol xs="12" md="6">
@@ -240,6 +288,7 @@ const CargoAppointment = (props) => {
                         placeholder=""
                         required
                         disabled
+                        value={visitData.vehiclePlate}
                       />
                     </CFormGroup>
                   </CCol>
@@ -251,6 +300,7 @@ const CargoAppointment = (props) => {
                         placeholder=""
                         required
                         disabled
+                        value={visitData.platformPlate}
                       />
                     </CFormGroup>
                   </CCol>
@@ -260,7 +310,13 @@ const CargoAppointment = (props) => {
                 <CCol xs="12" md="12">
                   <CFormGroup>
                     <CLabel htmlFor="petition">Pedimento</CLabel>
-                    <CInput id="petition" placeholder="" required disabled />
+                    <CInput
+                      id="petition"
+                      placeholder=""
+                      required
+                      disabled
+                      value={visitData.petition}
+                    />
                   </CFormGroup>
                 </CCol>
                 <CCol xs="12" md="12">
@@ -274,6 +330,7 @@ const CargoAppointment = (props) => {
                           id="packageNumber"
                           placeholder=""
                           required
+                          value={visitData.packageNumber}
                           disabled
                         />
                       </CFormGroup>
@@ -287,6 +344,7 @@ const CargoAppointment = (props) => {
                           id="containerNumber"
                           placeholder=""
                           required
+                          value={visitData.containerNumber}
                           disabled
                         />
                       </CFormGroup>
@@ -297,14 +355,13 @@ const CargoAppointment = (props) => {
                   <CRow>
                     <CCol xs="12" md="6">
                       <CFormGroup>
-                        <CLabel htmlFor="tractNumber">
-                          Numero Económico del Tracto
-                        </CLabel>
+                        <CLabel htmlFor="tractNumber">Numero del Tracto</CLabel>
                         <CInput
                           id="tractNumber"
                           placeholder=""
                           required
                           disabled
+                          value={visitData.tractNumber}
                         />
                       </CFormGroup>
                     </CCol>
@@ -316,6 +373,7 @@ const CargoAppointment = (props) => {
                           placeholder=""
                           required
                           disabled
+                          value={visitData.sealsNumber}
                         />
                       </CFormGroup>
                     </CCol>
@@ -332,6 +390,7 @@ const CargoAppointment = (props) => {
                           placeholder=""
                           required
                           disabled
+                          value={visitData.hostWarehouse}
                         />
                       </CFormGroup>
                     </CCol>
@@ -343,6 +402,7 @@ const CargoAppointment = (props) => {
                           placeholder=""
                           required
                           disabled
+                          value={visitData.hostName}
                         />
                       </CFormGroup>
                     </CCol>
@@ -362,6 +422,7 @@ const CargoAppointment = (props) => {
                           value={moment(visitData.dateTimestamp).format(
                             "DD-MMM-YYYY"
                           )}
+                          disabled
                         />
                       </CFormGroup>
                     </CCol>
@@ -387,7 +448,13 @@ const CargoAppointment = (props) => {
                     <CLabel htmlFor="firstName">Motivo</CLabel>
                   </CFormGroup>
                   <CFormGroup variant="custom-checkbox" inline>
-                    <CInputCheckbox custom id="load" name="inline-checkbox1" />
+                    <CInputCheckbox
+                      custom
+                      id="load"
+                      name="inline-checkbox1"
+                      checked={visitData.load}
+                      disabled
+                    />
                     <CLabel variant="custom-checkbox" htmlFor="load">
                       Carga
                     </CLabel>
@@ -397,7 +464,8 @@ const CargoAppointment = (props) => {
                       custom
                       id="unload"
                       name="inline-checkbox2"
-                      // value="unload"
+                      checked={visitData.unload}
+                      disabled
                     />
                     <CLabel variant="custom-checkbox" htmlFor="unload">
                       Descarga
@@ -481,4 +549,4 @@ const CargoAppointment = (props) => {
   );
 };
 
-export default CargoAppointment;
+export default IngressCargo;

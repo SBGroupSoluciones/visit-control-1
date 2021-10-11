@@ -726,6 +726,121 @@ export const visitByStatus = /* GraphQL */ `
     }
   }
 `;
+export const visitByType = /* GraphQL */ `
+  query VisitByType(
+    $type: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelVisitFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    visitByType(
+      type: $type
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        dateTimestamp
+        checkInTimestamp
+        checkOutTimestamp
+        reason
+        status
+        qr
+        timestamp
+        adminApprove
+        operApprove
+        adminInProgress
+        operInProgress
+        adminFinished
+        operFinished
+        adminInTimestamp
+        operInTimestamp
+        adminOutTimestamp
+        operOutTimestamp
+        type
+        createdAt
+        updatedAt
+        account {
+          id
+          firstName
+          lastName
+          imgUrl
+          company
+          email
+          role
+          phones
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        person {
+          id
+          firstName
+          lastName
+          email
+          imgUrl
+          phone
+          company
+          idFrontPath
+          idBackPath
+          createdAt
+          updatedAt
+          owner
+        }
+        privateVehicle {
+          id
+          plate
+          color
+          brand
+          subBrand
+          model
+          createdAt
+          updatedAt
+          owner
+        }
+        cargoVehicle {
+          id
+          line
+          vehiclePlate
+          platformPlate
+          containerNumber
+          tractNumber
+          load
+          unload
+          sealsNumber
+          additionalDoc
+          additionalDocPath
+          packageNumber
+          petition
+          petitionPath
+          timestamp
+          driverName
+          email
+          company
+          reason
+          phone
+          imgUrl
+          idFrontPath
+          idBackPath
+          createdAt
+          updatedAt
+          owner
+        }
+        host {
+          id
+          createdAt
+          updatedAt
+          owner
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const getPerson = /* GraphQL */ `
   query GetPerson($id: ID!) {
     getPerson(id: $id) {

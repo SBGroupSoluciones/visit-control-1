@@ -33,7 +33,7 @@ const PersonalVehicle = (props) => {
       brand: brand,
       model: model,
       subBrand: subBrand,
-      account: localStorage.getItem("account"),
+      privateVehicleAccountId: localStorage.getItem("account"),
     };
     vehicleCreate(vehicleData).then((vehicle) => {
       console.log("Se Creo el vehiculo", vehicle);

@@ -3,34 +3,35 @@ import { listPrivateVehicles, getAccount } from "src/graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
 
 export const CreatePrivateVehicle = async (params) => {
-  const { firstName, lastName, email, phone, company } = params;
-  const accountData = {
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    phones: phone,
-    company: company,
+  const { plate, color, brand, subBrand, model ,privateVehicleAccountId} = params;
+  const vehicleData = {
+    plate: plate,
+    color: color,
+    brand: brand,
+    model: model,
+    subBrand: subBrand,
+    privateVehicleAccountId: privateVehicleAccountId,
   };
 
   try {
-    const account = await API.graphql({
-      query: createAccount,
-      variables: { input: accountData },
+    const vehicle = await API.graphql({
+      query: createPrivateVehicle,
+      variables: { input: vehicleData },
     });
-    return account.data.createAccount;
+    return vehicle.data.createPrivateVehicle;
   } catch (e) {
     console.log(e);
   }
 };
 
-export const ListAccount = async () => {
-  try {
-    const accounts = await API.graphql(graphqlOperation(listAccounts));
-    return accounts.data.listAccounts.items;
-  } catch (e) {
-    console.log(e);
-  }
-};
+// export const ListAccount = async () => {
+//   try {
+//     const accounts = await API.graphql(graphqlOperation(listAccounts));
+//     return accounts.data.listAccounts.items;
+//   } catch (e) {
+//     console.log(e);
+//   }
+// };
 
 export const GetAccount = async (email) => {
   try {

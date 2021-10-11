@@ -25,7 +25,7 @@ import IngressCargo from "./IngressCargo";
 import { GetVisit } from "src/util/Visit";
 import { GetHost } from "../custom/Host";
 
-const Appointment = () => {
+const ScanQR = () => {
   const [active, setActive] = useState(0);
   const [ingressPerson, setIngressPerson] = useState(false);
   const [ingressCargo, setIngressCargo] = useState(false);
@@ -33,17 +33,18 @@ const Appointment = () => {
 
   useEffect(() => {}, []);
   const onHandleScan = (data) => {
-    if (data && !ingressPerson) {
+    if (data) {
       GetVisit(data).then((visit) => {
         console.log("LA VISITA QUE SE ESCANEOO ", visit.type);
         GetHost(visit.host.id).then((host) => {
           visit.hostName = `${host.hostName.firstName} ${host.hostName.lastName}`;
           visit.hostWarehouse = host.warehouse.name;
           setVisit(visit);
-          if (visit.type == "PERSON") {
+          if (visit.type == "PERSON" && !ingressPerson) {
             setIngressPerson(true);
           }
-          if (visit.type == "CARGO") {
+          if (visit.type == "CARGO" && !ingressCargo) {
+            console.log("entro a la parte de cargo")
             setIngressCargo(true);
           }
         });
@@ -57,7 +58,7 @@ const Appointment = () => {
   return (
     <>
       <IngressPersona show={ingressPerson} visit={visit} />
-      <ingressCargo show={ingressCargo} visit={visit} />
+      <IngressCargo show={ingressCargo} visit={visit} />
       <CRow>
         <CCol md="4">
           <CCard accentColor="success">
@@ -78,4 +79,4 @@ const Appointment = () => {
   );
 };
 
-export default Appointment;
+export default ScanQR;

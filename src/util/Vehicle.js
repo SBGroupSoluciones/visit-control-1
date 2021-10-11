@@ -6,7 +6,7 @@ import awsconfig from "../aws-exports";
 Auth.configure(awsconfig);
 
 export const vehicleCreate = async (params) => {
-  const { brand, color, model, plate, account, visit, subBrand } = params;
+  const { brand, color, model, plate, account,  subBrand } = params;
 
   const vehicleData = {
     brand: brand,
@@ -18,7 +18,6 @@ export const vehicleCreate = async (params) => {
   };
 
   try {
-      console.log("DATOS DEL VEHICULO ",vehicleData)
     const vehicle = await API.graphql({
       query: createPrivateVehicle,
       variables: { input: vehicleData },
