@@ -21,20 +21,32 @@ import PersonaAppointment from "./PersonaAppointment";
 import CargoAppointment from "./CargoAppointment";
 import QrReader from "react-qr-reader";
 import IngressPersona from "./IngressPersona";
+import IngressCargo from "./IngressCargo";
 import { GetVisit } from "src/util/Visit";
+import { GetHost } from "../custom/Host";
 
 const Appointment = () => {
   const [active, setActive] = useState(0);
   const [ingressPerson, setIngressPerson] = useState(false);
+  const [ingressCargo, setIngressCargo] = useState(false);
   const [visit, setVisit] = useState();
 
   useEffect(() => {}, []);
   const onHandleScan = (data) => {
     if (data && !ingressPerson) {
-      console.log(data);
       GetVisit(data).then((visit) => {
-        setVisit(visit);
-        setIngressPerson(true);
+        console.log("LA VISITA QUE SE ESCANEOO ", visit.type);
+        GetHost(visit.host.id).then((host) => {
+          visit.hostName = `${host.hostName.firstName} ${host.hostName.lastName}`;
+          visit.hostWarehouse = host.warehouse.name;
+          setVisit(visit);
+          if (visit.type == "PERSON") {
+            setIngressPerson(true);
+          }
+          if (visit.type == "CARGO") {
+            setIngressCargo(true);
+          }
+        });
       });
     }
   };
@@ -45,6 +57,7 @@ const Appointment = () => {
   return (
     <>
       <IngressPersona show={ingressPerson} visit={visit} />
+      <ingressCargo show={ingressCargo} visit={visit} />
       <CRow>
         <CCol md="4">
           <CCard accentColor="success">

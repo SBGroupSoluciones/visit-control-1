@@ -12,8 +12,10 @@ import {
   CTextarea,
   CModalFooter,
 } from "@coreui/react";
-import moment from "moment";
+import moment from "moment-timezone";
 import "moment/locale/es";
+import { visitUpdate } from "src/util/Visit";
+import { GetAccount } from "../Auth/Account";
 moment.locale("es");
 
 const IngressPersona = (props) => {
@@ -23,22 +25,29 @@ const IngressPersona = (props) => {
   const [role, setRole] = useState();
 
   useEffect(() => {
-
     if (visit) {
-      console.log("LA visita seleccioanada", visit);
       const {
         id,
+        person,
         dateTimestamp,
         checkInTimestamp,
+        checkOutTimestamp,
+        privateVehicle,
         reason,
         status,
         adminApprove,
         operApprove,
+        adminInProgress,
+        operInProgress,
+        adminFinished,
+        operFinished,
+        adminInTimestamp,
+        operInTimestamp,
+        adminOutTimestamp,
+        operOutTimestamp,
+        account,
         hostName,
         hostWarehouse,
-        account,
-        person,
-        privateVehicle,
       } = visit;
       const { firstName, lastName, email, phone, company } = person;
       const { role } = account;
@@ -47,10 +56,19 @@ const IngressPersona = (props) => {
         id: id,
         dateTimestamp: dateTimestamp,
         checkInTimestamp: checkInTimestamp,
+        checkOutTimestamp: checkOutTimestamp,
         reason: reason,
         status: status,
         adminApprove: adminApprove,
         operApprove: operApprove,
+        adminInProgress: adminInProgress,
+        operInProgress: operInProgress,
+        adminFinished: adminFinished,
+        operFinished: operFinished,
+        adminInTimestamp: adminInTimestamp,
+        operInTimestamp: operInTimestamp,
+        adminOutTimestamp: adminOutTimestamp,
+        operOutTimestamp: operOutTimestamp,
         hostName: hostName,
         hostWarehouse: hostWarehouse,
         firstName: firstName,
@@ -65,67 +83,81 @@ const IngressPersona = (props) => {
         subBrand: privateVehicle ? privateVehicle.subBrand : null,
       });
 
-
       setRole(role);
     }
   }, [visit]);
 
-  const v = {
-    id: "1aab4381-ed36-438a-8e35-efd5072d28d4",
-    dateTimestamp: "2021-10-20T10:00:00",
-    checkInTimestamp: null,
-    checkOutTimestamp: null,
-    reason: "Prueba",
-    status: "SCHEDULED",
-    qr: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50IjoiYW9qZWRhQHNiZ3JvdXAuY29tLm14IiwiZW1haWwiOiJzZ2F5dGFuQHNiZ3JvdXAuY29tLm14In0.kU9HAwqEpREikmlNcPHF_wVepoagZersvuw5Dc_RJao",
-    timestamp: "",
-    adminApprove: false,
-    operApprove: false,
-    type: "PERSON",
-    createdAt: "2021-10-05T16:59:31.840Z",
-    updatedAt: "2021-10-05T16:59:31.840Z",
-    account: {
-      id: "afcf58da-291f-4d10-adb3-d409dff374b8",
-      firstName: "Angel de Jesus",
-      lastName: "Ojeda Castro",
-      imgUrl: null,
-      company: "SBGroup",
-      email: "aojeda@sbgroup.com.mx",
-      role: "SUPER_ADMIN",
-      phones: ["6122308184"],
-      createdAt: "2021-09-14T19:11:56.090Z",
-      updatedAt: "2021-09-14T19:11:56.090Z",
-      owner: null,
-    },
-    owner: null,
-    person: {
-      id: "dddb6423-42be-473d-a652-301af84afed3",
-      firstName: "Susana",
-      lastName: "Gaytan",
-      email: "sgaytan@sbgroup.com.mx",
-      imgUrl: "Screenshot from 2021-06-10 13-00-56.png",
-      phone: "5577638496",
-      company: "SBGroup",
-      idFrontPath: "Screenshot from 2021-06-11 10-59-22.png",
-      idBackPath: "Screenshot from 2021-06-16 08-16-14.png",
-      createdAt: "2021-10-05T16:59:31.234Z",
-      updatedAt: "2021-10-05T16:59:31.234Z",
-      owner: null,
-    },
-    privateVehicle: null,
-    cargoVehicle: null,
-    host: {
-      id: "649db2be-db2c-4384-8570-e41e93919975",
-      createdAt: "2021-09-15T13:27:38.260Z",
-      updatedAt: "2021-09-15T13:27:38.260Z",
-      owner: null,
-    },
-    hostName: "Prescott Errichiello",
-    hostWarehouse: "ARBRUS",
+  const onIngress = () => {
+    visitUpdate(visitIngressHandler(visit)).then((updated) => {
+      console.log("se actualizo la cuenta ", updated);
+    });
+  };
+  const onReject = () => {
+    visitUpdate(visitRejectHandler(visit)).then((updated) => {
+      console.log("se actualizo la cuenta ", updated);
+    });
   };
 
-  const onIngress = () => {};
-  const onReject = () => {};
+  const visitRejectHandler = async (visitData) => {
+    const REJECTED = "N/A";
+
+    if (role == "ADMIN" && !visitData.operApprove) {
+      visitData.status = "REJECTED_BY_ADMIN";
+      visitData.adminApprove = false;
+      visitData.adminInProgress = false;
+      visitData.adminInTimestamp = REJECTED;
+      visitData.checkInTimestamp = moment().tz("America/Mexico_City").format();
+      visitData.adminFinished = false;
+      visitData.adminOutTimestamp = REJECTED;
+      visitData.checkOutTimestamp = moment().tz("America/Mexico_City").format();
+    }
+    if (role == "OPERATOR" && visitData.adminApprove) {
+      visitData.status = "REJECTED_BY_OPERATOR";
+      visitData.operApprove = false;
+      visitData.operInProgress = false;
+      visitData.operInTimestamp = REJECTED;
+    }
+  };
+
+  const visitIngressHandler = (visitData) => {
+    if (role == "ADMIN" && !visitData.operApprove) {
+      if (visitData.adminApprove) {
+        visitData.status = "FINISHED";
+        visitData.adminInProgress = false;
+        visitData.adminFinished = true;
+        visitData.adminOutTimestamp = moment()
+          .tz("America/Mexico_City")
+          .format();
+        visitData.checkOutTimestamp = moment()
+          .tz("America/Mexico_City")
+          .format();
+      } else {
+        visitData.status = "IN_PROGRESS_ADMIN";
+        visitData.adminApprove = true;
+        visitData.adminInProgress = true;
+        visitData.adminInTimestamp = moment()
+          .tz("America/Mexico_City")
+          .format();
+        visitData.checkInTimestamp = moment()
+          .tz("America/Mexico_City")
+          .format();
+      }
+    }
+    if (role == "OPERATOR" && visitData.adminApprove) {
+      if (visitData.operApprove) {
+        visitData.status = "FINISHED_OPERATOR";
+        visitData.operInProgress = false;
+        visitData.operOutTimestamp = moment()
+          .tz("America/Mexico_City")
+          .format();
+      } else {
+        visitData.status = "IN_PROGRESS_OPERATOR";
+        visitData.operApprove = true;
+        visitData.operInProgress = true;
+        visitData.operInTimestamp = moment().tz("America/Mexico_City").format();
+      }
+    }
+  };
 
   return (
     <>

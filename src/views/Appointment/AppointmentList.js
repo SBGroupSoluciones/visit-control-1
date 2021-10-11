@@ -119,11 +119,17 @@ const Appointment = () => {
         return "success";
       case "IN_PROGRESS":
         return "warning";
+      case "IN_PROGRESS_ADMIN":
+        return "warning";
+      case "IN_PROGRESS_OPERATOR":
+        return "warning";
+      case "FINISHED_OPERATOR":
+          return "warning";
       case "FINISHED":
         return "unregistered";
       case "REJECTED_BY_ADMIN":
         return "danger";
-      case "REJECTED_BY_OPER":
+      case "REJECTED_BY_OPERATOR":
         return "danger";
       case "CANCELLED":
         return "danger";
@@ -149,11 +155,15 @@ const Appointment = () => {
         return "Agendado";
       case "IN_PROGRESS":
         return "En Progreso";
+      case "IN_PROGRESS_ADMIN":
+        return "En Progreso Admin";
+      case "IN_PROGRESS_OPERATOR":
+        return "En Progreso Operador";
       case "FINISHED":
         return "Finalizada";
       case "REJECTED_BY_ADMIN":
         return "Rechazada por Admin";
-      case "REJECTED_BY_OPER":
+      case "REJECTED_BY_OPERATOR":
         return "Rechazada por Operador";
       case "CANCELLED":
         return "Cancelada";

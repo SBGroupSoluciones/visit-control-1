@@ -26,6 +26,8 @@ type Account
 
 type Visit
   @model
+  @key(name: "ByStatus", fields: ["status"], queryField: "visitByStatus")
+  @key(name: "ByType", fields: ["type"], queryField: "visitByType")
   @auth(
     rules: [
       { allow: owner, operations: [create, read, update, delete] }

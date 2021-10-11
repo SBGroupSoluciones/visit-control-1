@@ -115,7 +115,7 @@ const CargoAppointment = (props) => {
       if (selectedHost) {
         idGenerate(selectedHost.warehouse.code).then((newId) => {
           setAppointmentData({
-            id:newId,
+            id: newId,
             driverName: driverName,
             email: email,
             company: company,
@@ -147,18 +147,22 @@ const CargoAppointment = (props) => {
         fileName: imageName,
         file: imageData,
       };
-      uploadImage(data).then((uploaded) => {
-        if (uploaded) console.log(uploaded.key);
-      });
+      uploadImage(data)
+        .then((uploaded) => {
+          if (uploaded) console.log(uploaded.key);
+        })
+        .catch((error) => console.log("error al subir imagen", error));
     }
     if (ineFrontName && ineFrontData) {
       let data = {
         fileName: `${account}/${onNameFormat(driverName)}/${ineFrontName}`,
         file: ineFrontData,
       };
-      uploadImage(data).then((uploaded) => {
-        if (uploaded) console.log(uploaded.key);
-      });
+      uploadImage(data)
+        .then((uploaded) => {
+          if (uploaded) console.log(uploaded.key);
+        })
+        .catch((error) => console.log("error al subir imagen", error));
     }
     if (ineBackName && ineBackData) {
       let data = {
@@ -174,9 +178,11 @@ const CargoAppointment = (props) => {
         fileName: `${account}/${onNameFormat(driverName)}/${petitionName}`,
         file: petitionData,
       };
-      uploadImage(data).then((uploaded) => {
-        if (uploaded) console.log(uploaded.key);
-      });
+      uploadImage(data)
+        .then((uploaded) => {
+          if (uploaded) console.log(uploaded.key);
+        })
+        .catch((error) => console.log("error al subir imagen", error));
     }
 
     const onNameFormat = (name) => {

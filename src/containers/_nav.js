@@ -130,6 +130,11 @@ export const adminNav = [
         name: "Citas Agendadas",
         to: "/appointment/list",
       },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Escanear QR",
+        to: "/appointment/scan",
+      },
       // {
       //   _tag: "CSidebarNavItem",
       //   name: "Calendario de Citas",
@@ -154,6 +159,7 @@ export const operNav = [
     _tag: "CSidebarNavTitle",
     _children: ["Operador"],
   },
+  
   {
     _tag: "CSidebarNavDropdown",
     name: "Citas",
@@ -164,6 +170,11 @@ export const operNav = [
         _tag: "CSidebarNavItem",
         name: "Citas Agendadas",
         to: "/appointment/list",
+      },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Escanear QR",
+        to: "/appointment/scan",
       },
       // {
       //   _tag: "CSidebarNavItem",

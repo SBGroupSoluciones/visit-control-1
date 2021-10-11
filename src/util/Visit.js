@@ -2,11 +2,13 @@ import {
   createVisit,
   createPerson,
   createCargoVehicle,
+  updateVisit,
 } from "src/graphql/mutations";
 import { listHosts, listVisits, getVisit } from "src/graphql/queries";
 import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
 import awsconfig from "../aws-exports";
 import { idGenerate } from "./IdUtils";
+import { accountUpdate } from "src/views/Auth/Account";
 
 Auth.configure(awsconfig);
 
@@ -140,6 +142,18 @@ export const GetVisit = async (id) => {
       graphqlOperation(getVisit, { id: id })
     );
     return visit.data.getVisit;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const visitUpdate = async (visit) => {
+
+  try {
+    const visit = await API.graphql(
+      graphqlOperation(updateVisit, visit)
+    );
+    return visit.data;
   } catch (error) {
     console.log(error);
   }
