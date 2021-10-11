@@ -75,6 +75,9 @@ const AppointmentCalendar = React.lazy(() =>
 const AppointmentScan = React.lazy(() =>
 import("./views/Appointment/ScanQR")
 );
+const AppointmentAdminReport = React.lazy(() =>
+import("./views/Appointment/AuthorityAdminApointmentList")
+);
 const Warehouse = React.lazy(() => import("./views/Warehouse/CreateWarehouse"));
 const WarehouseList = React.lazy(() =>
   import("./views/Warehouse/ListWarehouse")
@@ -180,6 +183,18 @@ const routes = [
   },
   {
     path: "/appointment/scan",
+    exact: true,
+    name: "Escanear QR",
+    component: AppointmentScan,
+  },
+  {
+    path: "/appointment/Admin/List",
+    exact: true,
+    name: "Reporte Administrador",
+    component: AppointmentAdminReport,
+  },
+  {
+    path: "/appointment/Oper/List",
     exact: true,
     name: "Escanear QR",
     component: AppointmentScan,

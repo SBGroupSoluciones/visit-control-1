@@ -54,7 +54,7 @@ const getBadge = (status) => {
 };
 const fields = ["name", "registered", "role", "status"];
 
-const Appointment = () => {
+const AuthorityAdminApointmentList = () => {
   const history = useHistory();
   const [visits, setVisits] = useState();
   const [role, setRole] = useState();
@@ -72,22 +72,15 @@ const Appointment = () => {
               console.log("DESPUS DE GETHOST", visitsWHost);
               let filteredList = [];
               visitsWHost.map((visit) => {
-                // rol de host
-                if (
-                  account.company == visit.id.split("-")[0] &&
-                  account.email == visit.hostEmail
-                ) {
-                  filteredList.push(visit);
-                }
-                if (account.role == "SUPER_ADMIN") {
-                  filteredList.push(visit);
-                }
+                // filteredList.push(visit);
                 if (
                   account.role == "AUTHORITY" &&
                   account.company == visit.id.split("-")[0]
                 ) {
-                  if(visit.status == "IN_PROGRESS_ADMIN" ||
-                  visit.status == "FINISHED"){
+                  if (
+                    visit.status == "IN_PROGRESS_ADMIN" ||
+                    visit.status == "FINISHED"
+                  ) {
                     filteredList.push(visit);
                   }
                 }
@@ -95,8 +88,10 @@ const Appointment = () => {
                   account.role == "AUTHORITY" &&
                   account.company == visit.id.split("-")[0]
                 ) {
-                  if(visit.status == "IN_PROGRESS_OPERATOR" ||
-                  visit.status == "FINISHED_OPERATOR"){
+                  if (
+                    visit.status == "IN_PROGRESS_OPERATOR" ||
+                    visit.status == "FINISHED_OPERATOR"
+                  ) {
                     filteredList.push(visit);
                   }
                 }
@@ -220,21 +215,38 @@ const Appointment = () => {
   };
 
   const fields = [
-    
-    "dateTimestamp",
+    "adminInTimestamp",
+    "adminOutTimestamp",
     "person",
     "company",
-    "hostWarehouse",
-    "hostName",
+    "containerNumber",
+    "line",
+    "packageNumber",
+    "petition",
+    "platformPlate",
+    "sealsNumber",
+    "tractNumber",
+    "vehiclePlate",
+    "load",
+    "unload",
     "status",
     "type",
   ];
   const spanishFieds = {
-    dateTimestamp: "Fecha y Hora",
+    adminInTimestamp: "Hora de Ingreso",
+    adminOutTimestamp: "Hora de Salida",
     person: "Nombre",
     company: "Empresa",
-    hostWarehouse: "Recinto",
-    hostName: "Anfitrión",
+    containerNumber: "Número de Contenedor",
+    line: "Linea Transportista",
+    packageNumber: "Número de Bultos",
+    petition: "Pedimento",
+    platformPlate: "Placa de la Plataforma",
+    sealsNumber: "Número de Sellos",
+    tractNumber: "Número de Tracto",
+    vehiclePlate: "Placa del Vehículo",
+    load: "Carga",
+    unload: "Descarga",
     status: "Status",
     type: "Categoria",
   };
@@ -295,11 +307,86 @@ const Appointment = () => {
                 ),
               cargoVehicle: (item) =>
                 item.cargoVehicle ? <td>{`${item.driverName}`}</td> : <td></td>,
-              dateTimestamp: (item) => (
-                <td>
-                  {moment(item.dateTimestamp).format("MMMM Do YYYY, h:mm a")}
-                </td>
-              ),
+              line: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.line}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              packageNumber: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.packageNumber}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              petition: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.petition}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              platformPlate: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.platformPlate}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              sealsNumber: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.sealsNumber}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              tractNumber: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.tractNumber}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              vehiclePlate: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.vehiclePlate}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              load: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.load ? "Si" : "No"}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              unload: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.unload ? "Si" : "No"}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              containerNumber: (item) =>
+                item.cargoVehicle ? (
+                  <td>{`${item.cargoVehicle.containerNumber}`}</td>
+                ) : (
+                  <td></td>
+                ),
+              adminInTimestamp: (item) =>
+                item.adminInTimestamp ? (
+                  <td>
+                    {moment(item.adminInTimestamp).format(
+                      "MMMM Do YYYY, h:mm a"
+                    )}
+                  </td>
+                ) : (
+                  <td>N/A</td>
+                ),
+              adminOutTimestamp: (item) =>
+                item.adminOutTimestamp ? (
+                  <td>
+                    {moment(item.adminOutTimestamp).format(
+                      "MMMM Do YYYY, h:mm a"
+                    )}
+                  </td>
+                ) : (
+                  <td>"En Progreso..."</td>
+                ),
               company: (item) =>
                 item.person ? (
                   <td>{item.person.company}</td>
@@ -314,4 +401,4 @@ const Appointment = () => {
   );
 };
 
-export default Appointment;
+export default AuthorityAdminApointmentList;

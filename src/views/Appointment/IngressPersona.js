@@ -159,7 +159,7 @@ const IngressPersona = (props) => {
         visitData.operInTimestamp = moment().tz("America/Mexico_City").format();
       }
     }
-    return visitData
+    return visitData;
   };
 
   return (
@@ -403,14 +403,25 @@ const IngressPersona = (props) => {
             </CRow>
           ) : null}
         </CModalBody>
-        <CModalFooter>
-          <CButton color="danger" onClick={(e) => onReject(e)}>
-            Rechazar
-          </CButton>
-          <CButton color="success" onClick={(e) => onIngress(e)}>
-            Ingresar
-          </CButton>
-        </CModalFooter>
+        {true ? (
+          <CModalFooter>
+            <CButton color="danger" onClick={(e) => onReject(e)}>
+              Rechazar
+            </CButton>
+            <CButton color="success" onClick={(e) => onIngress(e)}>
+              Ingresar
+            </CButton>
+          </CModalFooter>
+        ) : (
+          <CModalFooter>
+            <CButton color="danger" onClick={(e) => onReject(e)}>
+              Cancelar
+            </CButton>
+            <CButton color="success" onClick={(e) => onIngress(e)}>
+              Aceptar
+            </CButton>
+          </CModalFooter>
+        )}
       </CModal>
     </>
   );

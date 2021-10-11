@@ -90,6 +90,11 @@ export const superAdminNav = [
         name: "Citas Agendadas",
         to: "/appointment/list",
       },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Reporte Administrador",
+        to: "/appointment/Admin/List",
+      },
       // {
       //   _tag: "CSidebarNavItem",
       //   name: "Calendario de Citas",
@@ -159,7 +164,7 @@ export const operNav = [
     _tag: "CSidebarNavTitle",
     _children: ["Operador"],
   },
-  
+
   {
     _tag: "CSidebarNavDropdown",
     name: "Citas",
@@ -208,8 +213,8 @@ export const authorityNav = [
     _children: [
       {
         _tag: "CSidebarNavItem",
-        name: "Citas Agendadas",
-        to: "/appointment/list",
+        name: "Reporte Administrador",
+        to: "/appointment/Admin/List",
       },
       // {
       //   _tag: "CSidebarNavItem",
@@ -320,5 +325,5 @@ export const guestNav = [
         to: "/appointment",
       },
     ],
-  }
+  },
 ];
