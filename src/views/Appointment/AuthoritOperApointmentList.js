@@ -80,7 +80,8 @@ const AuthorityAdminApointmentList = () => {
                 ) {
                   if (
                     visit.status == "IN_PROGRESS_OPERATOR" ||
-                    visit.status == "FINISHED_OPERATOR"
+                    visit.status == "FINISHED_OPERATOR" ||
+                    visit.status == "FINISHED"
                   ) {
                     filteredList.push(visit);
                   }

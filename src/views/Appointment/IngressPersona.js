@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CRow,
   CCol,
@@ -19,7 +20,8 @@ import { GetAccount } from "../Auth/Account";
 moment.locale("es");
 
 const IngressPersona = (props) => {
-  const { setAppointmentData, show, visit } = props;
+  const { setAppointmentData, show, visit, setIngressPerson } = props;
+  const history = useHistory();
 
   const [visitData, setVisitData] = useState();
   const [role, setRole] = useState();
@@ -84,18 +86,22 @@ const IngressPersona = (props) => {
           subBrand: privateVehicle ? privateVehicle.subBrand : null,
         });
 
-        setRole(role);
+        GetAccount(localStorage.getItem("account")).then((account) => {
+          setRole(account.role);
+        });
       }
     }
-  }, [visit]);
+  }, [visit, role]);
 
   const onIngress = () => {
     visitUpdate(visitIngressHandler(visit)).then((updated) => {
       console.log("se actualizo la cuenta ", updated);
+      history.push("/appointment/list");
     });
   };
   const onReject = () => {
     visitUpdate(visitRejectHandler(visit)).then((updated) => {
+      history.push("/appointment/list");
       console.log("se actualizo la cuenta ", updated);
     });
   };
@@ -145,10 +151,12 @@ const IngressPersona = (props) => {
           .format();
       }
     }
+    console.log("TEST CHARLY ", role, visitData.adminApprove);
     if (role == "OPERATOR" && visitData.adminApprove) {
       if (visitData.operApprove) {
         visitData.status = "FINISHED_OPERATOR";
         visitData.operInProgress = false;
+        visitData.operApprove = false;
         visitData.operOutTimestamp = moment()
           .tz("America/Mexico_City")
           .format();

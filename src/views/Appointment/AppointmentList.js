@@ -37,6 +37,7 @@ import IngressPersona from "./IngressPersona";
 import moment from "moment";
 import "moment/locale/es";
 import { GetAccount } from "../custom/PrivateVehicle";
+import IngressCargo from "./IngressCargo";
 
 const getBadge = (status) => {
   switch (status) {
@@ -60,6 +61,7 @@ const Appointment = () => {
   const [role, setRole] = useState();
   const [visit, setVisit] = useState();
   const [ingressPerson, setIngressPerson] = useState();
+  const [ingressCargo, setIngressCargo] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,24 +84,8 @@ const Appointment = () => {
                 if (account.role == "SUPER_ADMIN") {
                   filteredList.push(visit);
                 }
-                if (
-                  account.role == "AUTHORITY" &&
-                  account.company == visit.id.split("-")[0]
-                ) {
-                  if(visit.status == "IN_PROGRESS_ADMIN" ||
-                  visit.status == "FINISHED"){
-                    filteredList.push(visit);
-                  }
-                }
-                if (
-                  account.role == "AUTHORITY" &&
-                  account.company == visit.id.split("-")[0]
-                ) {
-                  if(visit.status == "IN_PROGRESS_OPERATOR" ||
-                  visit.status == "FINISHED_OPERATOR"){
-                    filteredList.push(visit);
-                  }
-                }
+                // filteredList.push(visit);
+
               });
               setVisits(filteredList);
             });
@@ -208,6 +194,8 @@ const Appointment = () => {
         return "En Progreso Operador";
       case "FINISHED":
         return "Finalizada";
+        case "FINISHED_OPERATOR":
+          return "Finalizada";
       case "REJECTED_BY_ADMIN":
         return "Rechazada por Admin";
       case "REJECTED_BY_OPERATOR":
@@ -230,7 +218,7 @@ const Appointment = () => {
     "type",
   ];
   const spanishFieds = {
-    id:"ID",
+    id: "ID",
     dateTimestamp: "Fecha y Hora",
     person: "Nombre",
     company: "Empresa",
@@ -242,12 +230,19 @@ const Appointment = () => {
 
   const onRowSelected = (item) => {
     setVisit(item);
-    setIngressPerson(!ingressPerson);
+    if (item.type == "PERSON" && !ingressPerson) {
+      setIngressPerson(true);
+    }
+    if (item.type == "CARGO" && !ingressCargo) {
+      console.log("entro a la parte de cargo")
+      setIngressCargo(true);
+    }
   };
 
   return (
     <>
-      <IngressPersona show={ingressPerson} visit={visit} />
+      <IngressPersona show={ingressPerson} visit={visit} showHandler={setIngressPerson}/>
+      <IngressCargo show={ingressCargo} visit={visit} showHandler={setIngressCargo}/>
       <CCard>
         <CCardHeader>Lista de Citas</CCardHeader>
         <CCardBody>
@@ -272,7 +267,7 @@ const Appointment = () => {
             hover
             sorter
             columnHeaderSlot={spanishFieds}
-            // onRowClick={(item) => onRowSelected(item)}
+            onRowClick={(item) => onRowSelected(item)}
             scopedSlots={{
               type: (item) => (
                 <td>
