@@ -84,17 +84,6 @@ const AuthorityAdminApointmentList = () => {
                     filteredList.push(visit);
                   }
                 }
-                if (
-                  account.role == "AUTHORITY" &&
-                  account.company == visit.id.split("-")[0]
-                ) {
-                  if (
-                    visit.status == "IN_PROGRESS_OPERATOR" ||
-                    visit.status == "FINISHED_OPERATOR"
-                  ) {
-                    filteredList.push(visit);
-                  }
-                }
               });
               setVisits(filteredList);
             });

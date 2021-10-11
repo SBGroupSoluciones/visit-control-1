@@ -216,6 +216,11 @@ export const authorityNav = [
         name: "Reporte Administrador",
         to: "/appointment/Admin/List",
       },
+      {
+        _tag: "CSidebarNavItem",
+        name: "Reporte Operador",
+        to: "/appointment/Oper/List",
+      },
       // {
       //   _tag: "CSidebarNavItem",
       //   name: "Calendario de Citas",

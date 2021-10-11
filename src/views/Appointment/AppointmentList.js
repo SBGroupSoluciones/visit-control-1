@@ -220,7 +220,7 @@ const Appointment = () => {
   };
 
   const fields = [
-    
+    "id",
     "dateTimestamp",
     "person",
     "company",
@@ -230,6 +230,7 @@ const Appointment = () => {
     "type",
   ];
   const spanishFieds = {
+    id:"ID",
     dateTimestamp: "Fecha y Hora",
     person: "Nombre",
     company: "Empresa",

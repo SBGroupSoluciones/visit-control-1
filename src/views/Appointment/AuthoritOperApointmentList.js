@@ -73,17 +73,7 @@ const AuthorityAdminApointmentList = () => {
               let filteredList = [];
               visitsWHost.map((visit) => {
                 // filteredList.push(visit);
-                if (
-                  account.role == "AUTHORITY" &&
-                  account.company == visit.id.split("-")[0]
-                ) {
-                  if (
-                    visit.status == "IN_PROGRESS_ADMIN" ||
-                    visit.status == "FINISHED"
-                  ) {
-                    filteredList.push(visit);
-                  }
-                }
+
                 if (
                   account.role == "AUTHORITY" &&
                   account.company == visit.id.split("-")[0]
