@@ -184,10 +184,6 @@ const CargoAppointment = (props) => {
         })
         .catch((error) => console.log("error al subir imagen", error));
     }
-
-    const onNameFormat = (name) => {
-      return name.replaceAll(" ", "-");
-    };
   }, [
     personAlready,
     driverName,
@@ -216,6 +212,9 @@ const CargoAppointment = (props) => {
     petitionName,
     petitionData,
   ]);
+  const onNameFormat = (name) => {
+    return name.replaceAll(" ", "-");
+  };
 
   const onDataPrepare = (data) => {
     let whList = [];
