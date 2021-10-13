@@ -16,11 +16,14 @@ import QRCode from "react-qr-code";
 import moment from "moment";
 import "moment/locale/es";
 import { visitCreate } from "../../util/Visit";
-import { idGenerate } from "../../util/IdUtils";
+import Amplify from "aws-amplify";
+import { AmplifyS3Image } from "@aws-amplify/ui-react";
+import awsconfig from "../../aws-exports";
 import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { jwtEncode } from "src/util/Utils";
 import { personCreate } from "src/util/Persona";
 moment.locale("es");
+Amplify.configure(awsconfig);
 
 const ConfirmPersona = (props) => {
   const { show, setPersonaConfirm, appointmentData } = props;
@@ -86,6 +89,7 @@ const ConfirmPersona = (props) => {
       },
     };
     personCreate(personaData).then((createdPerson) => {
+
       console.log("Se creo la persona ", createdPerson);
       const visit = {
         id: appointment.id,
@@ -100,8 +104,9 @@ const ConfirmPersona = (props) => {
         visitHostId: appointment.host.id,
         visitAccountId: localStorage.getItem("account"),
         visitPersonId: createdPerson.id,
-        visitPrivateVehicleId: appointment.plate ? appointment.plate : null,
+        visitPrivateVehicleId: appointment.plate,
       };
+      console.log("SE VA A CREAR LA VISITA , ", visit)
       visitCreate(visit).then((visitCreated) => {
         console.log("VISiTA CREADA", visitCreated);
         history.push("/appointment/list");
@@ -227,10 +232,11 @@ const ConfirmPersona = (props) => {
                     <CLabel htmlFor="firstName">
                       <strong>Imagen</strong>
                     </CLabel>
-                    <S3Image
-                      imgKey={appointment.imageUrl}
+                    {/* <S3Image
+                      imgKey={appointment.imgUrl}
                       onLoad={(url) => console.log(url)}
-                    />
+                    /> */}
+                    <AmplifyS3Image imgKey="oscar-garcia.png" />
                   </CCol>
                 </CRow>
                 <CRow>
@@ -238,19 +244,25 @@ const ConfirmPersona = (props) => {
                     <CLabel htmlFor="firstName">
                       <strong>INE Frente</strong>
                     </CLabel>
-                    <S3Image
+                    {/* <S3Image
                       imgKey={appointment.ineFUrl}
                       onLoad={(url) => console.log(url)}
+                    /> */}
+                    <AmplifyS3Image
+                      level="public"
+                      imgKey="oscar-garcia.png"
+                      identityId="us-east-1:2f42cff8-deef-466e-9b4d-64ebaea415ae"
                     />
                   </CCol>
                   <CCol xs="12" md="6">
                     <CLabel htmlFor="firstName">
                       <strong>INE Atras</strong>
                     </CLabel>
-                    <S3Image
+                    {/* <S3Image
                       imgKey={appointment.ineBUrl}
                       onLoad={(url) => console.log(url)}
-                    />
+                    /> */}
+                    <AmplifyS3Image imgKey={appointment.ineBUrl} />
                   </CCol>
                 </CRow>
               </CContainer>

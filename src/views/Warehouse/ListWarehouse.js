@@ -24,10 +24,12 @@ const getBadge = (status) => {
   }
 };
 
-const fields = ["code", "name", "address", "phone"];
+const fields = ["code", "name", "admin", "oper", "address", "phone"];
 const spanishFieds = {
   code: "Código",
   name: "Nombre",
+  admin: "Administrador",
+  oper: "Operador",
   address: "Dirección",
   phone: "Teléfono",
 };

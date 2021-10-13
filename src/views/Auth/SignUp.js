@@ -61,7 +61,6 @@ const SignUp = () => {
   }, [error, notyButton]);
 
   const onSignUp = async () => {
-    const role = "SUPER_ADMIN"
     try {
       const { user } = await Auth.signUp({
         username: email,

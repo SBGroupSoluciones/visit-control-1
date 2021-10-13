@@ -33,6 +33,7 @@ import usersData from "../users/UsersData";
 import { visitList } from "../../util/Visit";
 import { GetHost } from "../custom/Host";
 import IngressPersona from "./IngressPersona";
+import IngressCargo from "./IngressCargo";
 
 import moment from "moment";
 import "moment/locale/es";
@@ -60,6 +61,8 @@ const AuthorityAdminApointmentList = () => {
   const [role, setRole] = useState();
   const [visit, setVisit] = useState();
   const [ingressPerson, setIngressPerson] = useState();
+  const [ingressCargo, setIngressCargo] = useState();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -206,6 +209,7 @@ const AuthorityAdminApointmentList = () => {
   };
 
   const fields = [
+    "id",
     "adminInTimestamp",
     "adminOutTimestamp",
     "person",
@@ -224,6 +228,7 @@ const AuthorityAdminApointmentList = () => {
     "type",
   ];
   const spanishFieds = {
+    id:"id",
     adminInTimestamp: "Hora de Ingreso",
     adminOutTimestamp: "Hora de Salida",
     person: "Nombre",
@@ -244,12 +249,23 @@ const AuthorityAdminApointmentList = () => {
 
   const onRowSelected = (item) => {
     setVisit(item);
-    setIngressPerson(!ingressPerson);
+    if (item.type == "PERSON" && !ingressPerson) {
+      setIngressPerson(true);
+    }
+    if (item.type == "CARGO" && !ingressCargo) {
+      console.log("entro a la parte de cargo");
+      setIngressCargo(true);
+    }
   };
 
   return (
     <>
-      <IngressPersona show={ingressPerson} visit={visit} />
+      <IngressPersona show={ingressPerson} visit={visit} showHandler ={setIngressPerson} />
+      <IngressCargo
+        show={ingressCargo}
+        visit={visit}
+        showHandler={setIngressCargo}
+      />
       <CCard>
         <CCardHeader>Lista de Citas</CCardHeader>
         <CCardBody>
@@ -274,7 +290,7 @@ const AuthorityAdminApointmentList = () => {
             hover
             sorter
             columnHeaderSlot={spanishFieds}
-            // onRowClick={(item) => onRowSelected(item)}
+            onRowClick={(item) => onRowSelected(item)}
             scopedSlots={{
               type: (item) => (
                 <td>

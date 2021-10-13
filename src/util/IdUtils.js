@@ -2,7 +2,7 @@ import { visitList } from "./Visit";
 
 export const idGenerate = async (code) => {
   return visitList().then((visits) => {
-    console.log("================================ Visitas", visits);
+    // console.log("================================ Visitas", visits);
     let biggerNumber = 0;
 
     if (visits) {

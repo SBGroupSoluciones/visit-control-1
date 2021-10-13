@@ -84,8 +84,26 @@ const Appointment = () => {
                 if (account.role == "SUPER_ADMIN") {
                   filteredList.push(visit);
                 }
-                // filteredList.push(visit);
-
+                if (visit.account) {
+                  if (
+                    account.role == "USER" &&
+                    visit.account.email == account.email
+                  ) {
+                    filteredList.push(visit);
+                  }
+                }
+                if (
+                  account.company == visit.id.split("-")[0] &&
+                  account.role == "ADMIN"
+                ) {
+                  filteredList.push(visit);
+                }
+                if (
+                  account.company == visit.id.split("-")[0] &&
+                  account.role == "OPERATOR"
+                ) {
+                  filteredList.push(visit);
+                }
               });
               setVisits(filteredList);
             });
@@ -194,8 +212,8 @@ const Appointment = () => {
         return "En Progreso Operador";
       case "FINISHED":
         return "Finalizada";
-        case "FINISHED_OPERATOR":
-          return "Finalizada";
+      case "FINISHED_OPERATOR":
+        return "Finalizada";
       case "REJECTED_BY_ADMIN":
         return "Rechazada por Admin";
       case "REJECTED_BY_OPERATOR":
@@ -234,15 +252,23 @@ const Appointment = () => {
       setIngressPerson(true);
     }
     if (item.type == "CARGO" && !ingressCargo) {
-      console.log("entro a la parte de cargo")
+      console.log("entro a la parte de cargo");
       setIngressCargo(true);
     }
   };
 
   return (
     <>
-      <IngressPersona show={ingressPerson} visit={visit} showHandler={setIngressPerson}/>
-      <IngressCargo show={ingressCargo} visit={visit} showHandler={setIngressCargo}/>
+      <IngressPersona
+        show={ingressPerson}
+        visit={visit}
+        showHandler={setIngressPerson}
+      />
+      <IngressCargo
+        show={ingressCargo}
+        visit={visit}
+        showHandler={setIngressCargo}
+      />
       <CCard>
         <CCardHeader>Lista de Citas</CCardHeader>
         <CCardBody>

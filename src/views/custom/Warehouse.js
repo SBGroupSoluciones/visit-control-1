@@ -1,4 +1,4 @@
-import { createWarehouse } from "src/graphql/mutations";
+import { createWarehouse, updateWarehouse } from "src/graphql/mutations";
 import { listWarehouses, getWarehouse } from "src/graphql/queries";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import awsconfig from "../../aws-exports";
@@ -44,3 +44,26 @@ export const warehouseList = async () => {
 //     console.log(error);
 //   }
 // };
+
+export const warehouseUpdate = async (params) => {
+  const { code, name, address, phone, admin, oper } = params;
+  const warehouseData = {
+    code: code,
+    name: name,
+    address: address,
+    phone: phone,
+    admin: admin,
+    oper: oper,
+  };
+
+  try {
+    const warehouse = await API.graphql({
+      query: updateWarehouse,
+      variables: { input: warehouseData },
+    });
+    console.log("la cuenta se edito ", warehouse);
+    return warehouse.data;
+  } catch (e) {
+    console.log(e);
+  }
+};

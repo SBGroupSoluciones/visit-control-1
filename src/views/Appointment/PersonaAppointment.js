@@ -34,6 +34,7 @@ const PersonaAppointment = (props) => {
   const [company, setCompany] = useState();
   const [reason, setReason] = useState();
   const [plate, setPlate] = useState();
+  const [vehicleId, setVehicleId] = useState();
   const [vehicleList, setVehicleList] = useState();
   const [appointmentDate, setAppointmentDate] = useState();
   const [appointmentHour, setAppointmentHour] = useState();
@@ -51,6 +52,11 @@ const PersonaAppointment = (props) => {
   const [ineFrontData, setIneFrontData] = useState();
   const [ineBackName, setIneBackName] = useState();
   const [ineBackData, setIneBackData] = useState();
+
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingIneFront, setUploadingIneFront] = useState(false);
+  const [uploadingIneBack, setUploadingIneBack] = useState(false);
+
   const [imageKey, setImageKey] = useState();
 
   const changeHandler = (e) => {
@@ -83,16 +89,15 @@ const PersonaAppointment = (props) => {
       appointmentHour &&
       hostId &&
       hostName &&
-      warehouse
-      // &&
-      // imageName &&
-      // ineFrontName &&
-      // ineBackName
+      warehouse &&
+      imageName &&
+      ineFrontName &&
+      ineBackName
     ) {
       if (selectedHost) {
-        idGenerate(selectedHost.warehouse.code).then((newId)=>{
+        idGenerate(selectedHost.warehouse.code).then((newId) => {
           setAppointmentData({
-            id:newId,
+            id: newId,
             firstName: firstName,
             lastName: lastName,
             email: email,
@@ -110,43 +115,39 @@ const PersonaAppointment = (props) => {
         });
       }
 
-
-      if (imageName && imageData) {
+      if (imageName && imageData && !uploadingImage) {
+        setUploadingImage(true);
         let data = {
-          fileName: `${account}/${onNameFormat(firstName)}-${onNameFormat(
-            lastName
-          )}/${imageName}`,
+          fileName: imageNameGenerate(imageName),
           file: imageData,
         };
         uploadImage(data)
           .then((uploaded) => {
-            if (uploaded) console.log(uploaded.key);
+            if (uploaded) setImageName(uploaded.key);
           })
           .catch((error) => console.log("error al subir imagen", error));
       }
-      if (ineFrontName && ineFrontData) {
+      if (ineFrontName && ineFrontData && !uploadingIneFront) {
+        setUploadingIneFront(true);
         let data = {
-          fileName: `${account}/${onNameFormat(firstName)}-${onNameFormat(
-            lastName
-          )}/${ineFrontName}`,
+          fileName: imageNameGenerate(ineFrontName),
           file: ineFrontData,
         };
         uploadImage(data)
           .then((uploaded) => {
-            if (uploaded) console.log(uploaded.key);
+            if (uploaded) setIneFrontName(uploaded.key);
           })
           .catch((error) => console.log("error al subir imagen", error));
       }
-      if (ineBackName && ineBackData) {
+      if (ineBackName && ineBackData && !uploadingIneBack) {
+        setUploadingIneBack(true);
         let data = {
-          fileName: `${account}/${onNameFormat(firstName)}-${onNameFormat(
-            lastName
-          )}/${ineBackName}`,
+          fileName: imageNameGenerate(ineBackName),
           file: ineBackData,
         };
         uploadImage(data)
           .then((uploaded) => {
-            if (uploaded) console.log(uploaded.key);
+            if (uploaded) setIneBackName(uploaded.key);
           })
           .catch((error) => console.log("error al subir imagen", error));
       }
@@ -185,6 +186,12 @@ const PersonaAppointment = (props) => {
       }
     });
     setWarehouses(Array.from(new Set(whList)));
+  };
+
+  const imageNameGenerate = (name) => {
+    return `${account}/${onNameFormat(firstName)}-${onNameFormat(
+      lastName
+    )}/${name}`;
   };
 
   const onSetWarehouse = (wh) => {
@@ -429,22 +436,32 @@ const PersonaAppointment = (props) => {
             <CCol xs="12" md="3">
               <CFormGroup>
                 <CLabel htmlFor="firstName">Vechículo</CLabel>
-                <CSelect
-                  custom
-                  name="select"
-                  id="select"
-                  onChange={(e) => {
-                    onVehicleSelect(e.target.value);
-                  }}
-                >
-                  <option value="none">Ninguno</option>
-                  <option value="new">Añadir nuevo</option>
-                  {vehicleList
-                    ? vehicleList.map((x, y) => (
-                        <option key={y}>{x.plate}</option>
-                      ))
-                    : null}
-                </CSelect>
+                {!plate ? (
+                  <CSelect
+                    custom
+                    name="select"
+                    id="select"
+                    onChange={(e) => {
+                      onVehicleSelect(e.target.value);
+                    }}
+                  >
+                    <option value="none">Ninguno</option>
+                    <option value="new">Añadir nuevo</option>
+                    {vehicleList
+                      ? vehicleList.map((x, y) => (
+                          <option key={y}>{x.plate}</option>
+                        ))
+                      : null}
+                  </CSelect>
+                ) : (
+                  <CInput
+                    id="plate"
+                    placeholder=""
+                    value={plate}
+                    required
+                    disabled
+                  />
+                )}
               </CFormGroup>
             </CCol>
             <CCol xs="12" md="6">

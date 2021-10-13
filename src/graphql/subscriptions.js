@@ -130,6 +130,8 @@ export const onCreateAccount = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -273,6 +275,8 @@ export const onUpdateAccount = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -416,6 +420,8 @@ export const onDeleteAccount = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -676,6 +682,8 @@ export const onCreateVisit = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -936,6 +944,8 @@ export const onUpdateVisit = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -1196,6 +1206,8 @@ export const onDeleteVisit = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -2556,6 +2568,8 @@ export const onCreateWarehouse = /* GraphQL */ `
       name
       address
       phone
+      admin
+      oper
       lat
       lon
       createdAt
@@ -2581,6 +2595,8 @@ export const onUpdateWarehouse = /* GraphQL */ `
       name
       address
       phone
+      admin
+      oper
       lat
       lon
       createdAt
@@ -2606,6 +2622,8 @@ export const onDeleteWarehouse = /* GraphQL */ `
       name
       address
       phone
+      admin
+      oper
       lat
       lon
       createdAt
@@ -2693,6 +2711,8 @@ export const onCreateHost = /* GraphQL */ `
         name
         address
         phone
+        admin
+        oper
         lat
         lon
         createdAt
@@ -2787,6 +2807,8 @@ export const onUpdateHost = /* GraphQL */ `
         name
         address
         phone
+        admin
+        oper
         lat
         lon
         createdAt
@@ -2881,6 +2903,8 @@ export const onDeleteHost = /* GraphQL */ `
         name
         address
         phone
+        admin
+        oper
         lat
         lon
         createdAt
@@ -2939,6 +2963,8 @@ export const onCreateCalendar = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -2988,6 +3014,8 @@ export const onUpdateCalendar = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -3037,6 +3065,8 @@ export const onDeleteCalendar = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt

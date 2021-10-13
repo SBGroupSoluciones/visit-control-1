@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+
 import {
   CRow,
   CCol,
@@ -19,7 +21,9 @@ import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { hostList, uploadImage } from "../custom/Host";
 
 const IngressCargo = (props) => {
-  const { setAppointmentData, show, visit } = props;
+  const { setAppointmentData, show, visit, showHandler} = props;
+  const history = useHistory();
+
   const [visitData, setVisitData] = useState();
   const [role, setRole] = useState();
 
@@ -126,11 +130,23 @@ const IngressCargo = (props) => {
   const onIngress = () => {
     visitUpdate(visitIngressHandler(visit)).then((updated) => {
       console.log("se actualizo la cuenta ", updated);
+      history.push("/appointment/list");
+      showHandler(false);
     });
   };
   const onReject = () => {
     visitUpdate(visitRejectHandler(visit)).then((updated) => {
+      history.push("/appointment/list");
       console.log("se actualizo la cuenta ", updated);
+      showHandler(false);
+    });
+  };
+
+  const onCancel = () => {
+    visitUpdate(visitCanceled(visit)).then((updated) => {
+      history.push("/appointment/list");
+      console.log("se actualizo la cuenta ", updated);
+      showHandler(false);
     });
   };
 
@@ -153,7 +169,7 @@ const IngressCargo = (props) => {
       visitData.operInProgress = false;
       visitData.operInTimestamp = REJECTED;
     }
-    return visitData
+    return visitData;
   };
 
   const visitIngressHandler = (visitData) => {
@@ -178,11 +194,11 @@ const IngressCargo = (props) => {
         visitData.checkInTimestamp = moment()
           .tz("America/Mexico_City")
           .format();
-          visitData.adminFinished = false;
-          visitData.adminOutTimestamp = "";
-          visitData.checkOutTimestamp = "";
-          visitData.operFinished = false;
-          visitData.operInProgress = false;
+        visitData.adminFinished = false;
+        visitData.adminOutTimestamp = "";
+        visitData.checkOutTimestamp = "";
+        visitData.operFinished = false;
+        visitData.operInProgress = false;
         visitData.operInTimestamp = "";
         visitData.operOutTimestamp = "";
       }
@@ -201,17 +217,105 @@ const IngressCargo = (props) => {
         visitData.operInProgress = true;
         visitData.operInTimestamp = moment().tz("America/Mexico_City").format();
       }
-      return visitData
+      return visitData;
     }
+  };
+  
+  const visitCanceled = async (visitData) => {
+    visitData.status = "CANCELLED";
+    return visitData;
   };
 
   function removeEmpty(obj) {
-    return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null));
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, v]) => v != null)
+    );
   }
+  const onCloseModal = () => {
+    showHandler(false);
+  };
+
+  const onButtonAssign = (type) => {
+    switch (type) {
+      case "USER":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onCancel(e)}>
+                Cancelar Cita
+              </CButton>
+            </CModalFooter>
+          );
+        }
+        break;
+      case "HOST":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onCancel(e)}>
+                Cancelar Cita
+              </CButton>
+            </CModalFooter>
+          );
+        }
+        break;
+
+      case "ADMIN":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onReject(e)}>
+                Rechazar
+              </CButton>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Ingresar
+              </CButton>
+            </CModalFooter>
+          );
+        } else {
+          return (
+            <CModalFooter>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Dar Salida
+              </CButton>
+            </CModalFooter>
+          );
+        }
+
+        break;
+
+      case "OPERATOR":
+        if (visitData.status == "IN_PROGRESS_ADMIN") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onReject(e)}>
+                Rechazar
+              </CButton>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Ingresar
+              </CButton>
+            </CModalFooter>
+          );
+        } else {
+          return (
+            <CModalFooter>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Dar Salida
+              </CButton>
+            </CModalFooter>
+          );
+        }
+
+        break;
+
+      default:
+        break;
+    }
+  };
 
   return (
     <>
-      <CModal color="success" show={show} size="lg">
+      <CModal color="success" show={show} size="lg" onClose={onCloseModal}>
         <CModalHeader closeButton>
           <p className="h4">Confirmar Cita</p>
         </CModalHeader>
@@ -536,14 +640,7 @@ const IngressCargo = (props) => {
             </CRow>
           ) : null}
         </CModalBody>
-        <CModalFooter>
-          <CButton color="danger" onClick={(e) => onReject(e)}>
-            Rechazar
-          </CButton>
-          <CButton color="success" onClick={(e) => onIngress(e)}>
-            Ingresar
-          </CButton>
-        </CModalFooter>
+       {onButtonAssign(role)}
       </CModal>
     </>
   );

@@ -34,6 +34,7 @@ const ScanQR = () => {
   useEffect(() => {}, []);
   const onHandleScan = (data) => {
     if (data) {
+      console.log("LA DATA ES ", data);
       GetVisit(data).then((visit) => {
         console.log("LA VISITA QUE SE ESCANEOO ", visit.type);
         GetHost(visit.host.id).then((host) => {
@@ -44,7 +45,7 @@ const ScanQR = () => {
             setIngressPerson(true);
           }
           if (visit.type == "CARGO" && !ingressCargo) {
-            console.log("entro a la parte de cargo")
+            console.log("entro a la parte de cargo");
             setIngressCargo(true);
           }
         });
@@ -57,8 +58,16 @@ const ScanQR = () => {
 
   return (
     <>
-      <IngressPersona show={ingressPerson} visit={visit} />
-      <IngressCargo show={ingressCargo} visit={visit} />
+      <IngressPersona
+        show={ingressPerson}
+        visit={visit}
+        showHandler={setIngressPerson}
+      />
+      <IngressCargo
+        show={ingressCargo}
+        visit={visit}
+        showHandler={setIngressCargo}
+      />
       <CRow>
         <CCol md="4">
           <CCard accentColor="success">

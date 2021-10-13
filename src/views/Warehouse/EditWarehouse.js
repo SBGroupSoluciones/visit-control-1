@@ -20,7 +20,7 @@ import {
   isValidPhoneNumber,
   isValidWarehouseCode,
 } from "../Auth/utils";
-import { warehouseCreate } from "../custom/Warehouse";
+import { warehouseCreate, warehouseUpdate } from "../custom/Warehouse";
 
 const EditWarehouse = (props) => {
   const { show, showHandler, warehouse } = props;
@@ -30,10 +30,12 @@ const EditWarehouse = (props) => {
   const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [phone, setPhone] = useState();
+  const [admin, setAdmin] = useState();
+  const [oper, setOper] = useState();
 
   useEffect(() => {
     if (warehouse) {
-      const { code, name, address, phone } = warehouse;
+      const { code, name, address, phone, admin,oper } = warehouse;
       setCode(code);
       setName(name);
       setAddress(address);
@@ -57,24 +59,35 @@ const EditWarehouse = (props) => {
     setCode(code);
   };
 
+  const onAdminValidation = (admin) => {
+    setAdmin(admin);
+  };
+
+  const onOperValidation = (oper) => {
+    setOper(oper);
+  };
+
   const onEditWarehouse = async () => {
     const whData = {
       code: code,
       name: name,
       address: address,
       phone: phone,
+      admin:admin, 
+      oper:oper
     };
 
-    // warehouseCreate(whData)
-    //   .then((warehouse) => {
-    //     console.log("Se creo el Warehouse correctamente ", warehouse);
-    //     history.push({
-    //       pathname: "/warehouse/list",
-    //     });
-    //   })
-    //   .catch((e) => {
-    //     console.log("Error al crear warehouse ", e);
-    //   });
+    warehouseUpdate(whData)
+      .then((warehouse) => {
+        console.log("Se creo el Warehouse correctamente ", warehouse);
+        history.push({
+          pathname: "/warehouse/list",
+        });
+        showHandler(!show)
+      })
+      .catch((e) => {
+        console.log("Error al crear warehouse ", e);
+      });
   };
 
   const onCancel = () => {
@@ -139,6 +152,32 @@ const EditWarehouse = (props) => {
                 value={phone ? phone : null}
                 onChange={(e) => {
                   onPhoneValidation(e.target.value);
+                }}
+              />
+            </CCol>
+            <CCol xs="12" md="12">
+              <CLabel htmlFor="admin" className="ln-top">
+                Administrador
+              </CLabel>
+              <CInput
+                type="text"
+                autoComplete="admin"
+                value={admin ? admin : null}
+                onChange={(e) => {
+                  onAdminValidation(e.target.value);
+                }}
+              />
+            </CCol>
+            <CCol xs="12" md="12">
+              <CLabel htmlFor="oper" className="ln-top">
+                Operador
+              </CLabel>
+              <CInput
+                type="text"
+                autoComplete="oper"
+                value={oper ? oper : null}
+                onChange={(e) => {
+                  onOperValidation(e.target.value);
                 }}
               />
             </CCol>

@@ -28,18 +28,19 @@ const CreateWarehouse = () => {
   const [name, setName] = useState();
   const [address, setAddress] = useState();
   const [phone, setPhone] = useState();
+  const [admin, setAdmin] = useState();
+  const [oper, setOper] = useState();
   const [codeValid, setCodeValid] = useState();
   const [nameValid, setNameValid] = useState(false);
   const [addressValid, setAddressValid] = useState(false);
   const [phoneValid, setPhoneValid] = useState(false);
+  const [adminValid, setAdminValid] = useState(false);
+  const [operValid, setOperValid] = useState(false);
 
   // const [error, setError] = useState();
   // const [notify, setNotify] = useState(false);
 
-  useEffect(() => {
-
-
-  }, []);
+  useEffect(() => {}, []);
 
   const onNameValidation = (name) => {
     setNameValid(isValidText(name) && name);
@@ -61,12 +62,24 @@ const CreateWarehouse = () => {
     setCode(code);
   };
 
+  const onValidAdmin = (admin) => {
+    setAdminValid(isValidText(admin));
+    setAdmin(admin);
+  };
+
+  const onValidOper = (oper) => {
+    setOperValid(isValidText(oper));
+    setOper(oper);
+  };
+
   const onCreateWarehouse = async () => {
     const whData = {
-      code:code, 
+      code: code,
       name: name,
       address: address,
       phone: phone,
+      admin: admin,
+      oper: oper,
     };
 
     warehouseCreate(whData)
@@ -153,6 +166,36 @@ const CreateWarehouse = () => {
                     <CInvalidFeedback>
                       Introduzca un numero de telefono valido
                     </CInvalidFeedback>
+                  </CCol>{" "}
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="name" className="ln-top">
+                      Administrador
+                    </CLabel>
+                    <CInput
+                      type="text"
+                      autoComplete="admin"
+                      value={admin ? admin : null}
+                      onChange={(e) => {
+                        onValidAdmin(e.target.value);
+                      }}
+                      valid={adminValid}
+                      invalid={!adminValid && admin}
+                    />
+                  </CCol>{" "}
+                  <CCol xs="12" md="12">
+                    <CLabel htmlFor="oper" className="ln-top">
+                      Operador
+                    </CLabel>
+                    <CInput
+                      type="text"
+                      autoComplete="name"
+                      value={oper ? oper : null}
+                      onChange={(e) => {
+                        onValidOper(e.target.value);
+                      }}
+                      valid={operValid}
+                      invalid={!operValid && oper}
+                    />
                   </CCol>
                 </CRow>
               </CForm>

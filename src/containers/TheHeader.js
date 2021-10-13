@@ -68,9 +68,9 @@ const TheHeader = (props) => {
       </CHeaderNav>
       <CHeaderNav className="px-3">
         {/* REGISTERED USER HEADER NAV */}
-        <TheHeaderDropdownNotif />
+        {/* <TheHeaderDropdownNotif />
         <TheHeaderDropdownTasks />
-        <TheHeaderDropdownMssg />
+        <TheHeaderDropdownMssg /> */}
         <TheHeaderDropdown userData={userData}/>
       </CHeaderNav>
 

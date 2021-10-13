@@ -20,14 +20,16 @@ import { GetAccount } from "../Auth/Account";
 moment.locale("es");
 
 const IngressPersona = (props) => {
-  const { setAppointmentData, show, visit, setIngressPerson } = props;
+  const { setAppointmentData, show, visit, showHandler } = props;
   const history = useHistory();
 
   const [visitData, setVisitData] = useState();
   const [role, setRole] = useState();
+  const [buttons, setButtons] = useState();
 
   useEffect(() => {
     if (visit) {
+      console.log("ka vusuta qye se sekecuibi", visit);
       const {
         id,
         person,
@@ -93,17 +95,36 @@ const IngressPersona = (props) => {
     }
   }, [visit, role]);
 
+  const onCloseModal = () => {
+    showHandler(false);
+  };
+
   const onIngress = () => {
     visitUpdate(visitIngressHandler(visit)).then((updated) => {
       console.log("se actualizo la cuenta ", updated);
       history.push("/appointment/list");
+      showHandler(false);
     });
   };
   const onReject = () => {
     visitUpdate(visitRejectHandler(visit)).then((updated) => {
       history.push("/appointment/list");
       console.log("se actualizo la cuenta ", updated);
+      showHandler(false);
     });
+  };
+
+  const onCancel = () => {
+    visitUpdate(visitCanceled(visit)).then((updated) => {
+      history.push("/appointment/list");
+      console.log("se actualizo la cuenta ", updated);
+      showHandler(false);
+    });
+  };
+
+  const visitCanceled = async (visitData) => {
+    visitData.status = "CANCELLED";
+    return visitData;
   };
 
   const visitRejectHandler = async (visitData) => {
@@ -125,6 +146,7 @@ const IngressPersona = (props) => {
       visitData.operInProgress = false;
       visitData.operInTimestamp = REJECTED;
     }
+    return visitData;
   };
 
   const visitIngressHandler = (visitData) => {
@@ -150,6 +172,7 @@ const IngressPersona = (props) => {
           .tz("America/Mexico_City")
           .format();
       }
+      return visitData;
     }
     console.log("TEST CHARLY ", role, visitData.adminApprove);
     if (role == "OPERATOR" && visitData.adminApprove) {
@@ -170,11 +193,89 @@ const IngressPersona = (props) => {
     return visitData;
   };
 
+  const onButtonAssign = (type) => {
+    switch (type) {
+      case "USER":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onCancel(e)}>
+                Cancelar Cita
+              </CButton>
+            </CModalFooter>
+          );
+        }
+        break;
+      case "HOST":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onCancel(e)}>
+                Cancelar Cita
+              </CButton>
+            </CModalFooter>
+          );
+        }
+        break;
+
+      case "ADMIN":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onReject(e)}>
+                Rechazar
+              </CButton>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Ingresar
+              </CButton>
+            </CModalFooter>
+          );
+        } else {
+          return (
+            <CModalFooter>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Dar Salida
+              </CButton>
+            </CModalFooter>
+          );
+        }
+
+        break;
+
+      case "OPERATOR":
+        if (visitData.status == "IN_PROGRESS_ADMIN") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onReject(e)}>
+                Rechazar
+              </CButton>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Ingresar
+              </CButton>
+            </CModalFooter>
+          );
+        } else {
+          return (
+            <CModalFooter>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Dar Salida
+              </CButton>
+            </CModalFooter>
+          );
+        }
+
+        break;
+
+      default:
+        break;
+    }
+  };
+
   return (
     <>
-      <CModal color="success" show={show} size="lg">
+      <CModal color="success" show={show} size="lg" onClose={onCloseModal}>
         <CModalHeader closeButton>
-          <p className="h4">Confirmar Cita</p>
+          <p className="h4">Datos de la Cita </p>
         </CModalHeader>
         <CModalBody>
           {visitData ? (
@@ -318,6 +419,7 @@ const IngressPersona = (props) => {
                         value={moment(visitData.dateTimestamp).format(
                           "DD-MMM-YYYY"
                         )}
+                        disabled
                         // min={moment().format("YYYY-MM-DD")}
                       />
                     </CFormGroup>
@@ -411,7 +513,8 @@ const IngressPersona = (props) => {
             </CRow>
           ) : null}
         </CModalBody>
-        {true ? (
+        {onButtonAssign(role)}
+        {/* {true ? (
           <CModalFooter>
             <CButton color="danger" onClick={(e) => onReject(e)}>
               Rechazar
@@ -429,7 +532,7 @@ const IngressPersona = (props) => {
               Aceptar
             </CButton>
           </CModalFooter>
-        )}
+        )} */}
       </CModal>
     </>
   );

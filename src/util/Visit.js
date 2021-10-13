@@ -101,10 +101,10 @@ const personVisit = async (personData) => {
 export const visitList = async () => {
   try {
     const visits = await API.graphql(graphqlOperation(listVisits));
-    console.log("#LAS VISITAS ", visits);
+    // console.log("#LAS VISITAS ", visits);
     return visits.data.listVisits.items;
   } catch (e) {
-    console.log("Error al obtener visitas ", e);
+    // console.log("Error al obtener visitas ", e);
     if (e.data) {
       return e.data.listVisits.items;
     }

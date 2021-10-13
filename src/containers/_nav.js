@@ -2,16 +2,16 @@ import React from "react";
 import CIcon from "@coreui/icons-react";
 
 export const superAdminNav = [
-  {
-    _tag: "CSidebarNavItem",
-    name: "Tablero",
-    to: "/dashboard",
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "Nuevo",
-    },
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Tablero",
+  //   to: "/dashboard",
+  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  //   badge: {
+  //     color: "info",
+  //     text: "Nuevo",
+  //   },
+  // },
   {
     _tag: "CSidebarNavTitle",
     _children: ["Super-Admin"],
@@ -105,16 +105,16 @@ export const superAdminNav = [
 ];
 
 export const adminNav = [
-  {
-    _tag: "CSidebarNavItem",
-    name: "Tablero",
-    to: "/dashboard",
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Tablero",
+  //   to: "/dashboard",
+  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  //   badge: {
+  //     color: "info",
+  //     text: "NEW",
+  //   },
+  // },
   {
     _tag: "CSidebarNavTitle",
     _children: ["Administrador"],
@@ -150,16 +150,16 @@ export const adminNav = [
 ];
 
 export const operNav = [
-  {
-    _tag: "CSidebarNavItem",
-    name: "Tablero",
-    to: "/dashboard",
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Tablero",
+  //   to: "/dashboard",
+  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  //   badge: {
+  //     color: "info",
+  //     text: "NEW",
+  //   },
+  // },
   {
     _tag: "CSidebarNavTitle",
     _children: ["Operador"],
@@ -191,16 +191,16 @@ export const operNav = [
 ];
 
 export const authorityNav = [
-  {
-    _tag: "CSidebarNavItem",
-    name: "Tablero",
-    to: "/dashboard",
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Tablero",
+  //   to: "/dashboard",
+  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  //   badge: {
+  //     color: "info",
+  //     text: "NEW",
+  //   },
+  // },
   {
     _tag: "CSidebarNavTitle",
     _children: ["Autoridad"],
@@ -231,16 +231,16 @@ export const authorityNav = [
 ];
 
 export const userNav = [
-  {
-    _tag: "CSidebarNavItem",
-    name: "Dashboard",
-    to: "/dashboard",
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Dashboard",
+  //   to: "/dashboard",
+  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  //   badge: {
+  //     color: "info",
+  //     text: "NEW",
+  //   },
+  // },
   {
     _tag: "CSidebarNavTitle",
     _children: ["Usuario"],
@@ -272,16 +272,16 @@ export const userNav = [
 ];
 
 export const hostNav = [
-  {
-    _tag: "CSidebarNavItem",
-    name: "Dashboard",
-    to: "/dashboard",
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-    badge: {
-      color: "info",
-      text: "NEW",
-    },
-  },
+  // {
+  //   _tag: "CSidebarNavItem",
+  //   name: "Dashboard",
+  //   to: "/dashboard",
+  //   icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+  //   badge: {
+  //     color: "info",
+  //     text: "NEW",
+  //   },
+  // },
   {
     _tag: "CSidebarNavTitle",
     _children: ["Anfitrion"],

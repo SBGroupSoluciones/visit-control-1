@@ -85,7 +85,7 @@ type Person
 
 type PrivateVehicle
   @model
-  @key(fields: ["id", "plate"])
+  @key(fields: ["id","plate"])
   @key(name: "ByPlate", fields: ["plate"], queryField: "privateVehicleByPlate")
   @auth(
     rules: [
@@ -166,6 +166,8 @@ type Warehouse
   name: String!
   address: String
   phone: String
+  admin: String
+  oper: String
   lat: String
   lon: String
   host: [Host] @connection(name: "WarehouseHost")

@@ -130,6 +130,8 @@ export const getAccount = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -490,6 +492,8 @@ export const getVisit = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -1745,6 +1749,8 @@ export const getWarehouse = /* GraphQL */ `
       name
       address
       phone
+      admin
+      oper
       lat
       lon
       createdAt
@@ -1783,6 +1789,8 @@ export const listWarehouses = /* GraphQL */ `
         name
         address
         phone
+        admin
+        oper
         lat
         lon
         createdAt
@@ -1866,6 +1874,8 @@ export const getHost = /* GraphQL */ `
         name
         address
         phone
+        admin
+        oper
         lat
         lon
         createdAt
@@ -1923,6 +1933,8 @@ export const listHosts = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
@@ -1972,6 +1984,8 @@ export const getCalendar = /* GraphQL */ `
           name
           address
           phone
+          admin
+          oper
           lat
           lon
           createdAt
