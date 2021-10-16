@@ -32,11 +32,11 @@ const Appointment = () => {
 
   const onConfirmDate = () => {
     if (personaAppointment) {
-      console.log("DATA DE PERSONA ALTA ", personaAppointment)
+      console.log("DATA DE PERSONA ALTA ", personaAppointment);
       setPersonaConfirm(true);
     }
     if (cargoAppointment) {
-      console.log("CARGO",cargoAppointment)
+      console.log("CARGO", cargoAppointment);
       setCargoConfirm(true);
     }
   };
@@ -65,14 +65,18 @@ const Appointment = () => {
                 <CNav variant="tabs">
                   <CNavItem>
                     <CNavLink>
-                      <CIcon name="cil-user" />
-                      {active === 0 && " Persona"}
+                      <CIcon name="cil-user">
+                        <p> Persona</p>
+                      </CIcon>
+
+                      {/* {active === 0 && " Persona"} */}
                     </CNavLink>
                   </CNavItem>
                   <CNavItem>
                     <CNavLink>
                       <CIcon name="cil-truck" />
-                      {active === 1 && " Vehiculo de Carga"}
+                      <p> Vehículo de Carga</p>
+                      {/* {active === 1 && " Vehiculo de Carga"} */}
                     </CNavLink>
                   </CNavItem>
                 </CNav>

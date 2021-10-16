@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "visitcontrol0ca5cd6e": {}
+      },
+      "function": {
+        "visitcontrolsendmail": {
+          "deploymentBucketName": "amplify-visitcontrol-dev-125850-deployment",
+          "s3Key": "amplify-builds/visitcontrolsendmail-77444854725655546362-build.zip"
+        }
       }
     }
   }
