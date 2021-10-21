@@ -22,7 +22,7 @@ export const vehicleCreate = async (params) => {
       query: createPrivateVehicle,
       variables: { input: vehicleData },
     });
-    return vehicle.data.createVehicle;
+    return vehicle.data.createPrivateVehicle;
   } catch (e) {
     console.log(e);
   }

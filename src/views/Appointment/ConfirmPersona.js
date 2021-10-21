@@ -47,6 +47,7 @@ const ConfirmPersona = (props) => {
         imageName,
         ineFrontName,
         ineBackName,
+        vehicleId,
       } = appointmentData;
       const appointmentConfirmData = {
         type: "PERSON",
@@ -58,6 +59,7 @@ const ConfirmPersona = (props) => {
         reason: reason,
         phone: phone,
         plate: plate ? plate : null,
+        vehicleId:vehicleId,
         host: host,
         date: appointmentDate,
         time: appointmentHour,
@@ -104,7 +106,7 @@ const ConfirmPersona = (props) => {
         visitHostId: appointment.host.id,
         visitAccountId: localStorage.getItem("account"),
         visitPersonId: createdPerson.id,
-        visitPrivateVehicleId: appointment.plate,
+        visitPrivateVehicleId: appointment.vehicleId,
       };
       console.log("SE VA A CREAR LA VISITA , ", visit)
       visitCreate(visit).then((visitCreated) => {

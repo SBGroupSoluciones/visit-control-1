@@ -1053,8 +1053,8 @@ export const listPersons = /* GraphQL */ `
   }
 `;
 export const getPrivateVehicle = /* GraphQL */ `
-  query GetPrivateVehicle($id: ID!, $plate: String!) {
-    getPrivateVehicle(id: $id, plate: $plate) {
+  query GetPrivateVehicle($id: ID!) {
+    getPrivateVehicle(id: $id) {
       id
       plate
       color
@@ -1197,7 +1197,6 @@ export const getPrivateVehicle = /* GraphQL */ `
 export const listPrivateVehicles = /* GraphQL */ `
   query ListPrivateVehicles(
     $id: ID
-    $plate: ModelStringKeyConditionInput
     $filter: ModelPrivateVehicleFilterInput
     $limit: Int
     $nextToken: String
@@ -1205,7 +1204,6 @@ export const listPrivateVehicles = /* GraphQL */ `
   ) {
     listPrivateVehicles(
       id: $id
-      plate: $plate
       filter: $filter
       limit: $limit
       nextToken: $nextToken

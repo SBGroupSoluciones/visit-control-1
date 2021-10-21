@@ -85,7 +85,7 @@ type Person
 
 type PrivateVehicle
   @model
-  @key(fields: ["id","plate"])
+  @key(fields: ["id"])
   @key(name: "ByPlate", fields: ["plate"], queryField: "privateVehicleByPlate")
   @auth(
     rules: [

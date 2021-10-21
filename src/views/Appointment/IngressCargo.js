@@ -175,7 +175,7 @@ const IngressCargo = (props) => {
   const visitIngressHandler = (visitData) => {
     if (role == "ADMIN" && !visitData.operApprove) {
       if (visitData.adminApprove) {
-        visitData.status = "FINISHED";
+        visitData.status = "FINISHED_ADMIN";
         visitData.adminInProgress = false;
         visitData.adminFinished = true;
         visitData.adminOutTimestamp = moment()
@@ -202,7 +202,7 @@ const IngressCargo = (props) => {
         visitData.operInTimestamp = "";
         visitData.operOutTimestamp = "";
       }
-      return removeEmpty(visitData);
+      return visitData;
     }
     if (role == "OPERATOR" && visitData.adminApprove) {
       if (visitData.operApprove) {
@@ -221,7 +221,7 @@ const IngressCargo = (props) => {
     }
   };
   
-  const visitCanceled = async (visitData) => {
+  const visitCanceled = (visitData) => {
     visitData.status = "CANCELLED";
     return visitData;
   };
@@ -235,8 +235,65 @@ const IngressCargo = (props) => {
     showHandler(false);
   };
 
+  const onAdminButtons = () => {
+    if (visitData.status == "SCHEDULED") {
+      return (
+        <CModalFooter>
+          <CButton color="danger" onClick={(e) => onReject(e)}>
+            Rechazar
+          </CButton>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Ingresar
+          </CButton>
+        </CModalFooter>
+      );
+    } else {
+      return (
+        <CModalFooter>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Dar Salida
+          </CButton>
+        </CModalFooter>
+      );
+    }
+  };
+
+  const onOperButtons = () => {
+    if (visitData.status == "IN_PROGRESS_ADMIN") {
+      return (
+        <CModalFooter>
+          <CButton color="danger" onClick={(e) => onReject(e)}>
+            Rechazar
+          </CButton>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Ingresar
+          </CButton>
+        </CModalFooter>
+      );
+    } else {
+      return (
+        <CModalFooter>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Dar Salida
+          </CButton>
+        </CModalFooter>
+      );
+    }
+  };
+
   const onButtonAssign = (type) => {
     switch (type) {
+      case "SUPER_ADMIN":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onCancel(e)}>
+                Cancelar Cita
+              </CButton>
+            </CModalFooter>
+          );
+        }
+        break;
       case "USER":
         if (visitData.status == "SCHEDULED") {
           return (
@@ -261,51 +318,11 @@ const IngressCargo = (props) => {
         break;
 
       case "ADMIN":
-        if (visitData.status == "SCHEDULED") {
-          return (
-            <CModalFooter>
-              <CButton color="danger" onClick={(e) => onReject(e)}>
-                Rechazar
-              </CButton>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Ingresar
-              </CButton>
-            </CModalFooter>
-          );
-        } else {
-          return (
-            <CModalFooter>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Dar Salida
-              </CButton>
-            </CModalFooter>
-          );
-        }
-
+        onAdminButtons();
         break;
 
       case "OPERATOR":
-        if (visitData.status == "IN_PROGRESS_ADMIN") {
-          return (
-            <CModalFooter>
-              <CButton color="danger" onClick={(e) => onReject(e)}>
-                Rechazar
-              </CButton>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Ingresar
-              </CButton>
-            </CModalFooter>
-          );
-        } else {
-          return (
-            <CModalFooter>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Dar Salida
-              </CButton>
-            </CModalFooter>
-          );
-        }
-
+        onOperButtons();
         break;
 
       default:
@@ -317,7 +334,7 @@ const IngressCargo = (props) => {
     <>
       <CModal color="success" show={show} size="lg" onClose={onCloseModal}>
         <CModalHeader closeButton>
-          <p className="h4">Confirmar Cita</p>
+          <p className="h4">Datos de la Cita</p>
         </CModalHeader>
         <CModalBody>
           {visitData ? (

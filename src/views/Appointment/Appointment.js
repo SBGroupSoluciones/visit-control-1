@@ -65,17 +65,20 @@ const Appointment = () => {
                 <CNav variant="tabs">
                   <CNavItem>
                     <CNavLink>
-                      <CIcon name="cil-user">
-                        <p> Persona</p>
-                      </CIcon>
+                      <p>
+                        <CIcon name="cil-user" />
+                        &nbsp;Persona
+                      </p>
 
                       {/* {active === 0 && " Persona"} */}
                     </CNavLink>
                   </CNavItem>
                   <CNavItem>
                     <CNavLink>
-                      <CIcon name="cil-truck" />
-                      <p> Vehículo de Carga</p>
+                      <p>
+                        <CIcon name="cil-truck" />
+                        &nbsp;Vehículo de Carga
+                      </p>
                       {/* {active === 1 && " Vehiculo de Carga"} */}
                     </CNavLink>
                   </CNavItem>

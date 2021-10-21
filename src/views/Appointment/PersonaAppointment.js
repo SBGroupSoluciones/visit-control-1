@@ -105,6 +105,7 @@ const PersonaAppointment = (props) => {
             company: company,
             reason: reason,
             plate: plate,
+            vehicleId: vehicleId,
             appointmentDate: appointmentDate,
             appointmentHour: appointmentHour,
             host: selectedHost,
@@ -171,6 +172,7 @@ const PersonaAppointment = (props) => {
     ineBackData,
     availableHours,
     vehicleList,
+    vehicleId,
   ]);
 
   const onNameFormat = (name) => {
@@ -215,12 +217,16 @@ const PersonaAppointment = (props) => {
     setHostWId(hostNameList);
   };
 
-  const onVehicleSelect = (e) => {
-    console.log("data vehicle selectr", e);
-    if (e == "new") {
+  const onVehicleSelect = (event) => {
+    const selectedIndex = event.target.options.selectedIndex;
+
+    if (event.target.value == "new") {
       setNewVehicle(true);
     } else {
-      setPlate(e);
+      setPlate(event.target.value);
+      setVehicleId(
+        event.target.options[selectedIndex].getAttribute("data-key")
+      );
     }
   };
 
@@ -258,8 +264,13 @@ const PersonaAppointment = (props) => {
 
   const onGetVehicleList = () => {
     vehiclesList().then((vehicles) => {
-      setVehicleList(vehicles);
-      // console.log("LOS VEHICULOS ", vehicles);
+      let accountVehicles = [];
+      vehicles.map((vehicle) => {
+        if ((vehicle.account.email = localStorage.getItem("account"))) {
+          accountVehicles.push(vehicle);
+        }
+      });
+      setVehicleList(accountVehicles);
     });
   };
 
@@ -339,6 +350,7 @@ const PersonaAppointment = (props) => {
         show={newVehicle}
         setNotification={setNewVehicle}
         setVehiclePlate={setPlate}
+        setVehicleId={setVehicleId}
       />
       <CRow>
         <CCol xs="12" md="12">
@@ -442,14 +454,16 @@ const PersonaAppointment = (props) => {
                     name="select"
                     id="select"
                     onChange={(e) => {
-                      onVehicleSelect(e.target.value);
+                      onVehicleSelect(e);
                     }}
                   >
                     <option value="none">Ninguno</option>
                     <option value="new">Añadir nuevo</option>
                     {vehicleList
                       ? vehicleList.map((x, y) => (
-                          <option key={y}>{x.plate}</option>
+                          <option key={y} data-key={x.id}>
+                            {x.plate}
+                          </option>
                         ))
                       : null}
                   </CSelect>

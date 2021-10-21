@@ -206,6 +206,7 @@ const AuthorityAdminApointmentList = () => {
 
   const fields = [
     "id",
+    "admin",
     "adminInTimestamp",
     "adminOutTimestamp",
     "person",
@@ -225,6 +226,7 @@ const AuthorityAdminApointmentList = () => {
   ];
   const spanishFieds = {
     id:"ID",
+    admin:"Administrador",
     adminInTimestamp: "Hora de Ingreso",
     adminOutTimestamp: "Hora de Salida",
     person: "Nombre",

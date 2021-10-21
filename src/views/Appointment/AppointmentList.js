@@ -176,13 +176,15 @@ const Appointment = () => {
         return "warning";
       case "FINISHED_OPERATOR":
         return "warning";
-      case "FINISHED":
+      case "FINISHED_ADMIN":
         return "unregistered";
       case "REJECTED_BY_ADMIN":
         return "danger";
       case "REJECTED_BY_OPERATOR":
         return "danger";
       case "CANCELLED":
+        return "danger";
+      case "CANCELLED_SA":
         return "danger";
       default:
         return "primary";
@@ -210,16 +212,18 @@ const Appointment = () => {
         return "En Progreso Admin";
       case "IN_PROGRESS_OPERATOR":
         return "En Progreso Operador";
-      case "FINISHED":
-        return "Finalizada";
+      case "FINISHED_ADMIN":
+        return "Finalizado Administrador";
       case "FINISHED_OPERATOR":
-        return "Finalizada";
+        return "Finalizado Operador";
       case "REJECTED_BY_ADMIN":
         return "Rechazada por Admin";
       case "REJECTED_BY_OPERATOR":
         return "Rechazada por Operador";
       case "CANCELLED":
         return "Cancelada";
+      case "CANCELLED_SA":
+        return "Cancelada Super Admin";
       default:
         return "";
     }

@@ -8,12 +8,29 @@ const awsmobile = {
     "aws_user_pools_id": "us-east-1_tTWJdjZx8",
     "aws_user_pools_web_client_id": "67c1h6fbp3lhfd24tl66tcvnhe",
     "oauth": {},
+    "aws_cognito_login_mechanisms": [
+        "EMAIL"
+    ],
+    "aws_cognito_signup_attributes": [
+        "EMAIL"
+    ],
+    "aws_cognito_mfa_configuration": "OFF",
+    "aws_cognito_mfa_types": [
+        "SMS"
+    ],
+    "aws_cognito_password_protection_settings": {
+        "passwordPolicyMinLength": 8,
+        "passwordPolicyCharacters": []
+    },
+    "aws_cognito_verification_mechanisms": [
+        "EMAIL"
+    ],
     "aws_user_files_s3_bucket": "vcbucketdev125850-dev",
     "aws_user_files_s3_bucket_region": "us-east-1",
-    "aws_appsync_graphqlEndpoint": "https://q2ihu3yn4bc7djpopio4ifxq2a.appsync-api.us-east-1.amazonaws.com/graphql",
+    "aws_appsync_graphqlEndpoint": "https://exod6sjcora7bbet2ypvwmpbci.appsync-api.us-east-1.amazonaws.com/graphql",
     "aws_appsync_region": "us-east-1",
     "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
-    "aws_appsync_apiKey": "da2-yi5rw4nc2rhuriptbohe2k362a"
+    "aws_appsync_apiKey": "da2-oxosdlszzjb6jipmxz3ehomivu"
 };
 
 

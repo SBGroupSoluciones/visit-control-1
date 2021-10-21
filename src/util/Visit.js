@@ -53,7 +53,8 @@ export const visitCreate = async (params) => {
         query: createVisit,
         variables: { input: visitData },
       });
-      return visit.data.createVisit;
+      console.log("SE creo la visita bien, ", visit)
+      return visit
     } catch (e) {
       console.log(e);
     }

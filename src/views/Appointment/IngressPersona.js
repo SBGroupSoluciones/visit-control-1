@@ -17,6 +17,7 @@ import moment from "moment-timezone";
 import "moment/locale/es";
 import { visitUpdate } from "src/util/Visit";
 import { GetAccount } from "../Auth/Account";
+import { statusColor } from "../../util/StatusUtil";
 moment.locale("es");
 
 const IngressPersona = (props) => {
@@ -26,7 +27,6 @@ const IngressPersona = (props) => {
   const [visitData, setVisitData] = useState();
   const [role, setRole] = useState();
   const [buttons, setButtons] = useState();
-
   useEffect(() => {
     if (visit) {
       console.log("ka vusuta qye se sekecuibi", visit);
@@ -122,8 +122,12 @@ const IngressPersona = (props) => {
     });
   };
 
-  const visitCanceled = async (visitData) => {
-    visitData.status = "CANCELLED";
+  const visitCanceled = (visitData) => {
+    if (role == "SUPER_ADMIN") {
+      visitData.status = "CANCELLED_SA";
+    } else {
+      visitData.status = "CANCELLED";
+    }
     return visitData;
   };
 
@@ -152,7 +156,7 @@ const IngressPersona = (props) => {
   const visitIngressHandler = (visitData) => {
     if (role == "ADMIN" && !visitData.operApprove) {
       if (visitData.adminApprove) {
-        visitData.status = "FINISHED";
+        visitData.status = "FINISHED_ADMIN";
         visitData.adminInProgress = false;
         visitData.adminFinished = true;
         visitData.adminOutTimestamp = moment()
@@ -193,8 +197,65 @@ const IngressPersona = (props) => {
     return visitData;
   };
 
+  const onAdminButtons = () => {
+    if (visitData.status == "SCHEDULED") {
+      return (
+        <CModalFooter>
+          <CButton color="danger" onClick={(e) => onReject(e)}>
+            Rechazar
+          </CButton>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Ingresar
+          </CButton>
+        </CModalFooter>
+      );
+    } else {
+      return (
+        <CModalFooter>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Dar Salida
+          </CButton>
+        </CModalFooter>
+      );
+    }
+  };
+
+  const onOperButtons = () => {
+    if (visitData.status == "IN_PROGRESS_ADMIN") {
+      return (
+        <CModalFooter>
+          <CButton color="danger" onClick={(e) => onReject(e)}>
+            Rechazar
+          </CButton>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Ingresar
+          </CButton>
+        </CModalFooter>
+      );
+    } else {
+      return (
+        <CModalFooter>
+          <CButton color="success" onClick={(e) => onIngress(e)}>
+            Dar Salida
+          </CButton>
+        </CModalFooter>
+      );
+    }
+  };
+
   const onButtonAssign = (type) => {
     switch (type) {
+      case "SUPER_ADMIN":
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onCancel(e)}>
+                Cancelar Cita
+              </CButton>
+            </CModalFooter>
+          );
+        }
+        break;
       case "USER":
         if (visitData.status == "SCHEDULED") {
           return (
@@ -219,51 +280,11 @@ const IngressPersona = (props) => {
         break;
 
       case "ADMIN":
-        if (visitData.status == "SCHEDULED") {
-          return (
-            <CModalFooter>
-              <CButton color="danger" onClick={(e) => onReject(e)}>
-                Rechazar
-              </CButton>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Ingresar
-              </CButton>
-            </CModalFooter>
-          );
-        } else {
-          return (
-            <CModalFooter>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Dar Salida
-              </CButton>
-            </CModalFooter>
-          );
-        }
-
+        onAdminButtons();
         break;
 
       case "OPERATOR":
-        if (visitData.status == "IN_PROGRESS_ADMIN") {
-          return (
-            <CModalFooter>
-              <CButton color="danger" onClick={(e) => onReject(e)}>
-                Rechazar
-              </CButton>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Ingresar
-              </CButton>
-            </CModalFooter>
-          );
-        } else {
-          return (
-            <CModalFooter>
-              <CButton color="success" onClick={(e) => onIngress(e)}>
-                Dar Salida
-              </CButton>
-            </CModalFooter>
-          );
-        }
-
+        onOperButtons();
         break;
 
       default:
@@ -273,9 +294,14 @@ const IngressPersona = (props) => {
 
   return (
     <>
-      <CModal color="success" show={show} size="lg" onClose={onCloseModal}>
+      <CModal
+        color={visitData ? statusColor(visitData.status) : null}
+        show={show}
+        size="lg"
+        onClose={onCloseModal}
+      >
         <CModalHeader closeButton>
-          <p className="h4">Datos de la Cita </p>
+          <p className="h4">Datos de la Cita</p>
         </CModalHeader>
         <CModalBody>
           {visitData ? (
@@ -348,27 +374,6 @@ const IngressPersona = (props) => {
                       />
                     </CFormGroup>
                   </CCol>
-                  {/* <CCol xs="12" md="3">
-                  <CFormGroup>
-                    <CLabel htmlFor="firstName">Vechículo</CLabel>
-                    <CSelect
-                      custom
-                      name="select"
-                      id="select"
-                      onChange={(e) => {
-                        onVehicleSelect(e.target.value);
-                      }}
-                    >
-                      <option value="none">Ninguno</option>
-                      <option value="new">Añadir nuevo</option>
-                      {vehicleList
-                        ? vehicleList.map((x, y) => (
-                            <option key={y}>{x.plate}</option>
-                          ))
-                        : null}
-                    </CSelect>
-                  </CFormGroup>
-                </CCol> */}
                   <CCol xs="12" md="6">
                     <CFormGroup>
                       <CLabel htmlFor="firstName">Motivo de la visita</CLabel>
@@ -440,76 +445,80 @@ const IngressPersona = (props) => {
                 </CRow>
               </CCol>
               <hr />
-              <CCol xs="12" md="12">
-                <CLabel htmlFor="firstName">Datos del Vehiculo</CLabel>
-                <CRow>
-                  <CCol xs="12" md="4">
-                    <CFormGroup>
-                      <CLabel htmlFor="firstName">Placa</CLabel>
-                      <CInput
-                        id="lastName"
-                        placeholder=""
-                        disabled
-                        required
-                        value={visitData.plate}
-                        required
-                      />
-                    </CFormGroup>
-                  </CCol>
-                  <CCol xs="12" md="4">
-                    <CFormGroup>
-                      <CLabel htmlFor="firstName">Color</CLabel>
-                      <CInput
-                        id="lastName"
-                        placeholder=""
-                        disabled
-                        required
-                        value={visitData.color}
-                        required
-                      />
-                    </CFormGroup>
-                  </CCol>
-                  <CCol xs="12" md="4">
-                    <CFormGroup>
-                      <CLabel htmlFor="firstName">Marca</CLabel>
-                      <CInput
-                        id="lastName"
-                        placeholder=""
-                        disabled
-                        required
-                        value={visitData.brand}
-                        required
-                      />
-                    </CFormGroup>
-                  </CCol>{" "}
-                  <CCol xs="12" md="4">
-                    <CFormGroup>
-                      <CLabel htmlFor="firstName">Sub-Marca</CLabel>
-                      <CInput
-                        id="lastName"
-                        placeholder=""
-                        disabled
-                        required
-                        value={visitData.subBrand}
-                        required
-                      />
-                    </CFormGroup>
-                  </CCol>{" "}
-                  <CCol xs="12" md="4">
-                    <CFormGroup>
-                      <CLabel htmlFor="firstName">Modelo</CLabel>
-                      <CInput
-                        id="lastName"
-                        placeholder=""
-                        disabled
-                        required
-                        value={visitData.model}
-                        required
-                      />
-                    </CFormGroup>
-                  </CCol>
-                </CRow>
-              </CCol>
+              {visitData.plate ? (
+                <CCol xs="12" md="12" className="custom-separation-two">
+                  <CLabel htmlFor="firstName">
+                    <strong>Datos del Vehículo</strong>
+                  </CLabel>
+                  <CRow>
+                    <CCol xs="12" md="4">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Placa</CLabel>
+                        <CInput
+                          id="lastName"
+                          placeholder=""
+                          disabled
+                          required
+                          value={visitData.plate}
+                          required
+                        />
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="4">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Color</CLabel>
+                        <CInput
+                          id="lastName"
+                          placeholder=""
+                          disabled
+                          required
+                          value={visitData.color}
+                          required
+                        />
+                      </CFormGroup>
+                    </CCol>
+                    <CCol xs="12" md="4">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Marca</CLabel>
+                        <CInput
+                          id="lastName"
+                          placeholder=""
+                          disabled
+                          required
+                          value={visitData.brand}
+                          required
+                        />
+                      </CFormGroup>
+                    </CCol>{" "}
+                    <CCol xs="12" md="4">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Sub-Marca</CLabel>
+                        <CInput
+                          id="lastName"
+                          placeholder=""
+                          disabled
+                          required
+                          value={visitData.subBrand}
+                          required
+                        />
+                      </CFormGroup>
+                    </CCol>{" "}
+                    <CCol xs="12" md="4">
+                      <CFormGroup>
+                        <CLabel htmlFor="firstName">Modelo</CLabel>
+                        <CInput
+                          id="lastName"
+                          placeholder=""
+                          disabled
+                          required
+                          value={visitData.model}
+                          required
+                        />
+                      </CFormGroup>
+                    </CCol>
+                  </CRow>
+                </CCol>
+              ) : null}
             </CRow>
           ) : null}
         </CModalBody>

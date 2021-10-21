@@ -15,12 +15,13 @@ import {
 import { vehicleCreate } from "src/util/Vehicle";
 
 const PersonalVehicle = (props) => {
+  const account = localStorage.getItem("account");
   const [plate, setPlate] = useState();
   const [color, setColor] = useState();
   const [brand, setBrand] = useState();
   const [subBrand, setSubBrand] = useState();
   const [model, setModel] = useState();
-  const { show, setNotification, setVehiclePlate } = props;
+  const { show, setNotification, setVehiclePlate, setVehicleId } = props;
 
   const toggle = (e) => {
     setNotification(!show);
@@ -33,11 +34,14 @@ const PersonalVehicle = (props) => {
       brand: brand,
       model: model,
       subBrand: subBrand,
-      privateVehicleAccountId: localStorage.getItem("account"),
+      account: account,
     };
+
+    console.log("PRIMER LOG ", vehicleData);
     vehicleCreate(vehicleData).then((vehicle) => {
       console.log("Se Creo el vehiculo", vehicle);
       setVehiclePlate(plate);
+      setVehicleId(vehicle.id);
       setNotification(!show);
     });
   };
