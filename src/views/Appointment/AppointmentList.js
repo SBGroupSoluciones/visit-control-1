@@ -177,7 +177,7 @@ const Appointment = () => {
       case "FINISHED_OPERATOR":
         return "warning";
       case "FINISHED_ADMIN":
-        return "unregistered";
+        return "secondary";
       case "REJECTED_BY_ADMIN":
         return "danger";
       case "REJECTED_BY_OPERATOR":

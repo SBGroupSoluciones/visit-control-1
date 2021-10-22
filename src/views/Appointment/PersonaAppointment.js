@@ -266,7 +266,7 @@ const PersonaAppointment = (props) => {
     vehiclesList().then((vehicles) => {
       let accountVehicles = [];
       vehicles.map((vehicle) => {
-        if ((vehicle.account.email = localStorage.getItem("account"))) {
+        if ((vehicle.account.email == localStorage.getItem("account"))) {
           accountVehicles.push(vehicle);
         }
       });

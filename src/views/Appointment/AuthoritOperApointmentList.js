@@ -161,7 +161,7 @@ const AuthorityAdminApointmentList = () => {
         return "warning";
       case "FINISHED_OPERATOR":
         return "warning";
-      case "FINISHED":
+      case "FINISHED_ADMIN":
         return "unregistered";
       case "REJECTED_BY_ADMIN":
         return "danger";
@@ -195,7 +195,7 @@ const AuthorityAdminApointmentList = () => {
         return "En Progreso Admin";
       case "IN_PROGRESS_OPERATOR":
         return "En Progreso Operador";
-      case "FINISHED":
+      case "FINISHED_OPERATOR":
         return "Finalizada";
       case "REJECTED_BY_ADMIN":
         return "Rechazada por Admin";

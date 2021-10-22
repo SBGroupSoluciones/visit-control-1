@@ -59,7 +59,7 @@ const ConfirmPersona = (props) => {
         reason: reason,
         phone: phone,
         plate: plate ? plate : null,
-        vehicleId:vehicleId,
+        vehicleId: vehicleId,
         host: host,
         date: appointmentDate,
         time: appointmentHour,
@@ -91,7 +91,6 @@ const ConfirmPersona = (props) => {
       },
     };
     personCreate(personaData).then((createdPerson) => {
-
       console.log("Se creo la persona ", createdPerson);
       const visit = {
         id: appointment.id,
@@ -108,7 +107,7 @@ const ConfirmPersona = (props) => {
         visitPersonId: createdPerson.id,
         visitPrivateVehicleId: appointment.vehicleId,
       };
-      console.log("SE VA A CREAR LA VISITA , ", visit)
+      console.log("SE VA A CREAR LA VISITA , ", visit);
       visitCreate(visit).then((visitCreated) => {
         console.log("VISiTA CREADA", visitCreated);
         history.push("/appointment/list");
@@ -234,11 +233,14 @@ const ConfirmPersona = (props) => {
                     <CLabel htmlFor="firstName">
                       <strong>Imagen</strong>
                     </CLabel>
-                    {/* <S3Image
-                      imgKey={appointment.imgUrl}
+                    <S3Image
+                      imgKey="aojeda@sbgroup.com.mx/Angel-de-Jesus-Ojeda-Castro/photo5726530443683145648.jpg"
                       onLoad={(url) => console.log(url)}
-                    /> */}
-                    <AmplifyS3Image imgKey="oscar-garcia.png" />
+                    />
+                    <AmplifyS3Image
+                      imgKey="aojeda@sbgroup.com.mx/Angel-de-Jesus-Ojeda-Castro/photo5726530443683145648.jpg"
+                      identityId="us-east-1:2f42cff8-deef-466e-9b4d-64ebaea415ae"
+                    />
                   </CCol>
                 </CRow>
                 <CRow>

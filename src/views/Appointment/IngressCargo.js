@@ -21,7 +21,7 @@ import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { hostList, uploadImage } from "../custom/Host";
 
 const IngressCargo = (props) => {
-  const { setAppointmentData, show, visit, showHandler} = props;
+  const { setAppointmentData, show, visit, showHandler } = props;
   const history = useHistory();
 
   const [visitData, setVisitData] = useState();
@@ -220,7 +220,7 @@ const IngressCargo = (props) => {
       return visitData;
     }
   };
-  
+
   const visitCanceled = (visitData) => {
     visitData.status = "CANCELLED";
     return visitData;
@@ -318,11 +318,60 @@ const IngressCargo = (props) => {
         break;
 
       case "ADMIN":
-        onAdminButtons();
+        if (visitData.status == "SCHEDULED") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onReject(e)}>
+                Rechazar
+              </CButton>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Ingresar
+              </CButton>
+            </CModalFooter>
+          );
+        } else if (
+          visitData.status !== "CANCELLED" &&
+          visitData.status !== "FINISHED_ADMIN" &&
+          visitData.status !== "IN_PROGRESS_OPERATOR"
+        ) {
+          return (
+            <CModalFooter>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Dar Salida
+              </CButton>
+            </CModalFooter>
+          );
+        }
         break;
 
       case "OPERATOR":
-        onOperButtons();
+        if (visitData.status == "IN_PROGRESS_ADMIN") {
+          return (
+            <CModalFooter>
+              <CButton color="danger" onClick={(e) => onReject(e)}>
+                Rechazar
+              </CButton>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Ingresar
+              </CButton>
+            </CModalFooter>
+          );
+        } else if (
+          visitData.status !== "SCHEDULED" &&
+          visitData.status !== "CANCELLED" &&
+          visitData.status !== "FINISHED_ADMIN" &&
+          visitData.status !== "FINISHED_OPERATOR" &&
+          visitData.status !== "REJECTED_BY_ADMIN" &&
+          visitData.status !== "REJECTED_BY_OPERATOR"
+        ) {
+          return (
+            <CModalFooter>
+              <CButton color="success" onClick={(e) => onIngress(e)}>
+                Dar Salida
+              </CButton>
+            </CModalFooter>
+          );
+        }
         break;
 
       default:
@@ -657,7 +706,7 @@ const IngressCargo = (props) => {
             </CRow>
           ) : null}
         </CModalBody>
-       {onButtonAssign(role)}
+        {onButtonAssign(role)}
       </CModal>
     </>
   );
