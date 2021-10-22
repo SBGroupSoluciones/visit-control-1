@@ -19,6 +19,8 @@ import "moment/locale/es";
 import { visitUpdate } from "src/util/Visit";
 import { S3Image, PhotoPicker } from "aws-amplify-react";
 import { hostList, uploadImage } from "../custom/Host";
+import { GetAccount } from "../Auth/Account";
+
 
 const IngressCargo = (props) => {
   const { setAppointmentData, show, visit, showHandler } = props;
@@ -120,9 +122,9 @@ const IngressCargo = (props) => {
           idBackPath: idBackPath,
         });
 
-        console.log(visitData);
-
-        setRole(role);
+        GetAccount(localStorage.getItem("account")).then((account) => {
+          setRole(account.role);
+        });
       }
     }
   }, [visit]);

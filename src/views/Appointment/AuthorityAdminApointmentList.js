@@ -80,12 +80,13 @@ const AuthorityAdminApointmentList = () => {
                 ) {
                   if (
                     visit.status == "IN_PROGRESS_ADMIN" ||
-                    visit.status == "FINISHED"
+                    visit.status == "FINISHED_ADMIN"
                   ) {
                     filteredList.push(visit);
                   }
                 }
               });
+              console.log("LISTA ATES DE MOSTRAR ", filteredList)
               setVisits(filteredList);
             });
           });
@@ -157,8 +158,8 @@ const AuthorityAdminApointmentList = () => {
         return "warning";
       case "FINISHED_OPERATOR":
         return "warning";
-      case "FINISHED":
-        return "unregistered";
+      case "FINISHED_ADMIN":
+        return "secondary";
       case "REJECTED_BY_ADMIN":
         return "danger";
       case "REJECTED_BY_OPERATOR":
@@ -191,7 +192,7 @@ const AuthorityAdminApointmentList = () => {
         return "En Progreso Admin";
       case "IN_PROGRESS_OPERATOR":
         return "En Progreso Operador";
-      case "FINISHED":
+      case "FINISHED_ADMIN":
         return "Finalizada";
       case "REJECTED_BY_ADMIN":
         return "Rechazada por Admin";

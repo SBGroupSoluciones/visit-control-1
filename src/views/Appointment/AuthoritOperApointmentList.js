@@ -69,6 +69,7 @@ const AuthorityAdminApointmentList = () => {
       return GetAccount(localStorage.getItem("account")).then((account) => {
         if (account) {
           setRole(account.role);
+          console.log("LOG OPER LIST ", account.role)
           return visitList().then((allVisits) => {
             console.log("SI LLEGO? ", allVisits);
             return getHostData(allVisits).then((visitsWHost) => {
@@ -84,7 +85,7 @@ const AuthorityAdminApointmentList = () => {
                   if (
                     visit.status == "IN_PROGRESS_OPERATOR" ||
                     visit.status == "FINISHED_OPERATOR" ||
-                    visit.status == "FINISHED"
+                    visit.status == "FINISHED_ADMIN"
                   ) {
                     filteredList.push(visit);
                   }
@@ -162,7 +163,7 @@ const AuthorityAdminApointmentList = () => {
       case "FINISHED_OPERATOR":
         return "warning";
       case "FINISHED_ADMIN":
-        return "unregistered";
+        return "secondary";
       case "REJECTED_BY_ADMIN":
         return "danger";
       case "REJECTED_BY_OPERATOR":
@@ -195,7 +196,7 @@ const AuthorityAdminApointmentList = () => {
         return "En Progreso Admin";
       case "IN_PROGRESS_OPERATOR":
         return "En Progreso Operador";
-      case "FINISHED_OPERATOR":
+      case "FINISHED_ADMIN":
         return "Finalizada";
       case "REJECTED_BY_ADMIN":
         return "Rechazada por Admin";
