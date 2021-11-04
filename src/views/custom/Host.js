@@ -33,13 +33,30 @@ export const hostList = async () => {
 };
 
 export const uploadImage = async (data) => {
-  try {
-    const file = await Storage.put(data.fileName, data.file, {
-      level: "public",
-      contentType: "image/png",
-    });
-    return file;
-  } catch (error) {}
+
+  console.log("LA IMAGE QUE LLEGO ",data)
+
+  const result = await Storage.put("test.txt", "Hello");
+
+  console.log("YA ACABO ", result)
+  // try {
+  //   const file = await Storage.put(data.fileName, data.file, {
+  //     level: "public",
+  //     resumable: true,
+  //     completeCallback: (event) => {
+  //       console.log(`Successfully uploaded ${event.key}`);
+  //     },
+  //     progressCallback: (progress) => {
+  //       console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+  //     },
+  //     errorCallback: (err) => {
+  //       console.error("Unexpected error while uploading", err);
+  //     },
+  //   });
+  //   return file;
+  // } catch (error) {
+  //   console.log("ERROR CACHA3 ", error);
+  // }
 };
 
 export const getImage = async (name) => {

@@ -127,7 +127,7 @@ const IngressCargo = (props) => {
         });
       }
     }
-  }, [visit]);
+  }, [visit,role]);
 
   const onIngress = () => {
     visitUpdate(visitIngressHandler(visit)).then((updated) => {

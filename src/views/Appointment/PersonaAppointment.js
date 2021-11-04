@@ -89,10 +89,10 @@ const PersonaAppointment = (props) => {
       appointmentHour &&
       hostId &&
       hostName &&
-      warehouse &&
-      imageName &&
-      ineFrontName &&
-      ineBackName
+      warehouse 
+      // imageName &&
+      // ineFrontName &&
+      // ineBackName
     ) {
       if (selectedHost) {
         idGenerate(selectedHost.warehouse.code).then((newId) => {
@@ -117,6 +117,7 @@ const PersonaAppointment = (props) => {
       }
 
       if (imageName && imageData && !uploadingImage) {
+        console.log("entro al fi")
         setUploadingImage(true);
         let data = {
           fileName: imageNameGenerate(imageName),
